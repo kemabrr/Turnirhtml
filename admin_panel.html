@@ -233,9 +233,21 @@
 
         async function loadAdminData() {
             try {
-                const result = await apiGet('/api/admin-panel');
+                const response = await fetch(API_URL + '/api/admin-panel', { 
+                    headers: getAdminAuthHeaders() 
+                });
+
+                // DÜZELDI: 401/403 yalnyslygynda logout
+                if (response.status === 401 || response.status === 403) {
+                    alert('Admin sessiýaňyz gutardy ýa-da hukuklaryňyz ýok. Täzeden giriň.');
+                    adminLogout();
+                    return;
+                }
+
+                const result = await response.json();
+
                 if (!result.success) {
-                    if (result.message && result.message.includes('Admin')) {
+                    if (result.message && (result.message.includes('Admin') || result.message.includes('token'))) {
                         adminLogout();
                         return;
                     }

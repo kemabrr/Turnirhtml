@@ -35,6 +35,7 @@
 
     <script>
         const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND URL-iňiz bilen çalyň
+        const ADMIN_PANEL_URL = './admin_panel.html'; // Admin panel URL-si
 
         document.getElementById('admin-login-form').addEventListener('submit', async function(e) {
             e.preventDefault();
@@ -63,12 +64,20 @@
                     return;
                 }
 
-                if (!response.ok) throw new Error('Server yalnyslygy: ' + response.status);
+                // DÜZELDI: Hata mesajını düzgün oku
+                if (!response.ok) {
+                    let errMsg = 'Server yalnyslygy: ' + response.status;
+                    try {
+                        const errData = await response.json();
+                        errMsg = errData.detail || errData.message || errMsg;
+                    } catch(e) {}
+                    throw new Error(errMsg);
+                }
 
                 const result = await response.json();
                 if (result.success && result.data && result.data.access_token) {
                     localStorage.setItem('pubg_admin_token', result.data.access_token);
-                    window.location.href = './admin_panel.html';
+                    window.location.href = ADMIN_PANEL_URL;
                 } else {
                     alert(result.message || 'Parol nadogry!');
                     btnText.textContent = 'GIR';

@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
+
 </head>
 <body>
     <div class="bg-animation">
@@ -423,4 +424,188 @@
                             <div class="info-item">
                                 <span class="info-icon"><i class="fas fa-clock"></i></span>
                                 <div class="info-content">
-                                   
+                                    <span class="info-label">Wagty</span>
+                                    <span class="info-value">${escapeHtml(t.wagty)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-map"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Karta</span>
+                                    <span class="info-value">${escapeHtml(t.karta)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-user"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Gatnaşyk</span>
+                                    <span class="info-value">${escapeHtml(t.gatnasym)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-money-bill-wave"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Toleg</span>
+                                    <span class="info-value highlight">${escapeHtml(t.tolek)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-mobile-alt"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Toleg usuly</span>
+                                    <span class="info-value">${escapeHtml(t.tolek_usuly)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (bayrakRes.success && bayrakRes.bayraklar) {
+                    const b = bayrakRes.bayraklar;
+                    document.getElementById('bayrak-content').innerHTML = `
+                        <div class="prizes-grid">
+                            <div class="prize-card gold">
+                                <div class="prize-rank"><i class="fas fa-medal" style="color:#ffd700"></i></div>
+                                <div class="prize-info">
+                                    <h3>1-nji Orun</h3>
+                                    <p class="prize-amount">${escapeHtml(b.bir.mukdar)}</p>
+                                    <p class="prize-bonus">${escapeHtml(b.bir.bonus)}</p>
+                                </div>
+                            </div>
+                            <div class="prize-card silver">
+                                <div class="prize-rank"><i class="fas fa-medal" style="color:#c0c0c0"></i></div>
+                                <div class="prize-info">
+                                    <h3>2-nji Orun</h3>
+                                    <p class="prize-amount">${escapeHtml(b.iki.mukdar)}</p>
+                                </div>
+                            </div>
+                            <div class="prize-card bronze">
+                                <div class="prize-rank"><i class="fas fa-medal" style="color:#cd7f32"></i></div>
+                                <div class="prize-info">
+                                    <h3>3-nji Orun</h3>
+                                    <p class="prize-amount">${escapeHtml(b.uc.mukdar)}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prize-total">
+                            <span>JEMI BAYRAK:</span>
+                            <strong>${escapeHtml(b.jemi)}</strong>
+                        </div>
+                    `;
+                }
+            } catch (e) { console.error('User turnir yuklenmedi:', e); }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ===================== FORMS =====================
+        document.addEventListener('DOMContentLoaded', async function() {
+            await checkLoginStatus();
+            await loadStats();
+            await loadTurnirData();
+            await loadUserTurnir();
+
+            // Login form
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const telefon = document.getElementById('login-telefon').value.trim();
+                    const parol = document.getElementById('login-parol').value;
+                    const errorEl = document.getElementById('login-error');
+                    const btn = document.getElementById('login-submit-btn');
+
+                    if (!telefon || !parol) {
+                        errorEl.textContent = 'Telefon we parol girizin!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    btn.disabled = true;
+                    errorEl.classList.remove('show');
+                    try {
+                        const result = await apiPost('/api/login', { telefon, parol });
+                        if (result.success && result.data && result.data.access_token) {
+                            setToken(result.data.access_token);
+                            isUserLoggedIn = true;
+                            await checkLoginStatus();
+                            updateNavButtons();
+                            closeAuthModal();
+                            await loadUserTurnir();
+                            window.location.reload();
+                        } else {
+                            errorEl.textContent = result.message || 'Telefon ya-da parol nadogry!';
+                            errorEl.classList.add('show');
+                        }
+                    } catch (error) {
+                        errorEl.textContent = 'Yalnyslyk: ' + error.message;
+                        errorEl.classList.add('show');
+                    } finally {
+                        btn.disabled = false;
+                    }
+                });
+            }
+
+            // Register form
+            const registerForm = document.getElementById('register-form');
+            if (registerForm) {
+                registerForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const ad = document.getElementById('reg-ad').value.trim();
+                    const telefon = document.getElementById('reg-telefon').value.trim();
+                    const parol = document.getElementById('reg-parol').value;
+                    const parol_tekrar = document.getElementById('reg-parol-tekrar').value;
+                    const errorEl = document.getElementById('register-error');
+                    const btn = document.getElementById('register-submit-btn');
+
+                    if (!ad || !telefon || !parol) {
+                        errorEl.textContent = 'Ahli maglumatlary dolduryň!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    if (ad.length < 2) {
+                        errorEl.textContent = 'Ad 2 harpdan uly bolmaly!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    if (parol.length < 6) {
+                        errorEl.textContent = 'Parol 6 harpdan uly bolmaly!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    if (parol !== parol_tekrar) {
+                        errorEl.textContent = 'Parollar deň däl!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    btn.disabled = true;
+                    errorEl.classList.remove('show');
+                    try {
+                        const result = await apiPost('/api/kayit-ol', { ad, telefon, parol, parol_tekrar });
+                        if (result.success && result.data && result.data.access_token) {
+                            setToken(result.data.access_token);
+                            isUserLoggedIn = true;
+                            await checkLoginStatus();
+                            updateNavButtons();
+                            closeAuthModal();
+                            window.location.reload();
+                        } else {
+                            errorEl.textContent = result.message || 'Yalnyslyk yuze cykdy';
+                            errorEl.classList.add('show');
+                        }
+                    } catch (error) {
+                        errorEl.textContent = 'Yalnyslyk: ' + error.message;
+                        errorEl.classList.add('show');
+                    } finally {
+                        btn.disabled = false;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

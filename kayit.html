@@ -4,36 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrasiýa - PUBG Turnir</title>
-    <link rel="stylesheet" href="/static/css/base.css">
-    <link rel="stylesheet" href="/static/css/auth.css">
+    <link rel="stylesheet" href="/static/css/base.css?v=1.0.1">
+    <link rel="stylesheet" href="/static/css/auth.css?v=1.0.1">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        .auth-page { min-height: 100vh; display: flex; flex-direction: column; }
-        .auth-header { text-align: center; padding: 40px 20px 20px; }
-        .auth-header h1 { font-family: 'Orbitron', sans-serif; font-size: 28px; font-weight: 900; color: #ff2d55; letter-spacing: 4px; margin-bottom: 10px; text-shadow: 0 0 20px rgba(255, 45, 85, 0.3); }
-        .auth-header p { font-size: 14px; opacity: 0.7; color: #a0a0c0; }
-        .auth-tabs { display: flex; gap: 12px; margin: 0 20px 24px; background: rgba(255, 255, 255, 0.04); border-radius: 16px; padding: 6px; }
-        .auth-tab { flex: 1; padding: 14px; background: transparent; border: none; border-radius: 12px; color: rgba(255, 255, 255, 0.6); font-family: 'Orbitron', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 2px; text-align: center; text-decoration: none; }
-        .auth-tab.active { background: linear-gradient(135deg, #ff2d55, #ff6b35); color: white; box-shadow: 0 4px 20px rgba(255, 45, 85, 0.3); }
-        .auth-form-container { flex: 1; padding: 0 20px 20px; }
-        .auth-form { display: flex; flex-direction: column; gap: 16px; }
-        .auth-input-group { position: relative; }
-        .auth-input-group label { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #ff2d55; }
-        .auth-input-group input { width: 100%; padding: 18px 20px; background: rgba(255, 255, 255, 0.06); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 16px; color: #e8e8e8; font-size: 16px; font-family: 'Rajdhani', sans-serif; transition: all 0.3s; outline: none; }
-        .auth-input-group input:focus { border-color: #ff2d55; background: rgba(255, 45, 85, 0.08); }
-        .auth-input-group input::placeholder { color: rgba(255, 255, 255, 0.3); }
-        .auth-submit-btn { width: 100%; padding: 20px; background: linear-gradient(135deg, #ff2d55, #ff6b35); border: none; border-radius: 16px; color: white; font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 15px; text-align: center; text-transform: uppercase; letter-spacing: 4px; cursor: pointer; box-shadow: 0 8px 30px rgba(255, 45, 85, 0.4); transition: all 0.3s; margin-top: 8px; }
-        .auth-submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255, 45, 85, 0.5); }
-        .auth-submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(20px); border-top: 1px solid rgba(255, 45, 85, 0.15); padding: 8px 0 12px; }
-        .bottom-nav-container { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; }
-        .bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 10px; font-family: 'Rajdhani', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; padding: 4px 12px; border-radius: 12px; }
-        .bottom-nav-item i { font-size: 20px; }
-        .bottom-nav-item.active { color: #ff2d55; }
-        .auth-tab, .auth-input-group input, .auth-submit-btn, .bottom-nav-item, button, a { -webkit-tap-highlight-color: transparent !important; -webkit-touch-callout: none !important; }
-        .auth-tab:active, .auth-input-group input:active, .auth-submit-btn:active, .bottom-nav-item:active, button:active, a:active { background-color: transparent !important; -webkit-tap-highlight-color: transparent !important; }
-    </style>
+    
 </head>
 <body>
     <div class="bg-animation">
@@ -46,7 +21,7 @@
 
     <div class="auth-page">
         <header class="auth-header">
-            <a href="./index.html" class="back-btn" style="position: absolute; left: 20px; top: 20px;"><i class="fas fa-arrow-left"></i> Yza</a>
+            <a href="./index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Yza</a>
             <h1>REGISTRASIÝA</h1>
             <p>PUBG Turnira gatnasmak üçin hasap döredin</p>
         </header>
@@ -106,71 +81,7 @@
         </div>
     </nav>
 
-    <script>
-        const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND URL-iňiz bilen çalyň
-
-        function setToken(token) { localStorage.setItem('pubg_token', token); }
-
-        function getAuthHeaders() {
-            const token = localStorage.getItem('pubg_token');
-            return {
-                'Content-Type': 'application/json',
-                ...(token ? { 'Authorization': 'Bearer ' + token } : {})
-            };
-        }
-
-        function validateForm() {
-            const ad = document.getElementById('ad').value.trim();
-            const telefon = document.getElementById('telefon').value.trim();
-            const parol = document.getElementById('parol').value;
-            const parol_tekrar = document.getElementById('parol_tekrar').value;
-
-            if (ad.length < 2) { alert('Ad 2 harpdan uly bolmaly!'); return false; }
-            const telClean = telefon.replace(/\s/g, '').replace(/-/g, '').replace(/\+/g, '');
-            if (!/^\d{8}$/.test(telClean) && !/^993\d{8}$/.test(telClean)) {
-                alert('Telefon belgisi nadogry! Format: +993 XX XXX XXX ýa-da 8 san');
-                return false;
-            }
-            if (parol.length < 6) { alert('Parol 6 harpdan uly bolmaly!'); return false; }
-            if (parol !== parol_tekrar) { alert('Parollar deň däl!'); return false; }
-            return true;
-        }
-
-        document.getElementById('kayit-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            if (!validateForm()) return;
-
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
-
-            const data = {
-                ad: document.getElementById('ad').value.trim(),
-                telefon: document.getElementById('telefon').value.trim(),
-                parol: document.getElementById('parol').value,
-                parol_tekrar: document.getElementById('parol_tekrar').value
-            };
-
-            try {
-                const response = await fetch(API_URL + '/api/kayit-ol', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify(data)
-                });
-
-                const result = await response.json();
-
-                if (result.success && result.data && result.data.access_token) {
-                    setToken(result.data.access_token);
-                    window.location.href = './profil.html';
-                } else {
-                    alert(result.message || 'Yalnyslyk yuze cykdy');
-                    btn.disabled = false;
-                }
-            } catch (error) {
-                alert('Yalnyslyk yuze cykdy: ' + error.message);
-                btn.disabled = false;
-            }
-        });
-    </script>
+    
+    <script src="/static/js/kayit.js?v=1.0.1"></script>
 </body>
 </html>

@@ -115,7 +115,7 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
                         </button>`;
                 } else if (t.tolekli === 0) {
                     btnHtml = `
-                        <button class="btn-join-tournament" style="background:linear-gradient(135deg, #00c853, #00a844); box-shadow: 0 8px 30px rgba(0,200,83,0.4);" onclick="joinTournament(${t.id})" type="button">
+                        <button class="btn-join-tournament" class="btn-free" onclick="joinTournament(${t.id})" type="button">
                             <i class="fas fa-plus-circle"></i> TÖLEGSIZ GOŞUL
                         </button>`;
                 } else {
@@ -131,7 +131,7 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
                             <div class="tournament-info">
                                 <h3>${escapeHtml(t.ad)}</h3>
                                 <p>
-                                    ${t.tolekli === 0 ? '<span class="status-badge" style="background:rgba(0,200,83,0.15); color:#00c853; border:1px solid rgba(0,200,83,0.3);">TÖLEGSIZ</span>' : ''}
+                                    ${t.tolekli === 0 ? '<span class="status-badge" class="badge-free">TÖLEGSIZ</span>' : ''}
                                     <span class="status-badge status-${escapeHtml(t.status)}">${escapeHtml(t.status)}</span>
                                 </p>
                             </div>

@@ -1,0 +1,21 @@
+.close-btn:hover { background: rgba(255, 45, 85, 0.2) !important; border-color: rgba(255, 45, 85, 0.4) !important; color: #ff2d55 !important; transform: rotate(90deg); }
+        .team-code-display { text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.2); border-radius: 14px; margin-top: 16px; }
+        .team-code-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #a0a0c0; margin-bottom: 12px; }
+        .team-code-box { display: flex; align-items: center; gap: 12px; background: rgba(0, 0, 0, 0.4); padding: 16px 20px; border-radius: 12px; border: 1px solid rgba(255, 45, 85, 0.2); margin-bottom: 10px; }
+        .team-code-box code { flex: 1; font-family: 'Orbitron', monospace; font-size: 20px; color: #ff2d55; letter-spacing: 3px; text-shadow: 0 0 15px rgba(255, 45, 85, 0.3); }
+        .team-code-box button { background: rgba(255, 45, 85, 0.15); border: 1px solid rgba(255, 45, 85, 0.3); border-radius: 10px; padding: 10px 16px; color: #ff2d55; cursor: pointer; transition: all 0.3s; font-size: 16px; }
+        .team-code-box button:hover { background: rgba(255, 45, 85, 0.25); box-shadow: 0 0 20px rgba(255, 45, 85, 0.2); }
+        .team-code-hint { font-size: 12px; opacity: 0.6; color: #a0a0c0; }
+        .logout-section { text-align: center; margin-top: 30px; padding: 24px 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        .logout-btn-pro { display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, rgba(255, 45, 85, 0.1), rgba(255, 45, 85, 0.05)); border: 1.5px solid rgba(255, 45, 85, 0.3); border-radius: 16px; color: #ff2d55; padding: 16px 40px; font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; width: 100%; max-width: 300px; justify-content: center; }
+        .logout-btn-pro:hover { background: linear-gradient(135deg, rgba(255, 45, 85, 0.2), rgba(255, 45, 85, 0.1)); border-color: #ff2d55; box-shadow: 0 8px 30px rgba(255, 45, 85, 0.3); transform: translateY(-2px); }
+        .logout-btn-pro i { font-size: 16px; }
+        .loading { text-align: center; padding: 40px; opacity: 0.6; }
+        .loading i { font-size: 32px; color: #ff2d55; animation: spin 1s linear infinite; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.main-content { padding-bottom: 80px; }
+.form-header { position: relative; }
+.close-btn { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; color: #e8e8e8; font-size: 18px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s; z-index: 10; }
+#profil-content { display: none; }
+.btn-mt { margin-top: 15px; }
+.team-empty-icon { font-size: 32px; color: #ff2d55; margin-bottom: 12px; display: block; }

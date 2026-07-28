@@ -27,6 +27,13 @@
         .loading-box { text-align: center; padding: 40px; }
         .loading-box i { font-size: 32px; color: #ff2d55; animation: spin 1s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        /* Eýýäm gatnaşan bolumi */
+        .already-joined-box { background: linear-gradient(135deg, rgba(0, 200, 83, 0.08), rgba(0, 150, 255, 0.06)); border-radius: 20px; padding: 40px 28px; border: 1px solid rgba(0, 200, 83, 0.2); text-align: center; margin-bottom: 24px; }
+        .already-joined-box i { font-size: 64px; color: #00c853; margin-bottom: 20px; }
+        .already-joined-box h3 { font-family: 'Orbitron', sans-serif; font-size: 18px; color: #00c853; margin-bottom: 12px; }
+        .already-joined-box p { font-size: 14px; opacity: 0.8; color: #c0c0d0; margin-bottom: 8px; }
+        .already-joined-box .btn-submit { margin-top: 20px; background: linear-gradient(135deg, #00c853, #00a844); }
     </style>
 </head>
 <body>
@@ -48,6 +55,20 @@
         <div id="loading-area" class="loading-box">
             <i class="fas fa-spinner"></i>
             <p>Turnir maglumatlary yuklenyar...</p>
+        </div>
+
+        <!-- Eýýäm gatnaşan bolsa bu görkeziler -->
+        <div id="already-joined-area" style="display:none;">
+            <div class="tournament-summary" id="joined-tournament-summary"></div>
+            <div class="already-joined-box">
+                <i class="fas fa-check-circle"></i>
+                <h3>Siz eýýäm gatnaşdyňyz!</h3>
+                <p>Bu turnira eýýäm registrasiýa bolduňyz.</p>
+                <p id="joined-status-text" style="opacity:0.6; font-size:13px;"></p>
+                <button class="btn-submit" onclick="window.location.href='./turnir.html'" type="button">
+                    <span class="btn-text">TURNIRLERE YZARA</span>
+                </button>
+            </div>
         </div>
 
         <div id="content-area" style="display:none;">
@@ -135,6 +156,26 @@
                 window.location.href = './turnir.html';
                 return;
             }
+            
+            // Ilki barla: eýýäm gatnaşanmy?
+            try {
+                const durumRes = await fetch(API_URL + '/api/gatnas-durum/' + turnirId, {
+                    headers: getAuthHeaders()
+                });
+                
+                if (durumRes.ok) {
+                    const durum = await durumRes.json();
+                    if (durum.success && durum.is_joined) {
+                        // Eýýäm gatnaşan - form gizle, habar görkez
+                        showAlreadyJoined(durum.admin_onay, durum.odeme_durumu);
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.error('Gatnas durum barlanylmady:', e);
+            }
+            
+            // Turnir maglumatlaryny yükle
             try {
                 const result = await fetch(API_URL + '/api/turnir-data?turnir_id=' + turnirId, {
                     headers: getAuthHeaders()
@@ -179,6 +220,38 @@
                 alert('Turnir yuklenmedi: ' + e.message);
                 window.location.href = './turnir.html';
             }
+        }
+
+        function showAlreadyJoined(adminOnay, odemeDurumu) {
+            // Turnir maglumatlaryny görkez
+            fetch(API_URL + '/api/turnir-data?turnir_id=' + turnirId, { headers: getAuthHeaders() })
+                .then(r => r.json())
+                .then(result => {
+                    if (result.success && result.turnir) {
+                        const t = result.turnir;
+                        document.getElementById('joined-tournament-summary').innerHTML = `
+                            <h3><i class="fas fa-trophy"></i> ${escapeHtml(t.ad)}</h3>
+                            <p><strong>Sene:</strong> ${escapeHtml(t.senesi)}</p>
+                            <p><strong>Wagt:</strong> ${escapeHtml(t.wagty)}</p>
+                            <p><strong>Karta:</strong> ${escapeHtml(t.karta)}</p>
+                            <p><strong>Gatnaşyk:</strong> ${escapeHtml(t.gatnasym)}</p>
+                            <p><strong>Toleg:</strong> ${escapeHtml(t.tolek)}</p>
+                        `;
+                    }
+                });
+            
+            let statusText = '';
+            if (adminOnay === 0) statusText = 'Status: Garasylýar (Admin tassyklamagy garaşylýar)';
+            else if (adminOnay === 1) statusText = 'Status: Tassyklandy ✅';
+            else if (adminOnay === 2) statusText = 'Status: Ret edildi ❌';
+            
+            if (odemeDurumu === 1) statusText += ' | Toleg: Edilen 💰';
+            else statusText += ' | Toleg: Edilmedi';
+            
+            document.getElementById('joined-status-text').textContent = statusText;
+            
+            document.getElementById('loading-area').style.display = 'none';
+            document.getElementById('already-joined-area').style.display = 'block';
         }
 
         const paymentPhoneInput = document.getElementById('payment_phone');
@@ -247,4 +320,4 @@
         document.addEventListener('DOMContentLoaded', loadTurnir);
     </script>
 </body>
-</html>
+    </html>

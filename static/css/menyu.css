@@ -1,0 +1,23 @@
+.menu-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 80px; }
+.menu-item {
+    display: flex; align-items: center; gap: 18px; padding: 20px 22px;
+    background: rgba(255, 255, 255, 0.02); border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.06); text-decoration: none; color: #e8e8e8; transition: all 0.3s;
+}
+.menu-item:hover { background: rgba(255, 45, 85, 0.06); border-color: rgba(255, 45, 85, 0.2); transform: translateX(6px); }
+.menu-icon {
+    font-size: 22px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, rgba(255, 45, 85, 0.15), rgba(0, 150, 255, 0.1)); border-radius: 14px; color: #ff2d55;
+}
+.menu-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.menu-info p { font-size: 12px; opacity: 0.6; color: #a0a0c0; }
+.logout-btn {
+    display: flex; align-items: center; gap: 18px; padding: 20px 22px;
+    background: rgba(255, 255, 255, 0.02); border-radius: 18px;
+    border: 1px solid rgba(255, 45, 85, 0.2); color: #e8e8e8; transition: all 0.3s;
+    width: 100%; font-family: inherit; font-size: inherit; cursor: pointer; text-align: left;
+}
+.logout-btn:hover { background: rgba(255, 45, 85, 0.06); border-color: rgba(255, 45, 85, 0.4); transform: translateX(6px); }
+.logout-btn .menu-icon { background: rgba(255, 45, 85, 0.1); }
+.logout-btn h3 { color: #ff2d55; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.logout-btn p { font-size: 12px; opacity: 0.6; color: #a0a0c0; }

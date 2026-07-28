@@ -1,21 +1,159 @@
+/* ===================== PROFILE CARD ===================== */
+.profile-card {
+    background: linear-gradient(135deg, rgba(255, 45, 85, 0.08), rgba(0, 150, 255, 0.06));
+    border-radius: 20px; padding: 28px; margin-bottom: 24px;
+    border: 1px solid rgba(255, 45, 85, 0.15); display: flex; align-items: center; gap: 24px;
+    position: relative; overflow: hidden; backdrop-filter: blur(10px);
+}
+.profile-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 3px; height: 100%;
+    background: linear-gradient(180deg, #ff2d55, #ff6b35);
+}
+.profile-avatar {
+    width: 76px; height: 76px; background: linear-gradient(135deg, #ff2d55, #ff6b35);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-size: 36px; flex-shrink: 0; box-shadow: 0 0 30px rgba(255, 45, 85, 0.4); color: white; position: relative; z-index: 1;
+}
+.profile-info h2 { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: #e8e8e8; position: relative; z-index: 1; }
+.profile-pubg-id { font-size: 14px; opacity: 0.7; margin-bottom: 6px; color: #a0a0c0; position: relative; z-index: 1; }
+.profile-ref { font-family: 'Orbitron', monospace; font-size: 13px; color: #ff2d55; position: relative; z-index: 1; text-shadow: 0 0 10px rgba(255, 45, 85, 0.3); }
+
+/* ===================== STATUS CARD ===================== */
+.status-card {
+    background: rgba(255, 255, 255, 0.02); border-radius: 20px; padding: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.06); margin-bottom: 24px; backdrop-filter: blur(10px);
+    position: relative; overflow: hidden;
+}
+.status-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, #ff2d55, #ff6b35, #ff8c00, #ff2d55);
+    background-size: 200% 100%; animation: progress-shimmer 3s linear infinite;
+}
+.status-card h3 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: #ff2d55; margin-bottom: 20px; position: relative; z-index: 1; }
+.status-steps { display: flex; flex-direction: column; gap: 14px; margin: 24px 0; position: relative; z-index: 1; }
+.status-step {
+    display: flex; align-items: center; gap: 18px; padding: 18px;
+    background: rgba(255, 255, 255, 0.02); border-radius: 14px; border-left: 3px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden;
+}
+.status-step::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, rgba(255, 45, 85, 0.05), transparent); opacity: 0; transition: opacity 0.4s;
+}
+.status-step:hover::before { opacity: 1; }
+.status-step.completed { border-left-color: #00c853; background: rgba(0, 200, 83, 0.04); }
+.status-step.pending { border-left-color: #ff8c00; background: rgba(255, 140, 0, 0.04); }
+.status-step.rejected { border-left-color: #ff2d55; background: rgba(255, 45, 85, 0.04); }
+.step-icon { font-size: 26px; width: 36px; text-align: center; flex-shrink: 0; position: relative; z-index: 1; }
+.step-info { display: flex; flex-direction: column; position: relative; z-index: 1; }
+.step-title { font-weight: 700; font-size: 15px; color: #e8e8e8; }
+.step-date { font-size: 12px; opacity: 0.6; margin-top: 4px; color: #a0a0c0; }
+.status-badge {
+    padding: 14px 24px; border-radius: 14px; font-weight: 700; text-align: center;
+    margin-top: 18px; font-size: 14px; letter-spacing: 1px; position: relative; z-index: 1; animation: fadeInUp 0.5s ease;
+}
+.status-badge.approved { background: linear-gradient(135deg, rgba(0, 200, 83, 0.15), rgba(0, 200, 83, 0.08)); color: #00c853; border: 1px solid rgba(0, 200, 83, 0.3); box-shadow: 0 0 20px rgba(0, 200, 83, 0.2); }
+.status-badge.rejected { background: linear-gradient(135deg, rgba(255, 45, 85, 0.15), rgba(255, 45, 85, 0.08)); color: #ff2d55; border: 1px solid rgba(255, 45, 85, 0.3); box-shadow: 0 0 20px rgba(255, 45, 85, 0.2); }
+.status-badge.waiting { background: linear-gradient(135deg, rgba(255, 140, 0, 0.15), rgba(255, 140, 0, 0.08)); color: #ff8c00; border: 1px solid rgba(255, 140, 0, 0.3); box-shadow: 0 0 20px rgba(255, 140, 0, 0.2); }
+
+/* ===================== TEAM SECTION ===================== */
+.team-section { margin-bottom: 24px; }
+.team-section h3 {
+    font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: #ff2d55;
+    margin-bottom: 18px; display: flex; align-items: center; gap: 10px; position: relative; padding-left: 16px;
+}
+.team-section h3::before {
+    content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 4px; height: 20px; background: linear-gradient(180deg, #ff2d55, #ff6b35); border-radius: 2px; box-shadow: 0 0 10px rgba(255, 45, 85, 0.5);
+}
+.team-card {
+    background: rgba(255, 255, 255, 0.02); border-radius: 18px; padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.06); backdrop-filter: blur(10px); position: relative; overflow: hidden;
+}
+.team-card::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, #ff2d55, #ff6b35, #ff8c00, #ff2d55);
+    background-size: 200% 100%; animation: progress-shimmer 3s linear infinite;
+}
+.team-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); position: relative; z-index: 1; }
+.team-header h4 { font-size: 18px; font-weight: 700; color: #e8e8e8; }
+.team-code {
+    font-family: 'Orbitron', monospace; font-size: 12px; color: #ff2d55; background: rgba(255, 45, 85, 0.1);
+    padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(255, 45, 85, 0.2); text-shadow: 0 0 10px rgba(255, 45, 85, 0.2);
+}
+.team-members { display: flex; flex-direction: column; gap: 12px; margin-bottom: 18px; position: relative; z-index: 1; }
+.team-member {
+    display: flex; align-items: center; gap: 12px; padding: 14px;
+    background: rgba(255, 255, 255, 0.02); border-radius: 12px; transition: all 0.3s; border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.team-member:hover { background: rgba(255, 255, 255, 0.04); border-color: rgba(255, 45, 85, 0.1); transform: translateX(4px); }
+.team-member.leader { background: rgba(255, 215, 0, 0.04); border: 1px solid rgba(255, 215, 0, 0.15); }
+.team-member.leader:hover { background: rgba(255, 215, 0, 0.08); }
+.member-role { font-size: 11px; opacity: 0.7; width: 60px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #a0a0c0; }
+.team-member.leader .member-role { color: #ffd700; }
+.member-name { flex: 1; font-size: 14px; font-weight: 600; color: #e8e8e8; }
+.member-status { font-size: 18px; }
+.team-invite {
+    background: rgba(255, 45, 85, 0.04); border-radius: 12px; padding: 18px;
+    border: 1px dashed rgba(255, 45, 85, 0.3); position: relative; z-index: 1;
+}
+.team-invite p { font-size: 13px; opacity: 0.85; margin-bottom: 12px; color: #c0c0d0; }
+.invite-code-box { display: flex; align-items: center; gap: 12px; }
+.invite-code-box code {
+    flex: 1; font-family: 'Orbitron', monospace; font-size: 18px; color: #ff2d55;
+    background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 10px; text-align: center;
+    text-shadow: 0 0 10px rgba(255, 45, 85, 0.3); border: 1px solid rgba(255, 45, 85, 0.15); letter-spacing: 2px;
+}
+.team-empty {
+    background: rgba(255, 255, 255, 0.02); border-radius: 18px; padding: 28px;
+    border: 1px solid rgba(255, 255, 255, 0.06); text-align: center; backdrop-filter: blur(10px);
+}
+.team-empty p { font-size: 14px; opacity: 0.7; margin-bottom: 18px; color: #a0a0c0; }
+.team-actions { display: flex; gap: 12px; }
+
+/* ===================== SHARE SECTION ===================== */
+.share-section {
+    background: rgba(255, 255, 255, 0.02); border-radius: 18px; padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.06); margin-bottom: 24px; text-align: center;
+    backdrop-filter: blur(10px); position: relative; overflow: hidden;
+}
+.share-section::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+    background: linear-gradient(90deg, #ff2d55, #ff6b35, #ff8c00, #ff2d55);
+    background-size: 200% 100%; animation: progress-shimmer 3s linear infinite;
+}
+.share-section h3 { font-size: 14px; font-weight: 700; text-transform: uppercase; letter-spacing: 3px; color: #ff2d55; margin-bottom: 12px; position: relative; z-index: 1; }
+.share-section p { font-size: 13px; opacity: 0.7; margin-bottom: 18px; color: #a0a0c0; position: relative; z-index: 1; }
+.share-code-box { display: flex; align-items: center; gap: 12px; background: rgba(0, 0, 0, 0.3); padding: 14px; border-radius: 12px; position: relative; z-index: 1; border: 1px solid rgba(255, 45, 85, 0.15); }
+.share-code-box code { flex: 1; font-family: 'Orbitron', monospace; font-size: 18px; color: #ff2d55; text-shadow: 0 0 10px rgba(255, 45, 85, 0.3); letter-spacing: 2px; }
+.share-code-box button { background: rgba(255, 45, 85, 0.15); border: 1px solid rgba(255, 45, 85, 0.3); border-radius: 10px; padding: 10px 18px; color: #ff2d55; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.3s; }
+.share-code-box button:hover { background: rgba(255, 45, 85, 0.25); box-shadow: 0 0 20px rgba(255, 45, 85, 0.2); transform: translateY(-2px); }
+
+/* ===================== PROFIL INLINE ===================== */
 .close-btn:hover { background: rgba(255, 45, 85, 0.2) !important; border-color: rgba(255, 45, 85, 0.4) !important; color: #ff2d55 !important; transform: rotate(90deg); }
-        .team-code-display { text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.2); border-radius: 14px; margin-top: 16px; }
-        .team-code-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #a0a0c0; margin-bottom: 12px; }
-        .team-code-box { display: flex; align-items: center; gap: 12px; background: rgba(0, 0, 0, 0.4); padding: 16px 20px; border-radius: 12px; border: 1px solid rgba(255, 45, 85, 0.2); margin-bottom: 10px; }
-        .team-code-box code { flex: 1; font-family: 'Orbitron', monospace; font-size: 20px; color: #ff2d55; letter-spacing: 3px; text-shadow: 0 0 15px rgba(255, 45, 85, 0.3); }
-        .team-code-box button { background: rgba(255, 45, 85, 0.15); border: 1px solid rgba(255, 45, 85, 0.3); border-radius: 10px; padding: 10px 16px; color: #ff2d55; cursor: pointer; transition: all 0.3s; font-size: 16px; }
-        .team-code-box button:hover { background: rgba(255, 45, 85, 0.25); box-shadow: 0 0 20px rgba(255, 45, 85, 0.2); }
-        .team-code-hint { font-size: 12px; opacity: 0.6; color: #a0a0c0; }
-        .logout-section { text-align: center; margin-top: 30px; padding: 24px 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
-        .logout-btn-pro { display: inline-flex; align-items: center; gap: 12px; background: linear-gradient(135deg, rgba(255, 45, 85, 0.1), rgba(255, 45, 85, 0.05)); border: 1.5px solid rgba(255, 45, 85, 0.3); border-radius: 16px; color: #ff2d55; padding: 16px 40px; font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s; width: 100%; max-width: 300px; justify-content: center; }
-        .logout-btn-pro:hover { background: linear-gradient(135deg, rgba(255, 45, 85, 0.2), rgba(255, 45, 85, 0.1)); border-color: #ff2d55; box-shadow: 0 8px 30px rgba(255, 45, 85, 0.3); transform: translateY(-2px); }
-        .logout-btn-pro i { font-size: 16px; }
-        .loading { text-align: center; padding: 40px; opacity: 0.6; }
-        .loading i { font-size: 32px; color: #ff2d55; animation: spin 1s linear infinite; }
-        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.main-content { padding-bottom: 80px; }
-.form-header { position: relative; }
-.close-btn { position: absolute; top: 20px; right: 20px; width: 36px; height: 36px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15); border-radius: 50%; color: #e8e8e8; font-size: 18px; display: flex; align-items: center; justify-content: center; text-decoration: none; transition: all 0.3s; z-index: 10; }
-#profil-content { display: none; }
-.btn-mt { margin-top: 15px; }
-.team-empty-icon { font-size: 32px; color: #ff2d55; margin-bottom: 12px; display: block; }
+.team-code-display { text-align: center; padding: 20px; background: rgba(0, 0, 0, 0.2); border-radius: 14px; margin-top: 16px; }
+.team-code-label { font-size: 12px; text-transform: uppercase; letter-spacing: 2px; color: #a0a0c0; margin-bottom: 12px; }
+.team-code-box { display: flex; align-items: center; gap: 12px; background: rgba(0, 0, 0, 0.4); padding: 16px 20px; border-radius: 12px; border: 1px solid rgba(255, 45, 85, 0.2); margin-bottom: 10px; }
+.team-code-box code { flex: 1; font-family: 'Orbitron', monospace; font-size: 20px; color: #ff2d55; letter-spacing: 3px; text-shadow: 0 0 15px rgba(255, 45, 85, 0.3); }
+.team-code-box button { background: rgba(255, 45, 85, 0.15); border: 1px solid rgba(255, 45, 85, 0.3); border-radius: 10px; padding: 10px 16px; color: #ff2d55; cursor: pointer; transition: all 0.3s; font-size: 16px; }
+.team-code-box button:hover { background: rgba(255, 45, 85, 0.25); box-shadow: 0 0 20px rgba(255, 45, 85, 0.2); }
+.team-code-hint { font-size: 12px; opacity: 0.6; color: #a0a0c0; }
+.logout-section { text-align: center; margin-top: 30px; padding: 24px 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+.logout-btn-pro {
+    display: inline-flex; align-items: center; gap: 12px;
+    background: linear-gradient(135deg, rgba(255, 45, 85, 0.1), rgba(255, 45, 85, 0.05));
+    border: 1.5px solid rgba(255, 45, 85, 0.3); border-radius: 16px; color: #ff2d55;
+    padding: 16px 40px; font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.3s;
+    width: 100%; max-width: 300px; justify-content: center;
+}
+.logout-btn-pro:hover { background: linear-gradient(135deg, rgba(255, 45, 85, 0.2), rgba(255, 45, 85, 0.1)); border-color: #ff2d55; box-shadow: 0 8px 30px rgba(255, 45, 85, 0.3); transform: translateY(-2px); }
+.logout-btn-pro i { font-size: 16px; }
+.loading { text-align: center; padding: 40px; opacity: 0.6; }
+.loading i { font-size: 32px; color: #ff2d55; animation: spin 1s linear infinite; }
+
+/* ===================== RESPONSIVE PROFIL ===================== */
+@media (max-width: 480px) {
+    .profile-card { flex-direction: column; text-align: center; gap: 18px; }
+    .profile-avatar { width: 64px; height: 64px; font-size: 30px; }
+}

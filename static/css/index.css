@@ -1,227 +1,234 @@
-<!DOCTYPE html>
-<html lang="tk">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PUBG Mobile Turnir 2026 - Turkmenistan">
-    <title>PUBG Turnir 2026</title>
-    <link rel="stylesheet" href="/static/css/base.css?v=1.0.1">
-    <link rel="stylesheet" href="/static/css/index.css?v=1.0.1">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-</head>
-<body>
-    <div class="bg-animation">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-
-    <div class="toast-notification" id="lobi-toast">
-        <i class="fas fa-info-circle"></i> Siz entek turnira gatnaşmadynyz!
-    </div>
-
-    <header class="top-nav">
-        <div class="nav-container">
-            <div class="nav-left">
-                <div class="logo">
-                    <span class="logo-icon"><i class="fas fa-gamepad"></i></span>
-                    <div class="logo-text">
-                        <span class="logo-title">PUBG</span>
-                        <span class="logo-subtitle">TURNİR</span>
-                    </div>
-                </div>
-            </div>
-            <div class="nav-right" id="nav-buttons">
-                <button class="btn-nav-primary nav-btn-hidden" id="btn-kayit" onclick="openAuthModal()">REGISTRASYA</button>
-                <a href="./profil.html" class="btn-nav-primary nav-btn-hidden" id="btn-profil"><i class="fas fa-user"></i></a>
-            </div>
-        </div>
-    </header>
-
-    <div class="container main-content" style="padding-bottom: 80px;">
-        <section class="hero-section">
-            <div class="hero-icon"><i class="fas fa-gamepad"></i></div>
-            <h1 class="hero-title">PUBG MOBILE</h1>
-            <h2 class="hero-subtitle">TURNİR</h2>
-            <p class="hero-desc">Hakyky oyuncular gatnasya!</p>
-        </section>
-
-        <section class="counter-section">
-            <div class="counter-header">
-                <div class="counter-left">
-                    <span class="counter-label">GATNASYJY SANY</span>
-                    <div class="counter-value">
-                        <span id="current-count">0</span>
-                        <span class="counter-total">/ <span id="yer-sany">100</span></span>
-                    </div>
-                </div>
-                <div class="counter-right">
-                    <span class="counter-label">GALAN YER</span>
-                    <div class="counter-value-remaining" id="remaining-count">0</div>
-                </div>
-            </div>
-            <div class="progress-bar-container">
-                <div class="progress-bar" id="progress-bar" style="width: 0%"></div>
-            </div>
-            <div class="counter-alert" id="counter-alert">
-                Maglumatlar ýüklenýär...
-            </div>
-        </section>
-        
-        <section class="categories-section">
-            <h2 class="section-title">KATEGORIYALAR</h2>
-            <div class="categories-grid">
-                <button class="category-card" onclick="checkLobiAccess()" type="button">
-                    <div class="category-icon"><i class="fas fa-users"></i></div>
-                    <div class="category-info"><h3>Lobi Gur</h3><p>Dostlaryn bilen lobi gur</p></div>
-                    <span class="category-arrow"><i class="fas fa-chevron-right"></i></span>
-                </button>
-                <button class="category-card" onclick="showSection('turnir')" type="button">
-                    <div class="category-icon"><i class="fas fa-calendar-alt"></i></div>
-                    <div class="category-info"><h3>Turnir Maglumatlary</h3><p>Sene, wagt, karta</p></div>
-                    <span class="category-arrow"><i class="fas fa-chevron-right"></i></span>
-                </button>
-                <button class="category-card" onclick="showSection('bayrak')" type="button">
-                    <div class="category-icon"><i class="fas fa-trophy"></i></div>
-                    <div class="category-info"><h3>Bayraklar</h3><p>Yenijilere karasyan bayraklar</p></div>
-                    <span class="category-arrow"><i class="fas fa-chevron-right"></i></span>
-                </button>
-                <button class="category-card" onclick="showSection('duzgun')" type="button">
-                    <div class="category-icon"><i class="fas fa-clipboard-list"></i></div>
-                    <div class="category-info"><h3>Duzgunler</h3><p>Turnir duzgunleri</p></div>
-                    <span class="category-arrow"><i class="fas fa-chevron-right"></i></span>
-                </button>
-            </div>
-        </section>
-        
-        <section class="info-section" id="section-turnir" style="display:none;">
-            <h2 class="section-title">TURNIR MAGLUMATLARY</h2>
-            <div id="turnir-content">
-                <div class="no-tournament-info">
-                    <i class="fas fa-calendar-times"></i>
-                    <p>Siz entek haýsydyr bir turnira gatnaşmadynyz.</p>
-                    <p>Turnirler bölüminden gatnaşmak isleýän turniriňizi saýlaň!</p>
-                    <a href="./turnir.html" class="btn-primary" style="margin-top: 20px; display: inline-block; width: auto; padding: 14px 32px;">
-                        <i class="fas fa-trophy"></i> TURNIRLERI GORMEK
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section class="prizes-section" id="section-bayrak" style="display:none;">
-            <h2 class="section-title">BAYRAKLAR</h2>
-            <div id="bayrak-content">
-                <div class="no-tournament-info">
-                    <i class="fas fa-trophy"></i>
-                    <p>Bayraklar gatnaşan turniriňize görä görkeziler.</p>
-                    <p>Ilki bilen bir turnira gatnaşyň!</p>
-                </div>
-            </div>
-        </section>
-
-        <section class="rules-section" id="section-duzgun" style="display:none;">
-            <h2 class="section-title">DUZGUNLER</h2>
-            <div class="rules-list">
-                <div class="rule-item"><span class="rule-number">1</span><p>Gatnasyk tolegi <span id="rule-tolek">5 Manat</span> (TMCell 0804 arkaly)</p></div>
-                <div class="rule-item"><span class="rule-number">2</span><p>Her topar 4 kisiden ybarat bolmaly</p></div>
-                <div class="rule-item"><span class="rule-number">3</span><p>Emulator we mobil oyuncylar ayratyn kategoriyada</p></div>
-                <div class="rule-item"><span class="rule-number">4</span><p>Hile we 3-nji tarap programmalar gadagan</p></div>
-                <div class="rule-item"><span class="rule-number">5</span><p>Turnir wagtynda cykan oyuncylar diskwalifisasiya ediler</p></div>
-            </div>
-        </section>
-
-        <footer class="main-footer">
-            <p>2026 PUBG Turnir | Ahli hukuklar goralan</p>
-            <p class="footer-location">Turkmenistan</p>
-        </footer>
-    </div>
-
-    <nav class="bottom-nav">
-        <div class="bottom-nav-container">
-            <a href="./index.html" class="bottom-nav-item active">
-                <i class="fas fa-home"></i>
-                <span>Esasy</span>
-            </a>
-            <a href="./turnir.html" class="bottom-nav-item">
-                <i class="fas fa-trophy"></i>
-                <span>Turnir</span>
-            </a>
-            <a href="./magazyn.html" class="bottom-nav-item">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Magazyn</span>
-            </a>
-            <a href="./menyu.html" class="bottom-nav-item">
-                <i class="fas fa-bars"></i>
-                <span>Menýu</span>
-            </a>
-        </div>
-    </nav>
-    
-    <div class="auth-modal-overlay" id="auth-modal">
-        <div class="auth-modal">
-            <button class="auth-modal-close" onclick="closeAuthModal()" type="button">
-                <i class="fas fa-times"></i>
-            </button>
-
-            <div class="auth-modal-header">
-                <h2>PUBG TURNIR</h2>
-                <p>Hakygy oýunçylar gatnaşýa!</p>
-            </div>
-
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="showAuthTab('login', this)" type="button">GIRIS</button>
-                <button class="auth-tab" onclick="showAuthTab('register', this)" type="button">REGISTRASYA</button>
-            </div>
-
-            <div id="auth-tab-login" class="auth-tab-content active">
-                <form id="login-form" class="auth-form" novalidate>
-                    <div class="auth-input-group">
-                        <label><i class="fas fa-mobile-alt"></i> Telefon Nomeri</label>
-                        <input type="tel" id="login-telefon" placeholder="+993 XX XXX XXX" required maxlength="20" autocomplete="tel">
-                    </div>
-                    <div class="auth-input-group">
-                        <label><i class="fas fa-key"></i> Parol</label>
-                        <input type="password" id="login-parol" placeholder="Parolyňyz" required minlength="6" autocomplete="current-password">
-                    </div>
-                    <div class="auth-error" id="login-error"></div>
-                    <button type="submit" class="auth-submit-btn" id="login-submit-btn">
-                        <span class="btn-text">GIR</span>
-                    </button>
-                </form>
-            </div>
-
-            <div id="auth-tab-register" class="auth-tab-content">
-                <form id="register-form" class="auth-form" novalidate>
-                    <div class="auth-input-group">
-                        <label><i class="fas fa-user"></i> Adynyz</label>
-                        <input type="text" id="reg-ad" placeholder="Adynyz" required minlength="2" maxlength="100" autocomplete="name">
-                    </div>
-                    <div class="auth-input-group">
-                        <label><i class="fas fa-mobile-alt"></i> Telefon Nomeri</label>
-                        <input type="tel" id="reg-telefon" placeholder="+993 XX XXX XXX" required maxlength="20" autocomplete="tel">
-                    </div>
-                    <div class="auth-input-group">
-                        <label><i class="fas fa-key"></i> Parol</label>
-                        <input type="password" id="reg-parol" placeholder="Parol duzun (minimum 6)" required minlength="6" maxlength="100" autocomplete="new-password">
-                    </div>
-                    <div class="auth-input-group">
-                        <label><i class="fas fa-key"></i> Paroly Tassykla</label>
-                        <input type="password" id="reg-parol-tekrar" placeholder="Paroly gaytalan" required minlength="6" maxlength="100" autocomplete="new-password">
-                    </div>
-                    <div class="auth-error" id="register-error"></div>
-                    <button type="submit" class="auth-submit-btn" id="register-submit-btn">
-                        <span class="btn-text">REGISTRASYA</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
-
-    
-    <script src="/static/js/index.js?v=1.0.1"></script>
-</body>
-</html>
+.auth-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: flex-end;
+            padding: 0;
+        }
+        .auth-modal-overlay.active {
+            display: flex;
+        }
+        .auth-modal {
+            background: linear-gradient(135deg, #12121a, #0d0d15);
+            border-radius: 24px 24px 0 0;
+            width: 100%;
+            max-width: 480px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 45, 85, 0.2);
+            border-bottom: none;
+            box-shadow: 0 -10px 50px rgba(0, 0, 0, 0.5);
+            animation: modalSlideUp 0.3s ease;
+            position: relative;
+        }
+        @keyframes modalSlideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .auth-modal-close {
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            color: #e8e8e8;
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            z-index: 10;
+        }
+        .auth-modal-close:hover {
+            background: rgba(255, 45, 85, 0.2);
+            border-color: rgba(255, 45, 85, 0.4);
+            color: #ff2d55;
+            transform: rotate(90deg);
+        }
+        .auth-modal-header {
+            text-align: center;
+            padding: 32px 24px 16px;
+        }
+        .auth-modal-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 22px;
+            font-weight: 900;
+            color: #ff2d55;
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+        .auth-modal-header p {
+            font-size: 14px;
+            opacity: 0.6;
+            color: #a0a0c0;
+        }
+        .auth-tabs {
+            display: flex;
+            gap: 12px;
+            margin: 0 24px 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            padding: 6px;
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 14px;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+        .auth-tab.active {
+            background: linear-gradient(135deg, #ff2d55, #ff6b35);
+            color: white;
+            box-shadow: 0 4px 20px rgba(255, 45, 85, 0.3);
+        }
+        .auth-tab-content {
+            display: none;
+            padding: 0 24px 24px;
+        }
+        .auth-tab-content.active {
+            display: block;
+            animation: fadeInUp 0.3s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .auth-input-group {
+            position: relative;
+        }
+        .auth-input-group label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ff2d55;
+        }
+        .auth-input-group input {
+            width: 100%;
+            padding: 18px 20px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: #e8e8e8;
+            font-size: 16px;
+            font-family: 'Rajdhani', sans-serif;
+            transition: all 0.3s;
+            outline: none;
+        }
+        .auth-input-group input:focus {
+            border-color: #ff2d55;
+            background: rgba(255, 45, 85, 0.08);
+        }
+        .auth-input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .auth-submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff2d55, #ff6b35);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            font-size: 15px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(255, 45, 85, 0.4);
+            transition: all 0.3s;
+            margin-top: 8px;
+        }
+        .auth-submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255, 45, 85, 0.5);
+        }
+        .auth-submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .auth-error {
+            color: #ff2d55;
+            font-size: 13px;
+            text-align: center;
+            display: none;
+        }
+        .auth-error.show {
+            display: block;
+        }
+        .category-card, .bottom-nav-item, button, a {
+            -webkit-tap-highlight-color: transparent !important;
+            -webkit-touch-callout: none !important;
+        }
+        .category-card:active, .bottom-nav-item:active, button:active, a:active {
+            background-color: transparent !important;
+            -webkit-tap-highlight-color: transparent !important;
+        }
+        .nav-btn-hidden {
+            display: none !important;
+        }
+        .toast-notification {
+            position: fixed;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: linear-gradient(135deg, rgba(255, 45, 85, 0.9), rgba(255, 107, 53, 0.9));
+            color: white;
+            padding: 16px 24px;
+            border-radius: 14px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 8px 30px rgba(255, 45, 85, 0.4);
+            max-width: 90%;
+            text-align: center;
+        }
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        .no-tournament-info {
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0.6;
+        }
+        .no-tournament-info i {
+            font-size: 48px;
+            color: #ff2d55;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }

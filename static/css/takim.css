@@ -1,0 +1,49 @@
+/* ===================== TEAM TABS ===================== */
+.team-tabs { display: flex; gap: 12px; margin-bottom: 24px; }
+.tab-btn {
+    flex: 1; padding: 14px; background: rgba(255, 255, 255, 0.04); border: 2px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px; color: #e8e8e8; font-family: 'Rajdhani', sans-serif; font-weight: 700; font-size: 14px;
+    cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); letter-spacing: 1px;
+}
+.tab-btn.active { background: linear-gradient(135deg, #ff2d55, #ff6b35); border-color: #ff2d55; box-shadow: 0 4px 20px rgba(255, 45, 85, 0.3); }
+.tab-btn:hover:not(.active) { border-color: rgba(255, 45, 85, 0.4); background: rgba(255, 45, 85, 0.05); }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeInUp 0.4s ease; }
+
+.team-form {
+    background: rgba(255, 255, 255, 0.02); border-radius: 20px; padding: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.06); backdrop-filter: blur(10px);
+}
+.team-preview {
+    background: rgba(255, 215, 0, 0.04); border-radius: 14px; padding: 18px; margin-bottom: 18px;
+    border: 1px solid rgba(255, 215, 0, 0.15); position: relative; overflow: hidden;
+}
+.team-preview h4 { font-size: 14px; color: #ffd700; margin-bottom: 6px; font-weight: 700; }
+.team-preview p { font-size: 14px; opacity: 0.85; color: #c0c0d0; }
+.team-info-box {
+    background: rgba(255, 45, 85, 0.04); border-radius: 14px; padding: 18px; margin-bottom: 24px;
+    border: 1px solid rgba(255, 45, 85, 0.15);
+}
+.team-info-box p { font-size: 13px; opacity: 0.85; margin-bottom: 8px; color: #c0c0d0; }
+.team-info-box p:last-child { margin-bottom: 0; }
+
+/* ===================== PENDING SCREEN ===================== */
+.pending-screen { min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px 20px; }
+.pending-icon { font-size: 80px; color: #ff8c00; margin-bottom: 24px; filter: drop-shadow(0 0 20px rgba(255, 140, 0, 0.4)); animation: pulse 2s infinite; }
+.pending-title { font-family: 'Orbitron', sans-serif; font-size: 22px; color: #ff8c00; margin-bottom: 12px; letter-spacing: 3px; text-shadow: 0 0 15px rgba(255, 140, 0, 0.3); }
+.pending-text { font-size: 16px; opacity: 0.8; color: #c0c0d0; margin-bottom: 8px; }
+.pending-subtext { font-size: 13px; opacity: 0.5; color: #a0a0c0; margin-bottom: 28px; }
+
+/* ===================== LOADING ===================== */
+.loading-box { text-align: center; padding: 60px 20px; }
+.loading-box i { font-size: 32px; color: #ff2d55; animation: spin 1s linear infinite; }
+/* ===================== BOTTOM NAV ===================== */
+.bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; background: rgba(10, 10, 15, 0.95); backdrop-filter: blur(20px); border-top: 1px solid rgba(255, 45, 85, 0.15); padding: 8px 0 12px; }
+.bottom-nav-container { max-width: 480px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; }
+.bottom-nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 10px; font-family: 'Rajdhani', sans-serif; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s; padding: 4px 12px; border-radius: 12px; }
+.bottom-nav-item i { font-size: 20px; }
+.bottom-nav-item.active { color: #ff2d55; }
+
+/* ===================== KEYFRAMES ===================== */
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }

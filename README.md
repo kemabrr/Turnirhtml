@@ -1,2 +1,0 @@
-# Turnirhtml
-Cloudflare

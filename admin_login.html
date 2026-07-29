@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Admin - PUBG Turnuvasy</title>
-    <link rel="stylesheet" href="/static/css/base.css">
-    <link rel="stylesheet" href="/static/css/admin.css">
+    <link rel="stylesheet" href="/static/css/base.css?v=1.0.1">
+    <link rel="stylesheet" href="/static/css/admin.css?v=1.0.1">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -34,62 +34,7 @@
         </div>
     </div>
 
-    <script>
-        const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND URL-iňiz bilen çalyň
-        const ADMIN_PANEL_URL = './admin_panel.html'; // Admin panel URL-si
-
-        document.getElementById('admin-login-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
-            const sifre = document.getElementById('sifre').value;
-            if (sifre.length < 6) {
-                alert('Parol 6 harpdan uly bolmaly!');
-                return;
-            }
-
-            const btn = document.getElementById('login-btn');
-            const btnText = btn.querySelector('.btn-text');
-            btnText.textContent = 'Girilyar...';
-            btn.disabled = true;
-
-            try {
-                const response = await fetch(API_URL + '/api/admin-login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ sifre: sifre })
-                });
-
-                if (response.status === 429) {
-                    alert('Gaty kop synanyshyk! 1 minut garashyn.');
-                    btnText.textContent = 'GIR';
-                    btn.disabled = false;
-                    return;
-                }
-
-                // DÜZELDI: Hata mesajını düzgün oku
-                if (!response.ok) {
-                    let errMsg = 'Server yalnyslygy: ' + response.status;
-                    try {
-                        const errData = await response.json();
-                        errMsg = errData.detail || errData.message || errMsg;
-                    } catch(e) {}
-                    throw new Error(errMsg);
-                }
-
-                const result = await response.json();
-                if (result.success && result.data && result.data.access_token) {
-                    localStorage.setItem('pubg_admin_token', result.data.access_token);
-                    window.location.href = ADMIN_PANEL_URL;
-                } else {
-                    alert(result.message || 'Parol nadogry!');
-                    btnText.textContent = 'GIR';
-                    btn.disabled = false;
-                }
-            } catch (error) {
-                alert('Yalnyslyk: ' + error.message);
-                btnText.textContent = 'GIR';
-                btn.disabled = false;
-            }
-        });
-    </script>
+    
+    <script src="/static/js/admin_login.js?v=1.0.1"></script>
 </body>
 </html>

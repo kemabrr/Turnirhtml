@@ -5,38 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="PUBG Mobile Turnir 2026 - Turkmenistan">
     <title>PUBG Turnir 2026</title>
-    <style>
-        /* === BASE STYLES (from missing base.css) === */
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        body{background:#0a0a12;color:#e8e8e8;font-family:'Rajdhani',sans-serif;min-height:100vh;overflow-x:hidden}
-        .bg-animation{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;overflow:hidden}
-        .particle{position:absolute;width:4px;height:4px;background:rgba(255,45,85,0.4);border-radius:50%;animation:float 15s infinite}
-        @keyframes float{0%,100%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-10vh) rotate(720deg);opacity:0}}
-        .top-nav{position:fixed;top:0;left:0;width:100%;z-index:100;background:rgba(10,10,18,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,45,85,0.1)}
-        .nav-container{max-width:480px;margin:0 auto;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
-        .logo{display:flex;align-items:center;gap:12px}
-        .logo-icon{font-size:28px;color:#ff2d55;filter:drop-shadow(0 0 15px rgba(255,45,85,0.5))}
-        .logo-text{display:flex;flex-direction:column}
-        .logo-title{font-family:'Orbitron',sans-serif;font-size:18px;font-weight:900;color:#ff2d55;letter-spacing:2px}
-        .logo-subtitle{font-family:'Orbitron',sans-serif;font-size:10px;color:#0096ff;letter-spacing:4px}
-        .btn-nav-primary{padding:10px 20px;background:linear-gradient(135deg,#ff2d55,#ff6b35);border:none;border-radius:12px;color:#fff;font-family:'Orbitron',sans-serif;font-weight:700;font-size:11px;cursor:pointer;letter-spacing:2px;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
-        .container{max-width:480px;margin:0 auto;padding:0 20px}
-        .main-content{padding-top:80px}
-        .bottom-nav{position:fixed;bottom:0;left:0;width:100%;background:rgba(10,10,18,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,45,85,0.1);z-index:100}
-        .bottom-nav-container{max-width:480px;margin:0 auto;display:flex;justify-content:space-around;padding:8px 0}
-        .bottom-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px;color:rgba(255,255,255,0.5);text-decoration:none;font-size:10px;transition:all .3s}
-        .bottom-nav-item.active{color:#ff2d55}
-        .bottom-nav-item i{font-size:20px}
-        @keyframes icon-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-        @keyframes gradient-shift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-        @keyframes progress-shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
-        @keyframes pulse-glow{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.5}50%{transform:translate(-50%,-50%) scale(1.2);opacity:1}}
-        @keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes shimmer{0%{left:-100%}100%{left:100%}}
-    </style>
-    <link rel="stylesheet" href="/static/css/index.css?v=1.0.1">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/index.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
 </head>
 <body>
     <div class="bg-animation">
@@ -98,16 +72,10 @@
                 Maglumatlar ýüklenýär...
             </div>
         </section>
-
+        
         <section class="categories-section">
             <h2 class="section-title">KATEGORIYALAR</h2>
             <div class="categories-grid">
-                <button class="category-card" onclick="openLobiModal()" type="button">
-                    <div class="category-icon"><i class="fas fa-key"></i></div>
-                    <div class="category-info"><h3>PUBG Lobi Kody</h3><p>Turnir lobi kody we kanallar</p></div>
-                    <span class="category-arrow"><i class="fas fa-chevron-right"></i></span>
-                </button>
-
                 <button class="category-card" onclick="checkLobiAccess()" type="button">
                     <div class="category-icon"><i class="fas fa-users"></i></div>
                     <div class="category-info"><h3>Lobi Gur</h3><p>Dostlaryn bilen lobi gur</p></div>
@@ -130,7 +98,7 @@
                 </button>
             </div>
         </section>
-
+        
         <section class="info-section" id="section-turnir" style="display:none;">
             <h2 class="section-title">TURNIR MAGLUMATLARY</h2>
             <div id="turnir-content">
@@ -193,8 +161,7 @@
             </a>
         </div>
     </nav>
-
-    <!-- AUTH MODAL -->
+    
     <div class="auth-modal-overlay" id="auth-modal">
         <div class="auth-modal">
             <button class="auth-modal-close" onclick="closeAuthModal()" type="button">
@@ -255,25 +222,390 @@
         </div>
     </div>
 
-    <!-- LOBI KODY MODAL -->
-    <div class="auth-modal-overlay" id="lobi-modal">
-        <div class="auth-modal">
-            <button class="auth-modal-close" onclick="closeLobiModal()" type="button">
-                <i class="fas fa-times"></i>
-            </button>
-            <div class="auth-modal-header">
-                <h2>PUBG LOBI KODY</h2>
-                <p>Turnire gatnaşyk kody</p>
-            </div>
-            <div id="lobi-content" style="padding: 0 24px 24px;">
-                <div style="text-align:center;padding:20px;">
-                    <i class="fas fa-spinner fa-spin" style="color:#ff2d55;"></i>
-                    <p>Yuklenyar...</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        // ===================== CONFIG =====================
+        const API_URL = 'https://web-production-413a9.up.railway.app'; // BUNI ÖZ BACKEND URL-iňiz bilen çalyň
 
-    <script src="/static/js/index.js?v=1.0.1"></script>
+        // ===================== HELPERS =====================
+        function getToken() {
+            return localStorage.getItem('pubg_token');
+        }
+
+        function setToken(token) {
+            localStorage.setItem('pubg_token', token);
+        }
+
+        function removeToken() {
+            localStorage.removeItem('pubg_token');
+        }
+
+        function getAuthHeaders() {
+            const token = getToken();
+            return {
+                'Content-Type': 'application/json',
+                ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+            };
+        }
+
+        async function apiGet(endpoint) {
+            const res = await fetch(API_URL + endpoint, { headers: getAuthHeaders() });
+            return res.json();
+        }
+
+        async function apiPost(endpoint, body) {
+            const res = await fetch(API_URL + endpoint, {
+                method: 'POST',
+                headers: getAuthHeaders(),
+                body: JSON.stringify(body)
+            });
+            return res.json();
+        }
+
+        // ===================== AUTH =====================
+        let isUserLoggedIn = false;
+        let userTurnirId = null;
+
+        async function checkLoginStatus() {
+            try {
+                const result = await apiGet('/api/katilimci/me');
+                if (result.success && result.katilimci) {
+                    isUserLoggedIn = true;
+                    userTurnirId = result.katilimci.turnir_id || null;
+                    updateNavButtons();
+                    return true;
+                }
+            } catch (e) {}
+            isUserLoggedIn = false;
+            updateNavButtons();
+            return false;
+        }
+
+        function updateNavButtons() {
+            const btnKayit = document.getElementById('btn-kayit');
+            const btnProfil = document.getElementById('btn-profil');
+            if (!btnKayit || !btnProfil) return;
+            btnKayit.classList.remove('nav-btn-hidden');
+            btnProfil.classList.remove('nav-btn-hidden');
+            if (isUserLoggedIn) {
+                btnKayit.style.display = 'none';
+                btnProfil.style.display = 'inline-flex';
+            } else {
+                btnKayit.style.display = 'inline-block';
+                btnProfil.style.display = 'none';
+            }
+        }
+
+        function openAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+
+        function closeAuthModal() {
+            const modal = document.getElementById('auth-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+            const loginForm = document.getElementById('login-form');
+            const regForm = document.getElementById('register-form');
+            if (loginForm) loginForm.reset();
+            if (regForm) regForm.reset();
+            const loginError = document.getElementById('login-error');
+            const regError = document.getElementById('register-error');
+            if (loginError) loginError.classList.remove('show');
+            if (regError) regError.classList.remove('show');
+        }
+
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('auth-modal');
+            if (e.target === modal) closeAuthModal();
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeAuthModal();
+        });
+
+        function showAuthTab(tab, btn) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-tab-content').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('auth-tab-' + tab).classList.add('active');
+        }
+
+        function checkLobiAccess() {
+            if (!isUserLoggedIn) {
+                openAuthModal();
+                return;
+            }
+            if (!userTurnirId) {
+                const toast = document.getElementById('lobi-toast');
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+                return;
+            }
+            window.location.href = './takim.html';
+        }
+
+        function showSection(section) {
+            ['turnir', 'bayrak', 'duzgun'].forEach(s => {
+                const el = document.getElementById('section-' + s);
+                if (el) el.style.display = 'none';
+            });
+            const target = document.getElementById('section-' + section);
+            if (target) {
+                target.style.display = 'block';
+                target.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // ===================== DATA LOADING =====================
+        async function loadStats() {
+            try {
+                const result = await apiGet('/api/stats');
+                if (result.success) {
+                    const s = result.stats;
+                    document.getElementById('current-count').textContent = s.onaylanan;
+                    document.getElementById('yer-sany').textContent = s.yer_sany;
+                    document.getElementById('remaining-count').textContent = s.galan;
+                    const pct = s.yer_sany > 0 ? (s.onaylanan / s.yer_sany * 100) : 0;
+                    document.getElementById('progress-bar').style.width = pct + '%';
+                    
+                    const alertEl = document.getElementById('counter-alert');
+                    if (s.yer_sany > 0 && s.onaylanan >= s.yer_sany) {
+                        alertEl.textContent = 'TURNIR BASLADY! Ahli yerler doldu!';
+                    } else if (s.yer_sany > 0) {
+                        alertEl.textContent = s.yer_sany + ' gatnasyja yetende turnir baslar! Galan: ' + s.galan + ' yer';
+                    } else {
+                        alertEl.textContent = 'Yer sany bellenilmedi.';
+                    }
+                }
+            } catch (e) { console.error('Stats yuklenmedi:', e); }
+        }
+
+        async function loadTurnirData() {
+            try {
+                const result = await apiGet('/api/turnir-data');
+                if (result.success && result.turnir) {
+                    const t = result.turnir;
+                    document.getElementById('rule-tolek').textContent = t.tolek || '5 Manat';
+                }
+            } catch (e) {}
+        }
+
+        async function loadUserTurnir() {
+            if (!isUserLoggedIn || !userTurnirId) return;
+            try {
+                const [turnirRes, bayrakRes] = await Promise.all([
+                    apiGet('/api/turnir-data?turnir_id=' + userTurnirId),
+                    apiGet('/api/bayraklar?turnir_id=' + userTurnirId)
+                ]);
+                
+                if (turnirRes.success && turnirRes.turnir) {
+                    const t = turnirRes.turnir;
+                    document.getElementById('turnir-content').innerHTML = `
+                        <div class="info-list">
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-trophy"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Turnir</span>
+                                    <span class="info-value">${escapeHtml(t.ad)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-calendar"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Senesi</span>
+                                    <span class="info-value">${escapeHtml(t.senesi)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-clock"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Wagty</span>
+                                    <span class="info-value">${escapeHtml(t.wagty)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-map"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Karta</span>
+                                    <span class="info-value">${escapeHtml(t.karta)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-user"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Gatnaşyk</span>
+                                    <span class="info-value">${escapeHtml(t.gatnasym)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-money-bill-wave"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Toleg</span>
+                                    <span class="info-value highlight">${escapeHtml(t.tolek)}</span>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-icon"><i class="fas fa-mobile-alt"></i></span>
+                                <div class="info-content">
+                                    <span class="info-label">Toleg usuly</span>
+                                    <span class="info-value">${escapeHtml(t.tolek_usuly)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                if (bayrakRes.success && bayrakRes.bayraklar) {
+                    const b = bayrakRes.bayraklar;
+                    document.getElementById('bayrak-content').innerHTML = `
+                        <div class="prizes-grid">
+                            <div class="prize-card gold">
+                                <div class="prize-rank"><i class="fas fa-medal" style="color:#ffd700"></i></div>
+                                <div class="prize-info">
+                                    <h3>1-nji Orun</h3>
+                                    <p class="prize-amount">${escapeHtml(b.bir.mukdar)}</p>
+                                    <p class="prize-bonus">${escapeHtml(b.bir.bonus)}</p>
+                                </div>
+                            </div>
+                            <div class="prize-card silver">
+                                <div class="prize-rank"><i class="fas fa-medal" style="color:#c0c0c0"></i></div>
+                                <div class="prize-info">
+                                    <h3>2-nji Orun</h3>
+                                    <p class="prize-amount">${escapeHtml(b.iki.mukdar)}</p>
+                                </div>
+                            </div>
+                            <div class="prize-card bronze">
+                                <div class="prize-rank"><i class="fas fa-medal" style="color:#cd7f32"></i></div>
+                                <div class="prize-info">
+                                    <h3>3-nji Orun</h3>
+                                    <p class="prize-amount">${escapeHtml(b.uc.mukdar)}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prize-total">
+                            <span>JEMI BAYRAK:</span>
+                            <strong>${escapeHtml(b.jemi)}</strong>
+                        </div>
+                    `;
+                }
+            } catch (e) { console.error('User turnir yuklenmedi:', e); }
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // ===================== FORMS =====================
+        document.addEventListener('DOMContentLoaded', async function() {
+            await checkLoginStatus();
+            await loadStats();
+            await loadTurnirData();
+            await loadUserTurnir();
+
+            // Login form
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const telefon = document.getElementById('login-telefon').value.trim();
+                    const parol = document.getElementById('login-parol').value;
+                    const errorEl = document.getElementById('login-error');
+                    const btn = document.getElementById('login-submit-btn');
+
+                    if (!telefon || !parol) {
+                        errorEl.textContent = 'Telefon we parol girizin!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    btn.disabled = true;
+                    errorEl.classList.remove('show');
+                    try {
+                        const result = await apiPost('/api/login', { telefon, parol });
+                        if (result.success && result.data && result.data.access_token) {
+                            setToken(result.data.access_token);
+                            isUserLoggedIn = true;
+                            await checkLoginStatus();
+                            updateNavButtons();
+                            closeAuthModal();
+                            await loadUserTurnir();
+                            window.location.reload();
+                        } else {
+                            errorEl.textContent = result.message || 'Telefon ya-da parol nadogry!';
+                            errorEl.classList.add('show');
+                        }
+                    } catch (error) {
+                        errorEl.textContent = 'Yalnyslyk: ' + error.message;
+                        errorEl.classList.add('show');
+                    } finally {
+                        btn.disabled = false;
+                    }
+                });
+            }
+
+            // Register form
+            const registerForm = document.getElementById('register-form');
+            if (registerForm) {
+                registerForm.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const ad = document.getElementById('reg-ad').value.trim();
+                    const telefon = document.getElementById('reg-telefon').value.trim();
+                    const parol = document.getElementById('reg-parol').value;
+                    const parol_tekrar = document.getElementById('reg-parol-tekrar').value;
+                    const errorEl = document.getElementById('register-error');
+                    const btn = document.getElementById('register-submit-btn');
+
+                    if (!ad || !telefon || !parol) {
+                        errorEl.textContent = 'Ahli maglumatlary dolduryň!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    if (ad.length < 2) {
+                        errorEl.textContent = 'Ad 2 harpdan uly bolmaly!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    if (parol.length < 6) {
+                        errorEl.textContent = 'Parol 6 harpdan uly bolmaly!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    if (parol !== parol_tekrar) {
+                        errorEl.textContent = 'Parollar deň däl!';
+                        errorEl.classList.add('show');
+                        return;
+                    }
+                    btn.disabled = true;
+                    errorEl.classList.remove('show');
+                    try {
+                        const result = await apiPost('/api/kayit-ol', { ad, telefon, parol, parol_tekrar });
+                        if (result.success && result.data && result.data.access_token) {
+                            setToken(result.data.access_token);
+                            isUserLoggedIn = true;
+                            await checkLoginStatus();
+                            updateNavButtons();
+                            closeAuthModal();
+                            window.location.reload();
+                        } else {
+                            errorEl.textContent = result.message || 'Yalnyslyk yuze cykdy';
+                            errorEl.classList.add('show');
+                        }
+                    } catch (error) {
+                        errorEl.textContent = 'Yalnyslyk: ' + error.message;
+                        errorEl.classList.add('show');
+                    } finally {
+                        btn.disabled = false;
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

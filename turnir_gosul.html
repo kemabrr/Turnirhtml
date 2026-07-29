@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="tk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turnira Goşul - PUBG Turnuvasy</title>
+    <link rel="stylesheet" href="/static/css/base.css?v=1.0.1">
+    <link rel="stylesheet" href="/static/css/turnir_gosul.css?v=1.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container main-content">
+        <header class="form-header">
+            <a href="./turnir.html" class="back-btn"><i class="fas fa-arrow-left"></i> Yza</a>
+            <h1>TURNIRA GOŞUL</h1>
+            <p>Maglumatlaryňyzy dolduryň</p>
+        </header>
+
+        <div id="loading-area" class="loading-box">
+            <i class="fas fa-spinner"></i>
+            <p>Turnir maglumatlary yuklenyar...</p>
+        </div>
+
+        <!-- Eýýäm gatnaşan bolsa bu görkeziler -->
+        <div id="already-joined-area" style="display:none;">
+            <div class="tournament-summary" id="joined-tournament-summary"></div>
+            <div class="already-joined-box">
+                <i class="fas fa-check-circle"></i>
+                <h3>Siz eýýäm gatnaşdyňyz!</h3>
+                <p>Bu turnira eýýäm registrasiýa bolduňyz.</p>
+                <p id="joined-status-text" style="opacity:0.6; font-size:13px;"></p>
+                <button class="btn-submit" onclick="window.location.href='./turnir.html'" type="button">
+                    <span class="btn-text">TURNIRLERE YZARA</span>
+                </button>
+            </div>
+        </div>
+
+        <div id="content-area" style="display:none;">
+            <div class="tournament-summary" id="tournament-summary">
+                <!-- JS bilen doldurylar -->
+            </div>
+
+            <form id="join-tournament-form" class="join-form" novalidate>
+                <input type="hidden" id="turnir_id" value="">
+                <input type="hidden" id="turnir_tolekli" value="1">
+
+                <div class="form-group">
+                    <label for="pubg_id"><i class="fas fa-gamepad"></i> PUBG ID</label>
+                    <input type="text" id="pubg_id" placeholder="PUBG ID girizin (8-12 san)" required 
+                           minlength="8" maxlength="12" pattern="[0-9]{8,12}" autocomplete="off">
+                    <small class="form-hint">Oýundaky ID belginiz (8-12 sany san)</small>
+                </div>
+
+                <div class="form-group" id="payment-phone-group">
+                    <label for="payment_phone"><i class="fas fa-mobile-alt"></i> Toleg Telefon Belgisi</label>
+                    <input type="tel" id="payment_phone" placeholder="TMCell belginiz"
+                           maxlength="20" autocomplete="tel">
+                    <small class="form-hint">TMCell belginiz (toleg etmek üçin)</small>
+                </div>
+
+                <div class="payment-info-box" id="payment-info-box">
+                    <h4><i class="fas fa-info-circle"></i> Toleg Maglumatlary</h4>
+                    <p>Gatnasik tolegi: <strong id="info-tolek">-</strong></p>
+                    <p>Toleg usuly: <strong id="info-tolek-usuly">-</strong></p>
+                    <p>Toleg etjek belgi: <strong id="display-phone">-</strong></p>
+                </div>
+
+                <button type="submit" class="btn-submit" id="submit-btn">
+                    <span class="btn-text">TÖLEGE GIT</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <div class="bottom-nav-container">
+            <a href="./index.html" class="bottom-nav-item">
+                <i class="fas fa-home"></i>
+                <span>Esasy</span>
+            </a>
+            <a href="./turnir.html" class="bottom-nav-item active">
+                <i class="fas fa-trophy"></i>
+                <span>Turnir</span>
+            </a>
+            <a href="./magazyn.html" class="bottom-nav-item">
+                <i class="fas fa-shopping-cart"></i>
+                <span>Magazyn</span>
+            </a>
+            <a href="./menyu.html" class="bottom-nav-item">
+                <i class="fas fa-bars"></i>
+                <span>Menýu</span>
+            </a>
+        </div>
+    </nav>
+
+    
+    <script src="/static/js/turnir_gosul.js?v=1.0.1"></script>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="tk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Panel - PUBG Turnuvasy</title>
+    <link rel="stylesheet" href="/static/css/base.css?v=1.0.1">
+    <link rel="stylesheet" href="/static/css/admin.css?v=1.0.1">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    <div class="container main-content">
+        <header class="admin-header">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h1>Admin Panel</h1>
+                <button type="button" class="admin-logout-btn" onclick="adminLogout()">Cykys</button>
+            </div>
+            <div class="admin-stats">
+                <div class="stat-box"><span>Toplam</span><strong id="stat-toplam">0</strong></div>
+                <div class="stat-box"><span>Toleg Eden</span><strong id="stat-odeme">0</strong></div>
+                <div class="stat-box"><span>Onaylanan</span><strong id="stat-onay">0</strong></div>
+            </div>
+        </header>
+
+        <div class="admin-tabs">
+            <button class="admin-tab-btn active" onclick="showAdminTab('turnir', this)" type="button"><i class="fas fa-calendar-alt"></i> Turnirler</button>
+            <button class="admin-tab-btn" onclick="showAdminTab('katilimci', this)" type="button"><i class="fas fa-users"></i> Katylymcylar</button>
+            <button class="admin-tab-btn" onclick="showAdminTab('topar', this)" type="button"><i class="fas fa-trophy"></i> Toparlar</button>
+        </div>
+
+        <div id="tab-turnir" class="admin-tab-content active">
+            <section class="admin-section">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+                    <h2>Turnirler</h2>
+                    <button class="btn-submit" onclick="openTurnirModal()" type="button" style="width:auto; padding:12px 24px; font-size:12px;">
+                        <i class="fas fa-plus"></i> TÄZE TURNIR
+                    </button>
+                </div>
+                <div id="turnir-list-container">
+                    <div class="loading-box"><i class="fas fa-spinner"></i><p>Yuklenyar...</p></div>
+                </div>
+            </section>
+        </div>
+
+        <div id="tab-katilimci" class="admin-tab-content">
+            <section class="admin-section">
+                <h2>Katylymcylar</h2>
+                <div class="table-responsive">
+                    <table class="admin-table">
+                        <thead><tr><th>Ref. Kod</th><th>Ad</th><th>PUBG ID</th><th>Telefon</th><th>Turnir</th><th>Toleg</th><th>Onay</th><th>Islem</th></tr></thead>
+                        <tbody id="katilimci-tbody">
+                            <tr><td colspan="8" style="text-align:center;">Yuklenyar...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <div id="tab-topar" class="admin-tab-content">
+            <section class="admin-section">
+                <h2>Toparlar</h2>
+                <div class="teams-grid" id="teams-grid-container">
+                    <p style="text-align:center; opacity:0.6; padding:40px 0;">Yuklenyar...</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="admin-modal" id="turnir-modal">
+        <div class="admin-modal-content">
+            <div class="admin-modal-header">
+                <h3 id="modal-title">Täze Turnir</h3>
+                <button class="modal-close-btn" onclick="closeTurnirModal()" type="button"><i class="fas fa-times"></i></button>
+            </div>
+            <form id="turnir-form" class="ayar-form" style="padding:0; border:none; background:none;">
+                <input type="hidden" id="modal-turnir-id" value="">
+
+                <div class="ayar-group">
+                    <label>Turnir Ady</label>
+                    <input type="text" id="turnir-ad" placeholder="Mysal: PUBG MOBILE SQUAD" required>
+                </div>
+                <div class="ayar-group">
+                    <label>Senesi</label>
+                    <input type="text" id="turnir-senesi" placeholder="Mysal: 25 Iýul 2026" required>
+                </div>
+                <div class="ayar-group">
+                    <label>Wagty</label>
+                    <input type="text" id="turnir-wagty" placeholder="Mysal: 20:00 (TM)" required>
+                </div>
+                <div class="ayar-group">
+                    <label>Karta</label>
+                    <input type="text" id="turnir-karta" placeholder="Mysal: Erangel" required>
+                </div>
+                <div class="ayar-group">
+                    <label>Mode</label>
+                    <select id="turnir-mode" style="width:100%; padding:14px 16px; background:rgba(255,255,255,0.04); border:2px solid rgba(255,255,255,0.08); border-radius:12px; color:#e8e8e8; font-size:15px; font-family:'Rajdhani',sans-serif;">
+                        <option value="squad">Squad (4 kişi)</option>
+                        <option value="duo">Duo (2 kişi)</option>
+                        <option value="solo">Solo (1 kişi)</option>
+                    </select>
+                </div>
+                <div class="ayar-group">
+                    <label>Gatnaşyk</label>
+                    <input type="text" id="turnir-gatnasym" placeholder="Mysal: Squad (4 kişi)">
+                </div>
+                <div class="ayar-group">
+                    <label>Toleg</label>
+                    <input type="text" id="turnir-tolek" placeholder="Mysal: 5 Manat">
+                </div>
+                <div class="ayar-group">
+                    <label>Toleg Usuly</label>
+                    <input type="text" id="turnir-tolek-usuly" placeholder="Mysal: TMCell SMS">
+                </div>
+                <div class="ayar-group">
+                    <label>Yer Sany</label>
+                    <input type="number" id="turnir-yer-sany" value="100" min="1" max="10000">
+                </div>
+                <div class="ayar-group">
+                    <label>1-nji Orun</label>
+                    <input type="text" id="turnir-b1" placeholder="Mysal: 300 Manat|+ 🏆 Kubok">
+                </div>
+                <div class="ayar-group">
+                    <label>2-nji Orun</label>
+                    <input type="text" id="turnir-b2" placeholder="Mysal: 150 Manat">
+                </div>
+                <div class="ayar-group">
+                    <label>3-nji Orun</label>
+                    <input type="text" id="turnir-b3" placeholder="Mysal: 50 Manat">
+                </div>
+                <div class="ayar-group">
+                    <label>Jemi Bayrak</label>
+                    <input type="text" id="turnir-bjemi" placeholder="Mysal: 500 M">
+                </div>
+                <div class="ayar-group">
+                    <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                        <input type="checkbox" id="turnir-tolekli" checked style="width:20px; height:20px; accent-color:#ff2d55;">
+                        <span>Tölegli Turnir</span>
+                    </label>
+                    <small style="font-size:11px; opacity:0.6; display:block; margin-top:4px;">Tölegsiz turnirde ulanyjy gönümen tassyklanýar</small>
+                </div>
+                <div class="ayar-group">
+                    <label>Status</label>
+                    <select id="turnir-status" style="width:100%; padding:14px 16px; background:rgba(255,255,255,0.04); border:2px solid rgba(255,255,255,0.08); border-radius:12px; color:#e8e8e8; font-size:15px; font-family:'Rajdhani',sans-serif;">
+                        <option value="upcoming">Gelejek</option>
+                        <option value="current">Häzirki</option>
+                        <option value="past">Geçen</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-submit" id="modal-submit-btn" style="margin-top:10px;">
+                    <span class="btn-text">SAKLA</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    
+    <script src="/static/js/admin_panel.js?v=1.0.1"></script>
+</body>
+</html>

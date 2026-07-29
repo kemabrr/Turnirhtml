@@ -146,11 +146,10 @@
 
 /* ===================== RESPONSIVE ADMIN ===================== */
 @media (max-width: 480px) {
-    .admin-stats { grid-template-columns: 1fr; }
-    .teams-grid { grid-template-columns: 1fr; }
-    .admin-tabs { flex-direction: column; }
+    
+    
+    
 }
 
 /* ===================== KEYFRAMES ===================== */
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-                

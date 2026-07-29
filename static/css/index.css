@@ -222,6 +222,7 @@
     .counter-value { font-size: 34px; }
     .counter-value-remaining { font-size: 30px; }
 }
+
 /* ===================== LOBI MODAL EXTRA ===================== */
 #lobi-content code {
     background: rgba(0, 200, 83, 0.1);
@@ -233,4 +234,4 @@
 #lobi-content a:hover i {
     transform: scale(1.15);
     transition: transform 0.3s;
-}
+            }

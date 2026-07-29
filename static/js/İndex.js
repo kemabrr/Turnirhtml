@@ -136,6 +136,32 @@
             }
         }
 
+// ===================== LOBI KODY =====================
+        function openLobiModal() {
+            const modal = document.getElementById('lobi-modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                loadLobiData();
+    }
+}
+
+function closeLobiModal() {
+    const modal = document.getElementById('lobi-modal');
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+async function loadLobiData() {
+    const container = document.getElementById('lobi-content');
+    container.innerHTML = '<div style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin" style="color:#ff2d55;"></i><p style="margin-top:10px;opacity:0.7;">Yuklenyar...</p></div>';
+    
+    let html = '';
+    
+    // 1.
+
         // ===================== DATA LOADING =====================
         async function loadStats() {
             try {

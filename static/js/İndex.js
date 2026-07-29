@@ -125,7 +125,7 @@
         }
 
         function showSection(section) {
-            ['turnir', 'bayrak', 'duzgun'].forEach(s => {
+            ['turnir', 'bayrak', 'duzgun', 'lobi'].forEach(s => {
                 const el = document.getElementById('section-' + s);
                 if (el) el.style.display = 'none';
             });
@@ -271,6 +271,61 @@
             } catch (e) { console.error('User turnir yuklenmedi:', e); }
         }
 
+        async function loadLobiKodu() {
+            if (!isUserLoggedIn) {
+                document.getElementById('lobi-kodu-content').innerHTML = `
+                    <div class="auth-required-box">
+                        <i class="fas fa-lock"></i>
+                        <p>Lobi kodyny görmek üçin giriş ediň</p>
+                        <button class="btn-primary" onclick="openAuthModal()" style="margin-top:15px; width:auto; padding:12px 30px;">
+                            <i class="fas fa-sign-in-alt"></i> GIRIS
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+            
+            try {
+                const result = await apiGet('/api/lobi-kodu');
+                if (result.success && result.data && result.data.görkezilýär) {
+                    const d = result.data;
+                    document.getElementById('lobi-kodu-content').innerHTML = `
+                        <div class="lobi-code-box">
+                            <div class="lobi-code-label"><i class="fas fa-key"></i> LOBI KODY</div>
+                            <div class="lobi-code-value">${escapeHtml(d.lobi_kodu || '—')}</div>
+                            <div class="lobi-code-turnir">${escapeHtml(d.turnir_ady || '')}</div>
+                            <div class="lobi-code-badge ${d.tolekli ? 'paid' : 'free'}">
+                                ${d.tolekli ? '<i class="fas fa-crown"></i> Tölegli' : '<i class="fas fa-gift"></i> Tölegsiz'}
+                            </div>
+                        </div>
+                    `;
+                } else if (result.data && result.data.tolekli && !result.data.onay_durumu) {
+                    document.getElementById('lobi-kodu-content').innerHTML = `
+                        <div class="lobi-pending-box">
+                            <i class="fas fa-clock fa-spin"></i>
+                            <p>Admin tassyklamasy garaşylýar...</p>
+                            <p class="lobi-pending-sub">Töleg tassyklanandan soň lobi kody görkezilýär</p>
+                        </div>
+                    `;
+                } else {
+                    document.getElementById('lobi-kodu-content').innerHTML = `
+                        <div class="no-tournament-info">
+                            <i class="fas fa-info-circle"></i>
+                            <p>${result.message || 'Maglumat ýok'}</p>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error('Lobi kody yuklenmedi:', e);
+                document.getElementById('lobi-kodu-content').innerHTML = `
+                    <div class="no-tournament-info">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>Lobi kodyny ýüklemekde ýalňyşlyk</p>
+                    </div>
+                `;
+            }
+        }
+
         function escapeHtml(text) {
             if (!text) return '';
             const div = document.createElement('div');
@@ -284,6 +339,7 @@
             await loadStats();
             await loadTurnirData();
             await loadUserTurnir();
+            await loadLobiKodu();
 
             // Login form
             const loginForm = document.getElementById('login-form');
@@ -311,6 +367,7 @@
                             updateNavButtons();
                             closeAuthModal();
                             await loadUserTurnir();
+                            await loadLobiKodu();
                             window.location.reload();
                         } else {
                             errorEl.textContent = result.message || 'Telefon ya-da parol nadogry!';

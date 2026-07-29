@@ -1,4 +1,4 @@
-const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND URL-iňiz bilen çalyň
+const API_URL = 'https://web-production-413a9.up.railway.app'; // OZ BACKEND URL-iniz bilen calyn
 
         let cachedTurnirler = [];
         let cachedKatilimcilar = [];
@@ -48,9 +48,8 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
                     headers: getAdminAuthHeaders() 
                 });
 
-                // DÜZELDI: 401/403 yalnyslygynda logout
                 if (response.status === 401 || response.status === 403) {
-                    alert('Admin sessiýaňyz gutardy ýa-da hukuklaryňyz ýok. Täzeden giriň.');
+                    alert('Admin sessiyanyz gutardy yada hukuklarynyz yok. Tazeden girin.');
                     adminLogout();
                     return;
                 }
@@ -66,121 +65,66 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
                 const data = result.data;
                 if (!data) return;
 
-                // Stats
                 const s = data.stats || {};
                 document.getElementById('stat-toplam').textContent = s.toplam || 0;
-                document.getElementById('stat-odeme').textContent = s.odeme_yapan || 0;
-                document.getElementById('stat-onay').textContent = s.onaylanan || 0;
+                document.getElementById('stat-odeme').textContent = s.odeme || 0;
+                document.getElementById('stat-onay').textContent = s.onay || 0;
 
-                // Cache
                 cachedTurnirler = data.turnirler || [];
                 cachedKatilimcilar = data.katilimcilar || [];
                 cachedTakimlar = data.takimlar || [];
 
-                renderTurnirler(cachedTurnirler);
-                renderKatilimcilar(cachedKatilimcilar);
-                renderTakimlar(cachedTakimlar);
+                renderTurnirler();
+                renderKatilimcilar();
+                renderTakimlar();
             } catch (e) {
                 console.error('Admin data yuklenmedi:', e);
             }
         }
 
-        function renderTurnirler(turnirler) {
+        function renderTurnirler() {
             const container = document.getElementById('turnir-list-container');
-            if (!turnirler || !turnirler.length) {
-                container.innerHTML = '<p style="text-align:center; opacity:0.6; padding:40px 0;">Häzirki wagtda turnir ýok.</p>';
+            if (!cachedTurnirler.length) {
+                container.innerHTML = '<p style="text-align:center; opacity:0.6; padding:40px 0;">Hic turnir yok</p>';
                 return;
             }
-            container.innerHTML = '<div class="turnir-list">' + turnirler.map(t => `
-                <div class="turnir-admin-card">
-                    <div class="turnir-admin-header">
-                        <h4>${escapeHtml(t.ad)}</h4>
-                        <div style="display:flex; gap:6px;">
-                            ${t.tolekli === 0 ? '<span class="status-badge" style="background:rgba(0,200,83,0.15); color:#00c853; border:1px solid rgba(0,200,83,0.3);">TÖLEGSIZ</span>' : ''}
-                            <span class="status-badge status-${escapeHtml(t.status)}">${escapeHtml(t.status)}</span>
-                        </div>
-                    </div>
-                    <div class="turnir-admin-info">
-                        <p><strong>Sene:</strong> ${escapeHtml(t.senesi)}</p>
-                        <p><strong>Wagt:</strong> ${escapeHtml(t.wagty)}</p>
-                        <p><strong>Karta:</strong> ${escapeHtml(t.karta)}</p>
-                        <p><strong>Mode:</strong> ${escapeHtml(t.mode)}</p>
-                        <p><strong>Toleg:</strong> ${escapeHtml(t.tolek)}</p>
-                        <p><strong>Yer:</strong> ${t.onaylanan || 0}/${t.yer_sany || 0}</p>
-                    </div>
-                    <div class="turnir-admin-actions">
-                        <button class="btn-edit" onclick="editTurnir(${t.id})" type="button">
-                            <i class="fas fa-edit"></i> Üýtget
-                        </button>
-                        <button class="btn-delete-turnir" onclick="deleteTurnir(${t.id}, '${escapeHtml(t.ad)}')" type="button">
-                            <i class="fas fa-trash"></i> Poz
-                        </button>
-                    </div>
-                </div>
-            `).join('') + '</div>';
-        }
-
-        function renderKatilimcilar(katilimcilar) {
-            const tbody = document.getElementById('katilimci-tbody');
-            if (!katilimcilar || !katilimcilar.length) {
-                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;">Katylymcy ýok</td></tr>';
-                return;
-            }
-            tbody.innerHTML = katilimcilar.map(k => `
-                <tr>
-                    <td><code>${escapeHtml(k.referans_kodu)}</code></td>
-                    <td>${escapeHtml(k.ad)}</td>
-                    <td>${escapeHtml(k.pubg_id) || '-'}</td>
-                    <td>${escapeHtml(k.telefon)}</td>
-                    <td>${escapeHtml(getTurnirAd(k.turnir_id))}</td>
-                    <td>${k.odeme_durumu === 1 ? '<i class="fas fa-check-circle" style="color:#00c853"></i>' : '<i class="fas fa-times-circle" style="color:#ff2d55"></i>'}</td>
-                    <td>
-                        ${k.admin_onay === 0 ? 'Garasyl yar' : k.admin_onay === 1 ? 'Tassyklandy' : 'Ret edildi'}
-                    </td>
-                    <td>
-                        ${k.odeme_durumu === 1 && k.admin_onay === 0 ? `
-                            <button onclick="onayla('${escapeHtml(k.referans_kodu)}')" class="btn-approve" type="button">Onayla</button>
-                            <button onclick="reddet('${escapeHtml(k.referans_kodu)}')" class="btn-reject" type="button">Reddet</button>
-                        ` : ''}
-                        <button onclick="poz('${escapeHtml(k.referans_kodu)}')" class="btn-delete" type="button">Poz</button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderTakimlar(takimlar) {
-            const grid = document.getElementById('teams-grid-container');
-            if (!takimlar || !takimlar.length) {
-                grid.innerHTML = '<p style="text-align:center; opacity:0.6; padding:40px 0;">Topar ýok.</p>';
-                return;
-            }
-            grid.innerHTML = takimlar.map(t => {
-                let uyeCount = 1;
-                if (t.uye1_referans) uyeCount++;
-                if (t.uye2_referans) uyeCount++;
-                if (t.uye3_referans) uyeCount++;
+            container.innerHTML = cachedTurnirler.map(t => {
+                const statusColors = { upcoming: '#0096ff', current: '#00c853', past: '#ff2d55' };
+                const statusLabels = { upcoming: 'GELEJEK', current: 'HAZIRKI', past: 'GECEN' };
+                const color = statusColors[t.status] || '#a0a0c0';
+                const label = statusLabels[t.status] || t.status;
                 return `
-                    <div class="team-admin-card">
-                        <h4>${escapeHtml(t.takim_adi || 'Topar')}</h4>
-                        <p>Kod: <code>${escapeHtml(t.takim_kodu)}</code></p>
-                        <p>Lider: ${escapeHtml(t.lider_ady || '-')}</p>
-                        <p>Agzalar: ${uyeCount}</p>
+                    <div class="turnir-admin-card">
+                        <div class="turnir-admin-header">
+                            <h4>${escapeHtml(t.ad)}</h4>
+                            <span class="status-badge" style="background:${color}20; color:${color}; border:1px solid ${color}40;">${label}</span>
+                        </div>
+                        <div class="turnir-admin-info">
+                            <p><strong>Sene:</strong> ${escapeHtml(t.senesi)}</p>
+                            <p><strong>Wagt:</strong> ${escapeHtml(t.wagty)}</p>
+                            <p><strong>Karta:</strong> ${escapeHtml(t.karta)}</p>
+                            <p><strong>Mode:</strong> ${escapeHtml(t.mode)}</p>
+                            <p><strong>Toleg:</strong> ${escapeHtml(t.tolek)}</p>
+                            <p><strong>Yer:</strong> ${t.onaylanan || 0}/${t.yer_sany}</p>
+                            <p><strong>Lobi Kody:</strong> ${escapeHtml(t.lobi_kodu) || '<span style="opacity:0.4">Bellenmedi</span>'}</p>
+                            <p><strong>Tolekli:</strong> ${t.tolekli ? 'Hawa' : 'Yok'}</p>
+                        </div>
+                        <div class="turnir-admin-actions">
+                            <button class="btn-edit" onclick="editTurnir(${t.id})" type="button"><i class="fas fa-edit"></i> Duzelt</button>
+                            <button class="btn-delete-turnir" onclick="deleteTurnir(${t.id})" type="button"><i class="fas fa-trash"></i> Poz</button>
+                        </div>
                     </div>
                 `;
             }).join('');
         }
 
-        function showAdminTab(tab, btn) {
-            document.querySelectorAll('.admin-tab-content').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-tab-btn').forEach(t => t.classList.remove('active'));
-            document.getElementById('tab-' + tab).classList.add('active');
-            if (btn) btn.classList.add('active');
-        }
-
         function openTurnirModal() {
-            document.getElementById('modal-title').textContent = 'Täze Turnir';
+            document.getElementById('modal-title').textContent = 'Taze Turnir';
             document.getElementById('modal-turnir-id').value = '';
             document.getElementById('turnir-form').reset();
+            document.getElementById('turnir-status').value = 'upcoming';
+            document.getElementById('turnir-tolekli').checked = true;
+            document.getElementById('modal-submit-btn').innerHTML = '<span class="btn-text">DORET</span>';
             document.getElementById('turnir-modal').classList.add('active');
         }
 
@@ -189,46 +133,34 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
         }
 
         function editTurnir(id) {
-            apiGet('/api/turnir-detay/' + id).then(result => {
-                if (result.success) {
-                    const t = result.turnir;
-                    document.getElementById('modal-title').textContent = 'Turnir Üýtget';
-                    document.getElementById('modal-turnir-id').value = t.id;
-                    document.getElementById('turnir-ad').value = t.ad || '';
-                    document.getElementById('turnir-senesi').value = t.senesi || '';
-                    document.getElementById('turnir-wagty').value = t.wagty || '';
-                    document.getElementById('turnir-karta').value = t.karta || '';
-                    document.getElementById('turnir-mode').value = t.mode || 'squad';
-                    document.getElementById('turnir-gatnasym').value = t.gatnasym || '';
-                    document.getElementById('turnir-tolek').value = t.tolek || '';
-                    document.getElementById('turnir-tolek-usuly').value = t.tolek_usuly || '';
-                    document.getElementById('turnir-yer-sany').value = t.yer_sany || 100;
-                    document.getElementById('turnir-b1').value = t.bayrak_1 || '';
-                    document.getElementById('turnir-b2').value = t.bayrak_2 || '';
-                    document.getElementById('turnir-b3').value = t.bayrak_3 || '';
-                    document.getElementById('turnir-bjemi').value = t.bayrak_jemi || '';
-                    document.getElementById('turnir-status').value = t.status || 'upcoming';
-                    document.getElementById('turnir-tolekli').checked = t.tolekli === 1;
-                    document.getElementById('turnir-modal').classList.add('active');
-                }
-            }).catch(e => alert('Turnir maglumatlaryny almakda yalnyslyk!'));
-        }
-
-        async function deleteTurnir(id, ad) {
-            if (!confirm('"' + ad + '" turnirini pozmak isleyarsinizmi?')) return;
-            try {
-                const result = await apiPost('/api/admin-turnir-sil', { turnir_id: id });
-                if (result.success) await loadAdminData();
-                else alert(result.message);
-            } catch (error) { alert('Yalnyslyk: ' + error.message); }
+            const t = cachedTurnirler.find(x => x.id === id);
+            if (!t) return;
+            document.getElementById('modal-title').textContent = 'Turniri Duzelt';
+            document.getElementById('modal-turnir-id').value = t.id;
+            document.getElementById('turnir-ad').value = t.ad || '';
+            document.getElementById('turnir-senesi').value = t.senesi || '';
+            document.getElementById('turnir-wagty').value = t.wagty || '';
+            document.getElementById('turnir-karta').value = t.karta || '';
+            document.getElementById('turnir-mode').value = t.mode || 'squad';
+            document.getElementById('turnir-gatnasym').value = t.gatnasym || '';
+            document.getElementById('turnir-tolek').value = t.tolek || '';
+            document.getElementById('turnir-tolek-usuly').value = t.tolek_usuly || '';
+            document.getElementById('turnir-yer-sany').value = t.yer_sany || 100;
+            document.getElementById('turnir-b1').value = t.bayrak_1 || '';
+            document.getElementById('turnir-b2').value = t.bayrak_2 || '';
+            document.getElementById('turnir-b3').value = t.bayrak_3 || '';
+            document.getElementById('turnir-bjemi').value = t.bayrak_jemi || '';
+            document.getElementById('turnir-lobi-kodu').value = t.lobi_kodu || '';
+            document.getElementById('turnir-tolekli').checked = t.tolekli === 1 || t.tolekli === true;
+            document.getElementById('turnir-status').value = t.status || 'upcoming';
+            document.getElementById('modal-submit-btn').innerHTML = '<span class="btn-text">SAKLA</span>';
+            document.getElementById('turnir-modal').classList.add('active');
         }
 
         document.getElementById('turnir-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            const turnirId = document.getElementById('modal-turnir-id').value;
-            const isEdit = turnirId !== '';
-
-            const data = {
+            const id = document.getElementById('modal-turnir-id').value;
+            const body = {
                 ad: document.getElementById('turnir-ad').value,
                 senesi: document.getElementById('turnir-senesi').value,
                 wagty: document.getElementById('turnir-wagty').value,
@@ -242,53 +174,135 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
                 bayrak_2: document.getElementById('turnir-b2').value,
                 bayrak_3: document.getElementById('turnir-b3').value,
                 bayrak_jemi: document.getElementById('turnir-bjemi').value,
-                status: document.getElementById('turnir-status').value,
-                tolekli: document.getElementById('turnir-tolekli').checked
+                lobi_kodu: document.getElementById('turnir-lobi-kodu').value,
+                tolekli: document.getElementById('turnir-tolekli').checked,
+                status: document.getElementById('turnir-status').value
             };
-
-            if (isEdit) data.turnir_id = parseInt(turnirId);
-            const url = isEdit ? '/api/admin-turnir-guncelle' : '/api/admin-turnir-ekle';
-
+            const btn = document.getElementById('modal-submit-btn');
+            btn.disabled = true;
             try {
-                const result = await apiPost(url, data);
-                if (result.success) { closeTurnirModal(); await loadAdminData(); }
-                else alert(result.message);
-            } catch (error) { alert('Yalnyslyk: ' + error.message); }
+                let result;
+                if (id) {
+                    body.turnir_id = parseInt(id);
+                    result = await apiPost('/api/admin/turnir/duzelt', body);
+                } else {
+                    result = await apiPost('/api/admin/turnir/doret', body);
+                }
+                if (result.success) {
+                    closeTurnirModal();
+                    await loadAdminData();
+                } else {
+                    alert(result.message || 'Yalnyslyk yuze cykdy');
+                }
+            } catch (err) {
+                alert('Baglanyp bolmady: ' + err.message);
+            } finally {
+                btn.disabled = false;
+            }
         });
 
-        async function onayla(refCode) {
-            if (!confirm('Tassyklamak isleyarsinizmi?')) return;
+        async function deleteTurnir(id) {
+            if (!confirm('Bu turniri pozmak isleyanizmi?')) return;
             try {
-                const result = await apiPost('/api/admin-onayla', { referans_kodu: refCode });
-                if (result.success) await loadAdminData(); else alert(result.message);
-            } catch (error) { alert('Yalnyslyk: ' + error.message); }
+                const result = await apiPost('/api/admin/turnir/poz', { turnir_id: id });
+                if (result.success) {
+                    await loadAdminData();
+                } else {
+                    alert(result.message || 'Pozmak basarylmady');
+                }
+            } catch (e) {
+                alert('Yalnyslyk: ' + e.message);
+            }
         }
 
-        async function reddet(refCode) {
-            if (!confirm('Ret etmek isleyarsinizmi?')) return;
-            try {
-                const result = await apiPost('/api/admin-reddet', { referans_kodu: refCode });
-                if (result.success) await loadAdminData(); else alert(result.message);
-            } catch (error) { alert('Yalnyslyk: ' + error.message); }
+        function renderKatilimcilar() {
+            const tbody = document.getElementById('katilimci-tbody');
+            if (!cachedKatilimcilar.length) {
+                tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; opacity:0.6;">Hic katylymci yok</td></tr>';
+                return;
+            }
+            tbody.innerHTML = cachedKatilimcilar.map(k => {
+                const odemeClass = k.odeme_durumu ? 'status-ok' : 'status-wait';
+                const onayClass = k.admin_onay ? 'status-ok' : 'status-wait';
+                const odemeText = k.odeme_durumu ? 'Edildi' : 'Beklemede';
+                const onayText = k.admin_onay ? 'Onaylandy' : 'Beklemede';
+                return `
+                    <tr>
+                        <td><code>${escapeHtml(k.referans_kodu)}</code></td>
+                        <td>${escapeHtml(k.ad)}</td>
+                        <td>${escapeHtml(k.pubg_id) || '-'}</td>
+                        <td>${escapeHtml(k.telefon)}</td>
+                        <td>${escapeHtml(getTurnirAd(k.turnir_id))}</td>
+                        <td><span class="${odemeClass}">${odemeText}</span></td>
+                        <td><span class="${onayClass}">${onayText}</span></td>
+                        <td>
+                            <button class="btn-action btn-onay" onclick="onayKatilimci('${escapeHtml(k.referans_kodu)}')" type="button" title="Onayla"><i class="fas fa-check"></i></button>
+                            <button class="btn-action btn-reddet" onclick="reddetKatilimci('${escapeHtml(k.referans_kodu)}')" type="button" title="Reddet"><i class="fas fa-times"></i></button>
+                            <button class="btn-action btn-delete" onclick="deleteKatilimci('${escapeHtml(k.referans_kodu)}')" type="button" title="Poz"><i class="fas fa-trash"></i></button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
         }
 
-        async function poz(refCode) {
-            if (!confirm('Katylyjy pozmak isleyarsinizmi? Bu hereket yzyna alynyp bilmez!')) return;
+        async function onayKatilimci(ref) {
             try {
-                const result = await apiPost('/api/admin-poz', { referans_kodu: refCode });
-                if (result.success) await loadAdminData(); else alert(result.message);
-            } catch (error) { alert('Yalnyslyk: ' + error.message); }
+                const result = await apiPost('/api/admin/onayla', { referans_kodu: ref });
+                if (result.success) await loadAdminData();
+                else alert(result.message);
+            } catch (e) { alert('Yalnyslyk: ' + e.message); }
+        }
+
+        async function reddetKatilimci(ref) {
+            if (!confirm('Bu katylymcyny reddetmek isleyanizmi?')) return;
+            try {
+                const result = await apiPost('/api/admin/reddet', { referans_kodu: ref });
+                if (result.success) await loadAdminData();
+                else alert(result.message);
+            } catch (e) { alert('Yalnyslyk: ' + e.message); }
+        }
+
+        async function deleteKatilimci(ref) {
+            if (!confirm('Bu katylymcyny pozmak isleyanizmi?')) return;
+            try {
+                const result = await apiPost('/api/admin/poz', { referans_kodu: ref });
+                if (result.success) await loadAdminData();
+                else alert(result.message);
+            } catch (e) { alert('Yalnyslyk: ' + e.message); }
+        }
+
+        function renderTakimlar() {
+            const container = document.getElementById('teams-grid-container');
+            if (!cachedTakimlar.length) {
+                container.innerHTML = '<p style="text-align:center; opacity:0.6; padding:40px 0;">Hic topar yok</p>';
+                return;
+            }
+            container.innerHTML = cachedTakimlar.map(t => `
+                <div class="team-card">
+                    <div class="team-header">
+                        <h4>${escapeHtml(t.takim_adi) || 'Topar ' + t.takim_kodu}</h4>
+                        <span class="team-code">${escapeHtml(t.takim_kodu)}</span>
+                    </div>
+                    <div class="team-members">
+                        <p><i class="fas fa-crown" style="color:#ffd700"></i> ${escapeHtml(t.lider_referans)}</p>
+                        ${t.uye1_referans ? `<p><i class="fas fa-user"></i> ${escapeHtml(t.uye1_referans)}</p>` : ''}
+                        ${t.uye2_referans ? `<p><i class="fas fa-user"></i> ${escapeHtml(t.uye2_referans)}</p>` : ''}
+                        ${t.uye3_referans ? `<p><i class="fas fa-user"></i> ${escapeHtml(t.uye3_referans)}</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function showAdminTab(tab, btn) {
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.admin-tab-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tab-' + tab).classList.add('active');
         }
 
         function adminLogout() {
             removeAdminToken();
-            window.location.href = './admin_login.html';
+            window.location.href = './admin.html';
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            if (!getAdminToken()) {
-                window.location.href = './admin_login.html';
-                return;
-            }
-            loadAdminData();
-        });
+        document.addEventListener('DOMContentLoaded', loadAdminData);

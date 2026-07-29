@@ -178,6 +178,25 @@
                 <p>Hakygy oýunçylar gatnaşýa!</p>
             </div>
 
+            <!-- LOBI KODY MODAL -->
+            <div class="auth-modal-overlay" id="lobi-modal">
+            <div class="auth-modal">
+            <button class="auth-modal-close" onclick="closeLobiModal()" type="button">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="auth-modal-header">
+                <h2>PUBG LOBI KODY</h2>
+                <p>Turnire gatnaşyk kody</p>
+            </div>
+            <div id="lobi-content" style="padding: 0 24px 24px;">
+            <div style="text-align:center;padding:20px;">
+                <i class="fas fa-spinner fa-spin" style="color:#ff2d55;"></i>
+                <p>Yuklenyar...</p>
+            </div>
+        </div>
+    </div>
+</div>
+
             <div class="auth-tabs">
                 <button class="auth-tab active" onclick="showAuthTab('login', this)" type="button">GIRIS</button>
                 <button class="auth-tab" onclick="showAuthTab('register', this)" type="button">REGISTRASYA</button>

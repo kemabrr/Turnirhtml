@@ -1,3 +1,4 @@
+// v1.0.2 - Cache bust
 console.log("[PUBG] index.js loaded successfully");
 // ===================== CONFIG =====================
 const API_URL = 'https://web-production-413a9.up.railway.app';

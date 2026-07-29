@@ -1,3 +1,4 @@
+console.log("[PUBG] index.js loaded successfully");
 // ===================== CONFIG =====================
         const API_URL = 'https://web-production-413a9.up.railway.app'; // BUNI ÖZ BACKEND URL-iňiz bilen çalyň
 
@@ -41,6 +42,7 @@
         let userTurnirId = null;
 
         async function checkLoginStatus() {
+            console.log("[PUBG] checkLoginStatus called");
             try {
                 const result = await apiGet('/api/katilimci/me');
                 if (result.success && result.katilimci) {
@@ -240,6 +242,7 @@
 
         // ===================== DATA LOADING =====================
         async function loadStats() {
+            console.log("[PUBG] loadStats called");
             try {
                 const result = await apiGet('/api/stats');
                 if (result.success) {
@@ -433,53 +436,3 @@
                 registerForm.addEventListener('submit', async function(e) {
                     e.preventDefault();
                     const ad = document.getElementById('reg-ad').value.trim();
-                    const telefon = document.getElementById('reg-telefon').value.trim();
-                    const parol = document.getElementById('reg-parol').value;
-                    const parol_tekrar = document.getElementById('reg-parol-tekrar').value;
-                    const errorEl = document.getElementById('register-error');
-                    const btn = document.getElementById('register-submit-btn');
-
-                    if (!ad || !telefon || !parol) {
-                        errorEl.textContent = 'Ahli maglumatlary dolduryň!';
-                        errorEl.classList.add('show');
-                        return;
-                    }
-                    if (ad.length < 2) {
-                        errorEl.textContent = 'Ad 2 harpdan uly bolmaly!';
-                        errorEl.classList.add('show');
-                        return;
-                    }
-                    if (parol.length < 6) {
-                        errorEl.textContent = 'Parol 6 harpdan uly bolmaly!';
-                        errorEl.classList.add('show');
-                        return;
-                    }
-                    if (parol !== parol_tekrar) {
-                        errorEl.textContent = 'Parollar deň däl!';
-                        errorEl.classList.add('show');
-                        return;
-                    }
-                    btn.disabled = true;
-                    errorEl.classList.remove('show');
-                    try {
-                        const result = await apiPost('/api/kayit-ol', { ad, telefon, parol, parol_tekrar });
-                        if (result.success && result.data && result.data.access_token) {
-                            setToken(result.data.access_token);
-                            isUserLoggedIn = true;
-                            await checkLoginStatus();
-                            updateNavButtons();
-                            closeAuthModal();
-                            window.location.reload();
-                        } else {
-                            errorEl.textContent = result.message || 'Yalnyslyk yuze cykdy';
-                            errorEl.classList.add('show');
-                        }
-                    } catch (error) {
-                        errorEl.textContent = 'Yalnyslyk: ' + error.message;
-                        errorEl.classList.add('show');
-                    } finally {
-                        btn.disabled = false;
-                    }
-                });
-            }
-        });

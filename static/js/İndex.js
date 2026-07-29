@@ -23,7 +23,9 @@
         }
 
         async function apiGet(endpoint) {
-            const res = await fetch(API_URL + endpoint, { headers: getAuthHeaders() });
+            const res = await fetch(API_URL + endpoint, { 
+                headers: getAuthHeaders()
+            });
             return res.json();
         }
 

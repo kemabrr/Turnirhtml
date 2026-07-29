@@ -1,5 +1,5 @@
 // ===================== CONFIG =====================
-        const API_URL = 'https://web-production-413a9.up.railway.app'; // BUNI ÖZ BACKEND URL-iňiz bilen çalyň
+        const API_URL = 'https://web-production-413a9.up.railway.app';
 
         // ===================== HELPERS =====================
         function getToken() {
@@ -136,7 +136,7 @@
             }
         }
 
-// ===================== LOBI KODY =====================
+        // ===================== LOBI KODY =====================
         function openLobiModal() {
             const modal = document.getElementById('lobi-modal');
             if (modal) {
@@ -147,153 +147,156 @@
         }
 
         function closeLobiModal() {
-        const modal = document.getElementById('lobi-modal');
-        if (modal) {
-            modal.classList.remove('active');
-            document.body.style.overflow = '';
+            const modal = document.getElementById('lobi-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
             }
         }
 
         async function loadLobiData() {
-        const container = document.getElementById('lobi-content');
-        container.innerHTML = '<div style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin" style="color:#ff2d55;"></i><p style="margin-top:10px;opacity:0.7;">Yuklenyar...</p></div>';
-    
-        let html = '';
-    
-        // 1. Kanallar elmydama görkez (auth gerek dal)
-        try {
-        const kanalRes = await fetch(API_URL + '/api/lobi-kanallar');
-        const kanalData = await kanalRes.json();
-        
-        if (kanalData.success && kanalData.data) {
-            const d = kanalData.data;
-            const kanallar = d.kanallar || [];
+            const container = document.getElementById('lobi-content');
+            container.innerHTML = '<div style="text-align:center;padding:20px;"><i class="fas fa-spinner fa-spin" style="color:#ff2d55;"></i><p style="margin-top:10px;opacity:0.7;">Yuklenyar...</p></div>';
             
-            html += `
-                <div style="margin-bottom:24px;">
-                    <p style="font-size:13px; opacity:0.8; text-align:center; margin-bottom:16px; line-height:1.6; color:#c0c0d0;">
-                        ${escapeHtml(d.text)}
-                    </p>
-                    <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
-                        ${kanallar.map(k => `
-                            <a href="${escapeHtml(k.url)}" target="_blank" rel="noopener" 
-                               style="display:flex; flex-direction:column; align-items:center; gap:8px; 
-                                      text-decoration:none; color:#e8e8e8; transition:all 0.3s;
-                                      padding:16px 20px; border-radius:16px; background:rgba(255,255,255,0.03);
-                                      border:1px solid rgba(255,255,255,0.08); min-width:80px;"
-                               onmouseover="this.style.borderColor='rgba(255,45,85,0.4)';this.style.transform='translateY(-4px)';this.style.background='rgba(255,45,85,0.08)'"
-                               onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.transform='none';this.style.background='rgba(255,255,255,0.03)'">
-                                <i class="fab fa-telegram" style="font-size:28px; color:#0088cc; text-shadow:0 0 15px rgba(0,136,204,0.4); ${k.icon !== 'telegram' ? 'display:none;' : ''}"></i>
-                                <i class="fas fa-comment-dots" style="font-size:28px; color:#ff6b35; text-shadow:0 0 15px rgba(255,107,53,0.4); ${k.icon !== 'imo' ? 'display:none;' : ''}"></i>
-                                <i class="fas fa-link" style="font-size:28px; color:#00c853; text-shadow:0 0 15px rgba(0,200,83,0.4); ${k.icon !== 'link' ? 'display:none;' : ''}"></i>
-                                <span style="font-size:12px; font-weight:700; letter-spacing:1px;">${escapeHtml(k.name)}</span>
-                            </a>
-                        `).join('')}
+            let html = '';
+            
+            // 1. Kanallar elmydama görkez (auth gerek dal)
+            try {
+                const kanalRes = await fetch(API_URL + '/api/lobi-kanallar');
+                const kanalData = await kanalRes.json();
+                
+                if (kanalData.success && kanalData.data) {
+                    const d = kanalData.data;
+                    const kanallar = d.kanallar || [];
+                    
+                    html += `
+                        <div style="margin-bottom:24px;">
+                            <p style="font-size:13px; opacity:0.8; text-align:center; margin-bottom:16px; line-height:1.6; color:#c0c0d0;">
+                                ${escapeHtml(d.text)}
+                            </p>
+                            <div style="display:flex; justify-content:center; gap:20px; flex-wrap:wrap;">
+                                ${kanallar.map(k => `
+                                    <a href="${escapeHtml(k.url)}" target="_blank" rel="noopener" 
+                                       style="display:flex; flex-direction:column; align-items:center; gap:8px; 
+                                              text-decoration:none; color:#e8e8e8; transition:all 0.3s;
+                                              padding:16px 20px; border-radius:16px; background:rgba(255,255,255,0.03);
+                                              border:1px solid rgba(255,255,255,0.08); min-width:80px;"
+                                       onmouseover="this.style.borderColor='rgba(255,45,85,0.4)';this.style.transform='translateY(-4px)';this.style.background='rgba(255,45,85,0.08)'"
+                                       onmouseout="this.style.borderColor='rgba(255,255,255,0.08)';this.style.transform='none';this.style.background='rgba(255,255,255,0.03)'">
+                                        <i class="fab fa-telegram" style="font-size:28px; color:#0088cc; text-shadow:0 0 15px rgba(0,136,204,0.4); ${k.icon !== 'telegram' ? 'display:none;' : ''}"></i>
+                                        <i class="fas fa-comment-dots" style="font-size:28px; color:#ff6b35; text-shadow:0 0 15px rgba(255,107,53,0.4); ${k.icon !== 'imo' ? 'display:none;' : ''}"></i>
+                                        <i class="fas fa-link" style="font-size:28px; color:#00c853; text-shadow:0 0 15px rgba(0,200,83,0.4); ${k.icon !== 'link' ? 'display:none;' : ''}"></i>
+                                        <span style="font-size:12px; font-weight:700; letter-spacing:1px;">${escapeHtml(k.name)}</span>
+                                    </a>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            } catch (e) {
+                console.error('Kanallar yuklenmedi:', e);
+            }
+
+            // 2. Lobi kody - auth bilen synanys
+            if (!getToken()) {
+                html += `
+                    <div style="text-align:center; padding:20px; background:rgba(255,45,85,0.05); border-radius:16px; border:1px solid rgba(255,45,85,0.15);">
+                        <i class="fas fa-lock" style="font-size:24px; color:#ff2d55; margin-bottom:10px;"></i>
+                        <p style="font-size:14px; opacity:0.9;">Lobi kody görmek üçin <strong>giriş</strong> ediň we bir turnira <strong>gatnaşyň</strong>!</p>
                     </div>
-                </div>
-            `;
-        }
-    } catch (e) {
-        console.error('Kanallar yuklenmedi:', e);
-    }
+                `;
+                container.innerHTML = html;
+                return;
+            }
 
-    // 2. Lobi kody - auth bilen synanys
-    if (!getToken()) {
-        html += `
-            <div style="text-align:center; padding:20px; background:rgba(255,45,85,0.05); border-radius:16px; border:1px solid rgba(255,45,85,0.15);">
-                <i class="fas fa-lock" style="font-size:24px; color:#ff2d55; margin-bottom:10px;"></i>
-                <p style="font-size:14px; opacity:0.9;">Lobi kody görmek üçin <strong>giriş</strong> ediň we bir turnira <strong>gatnaşyň</strong>!</p>
-            </div>
-        `;
-        container.innerHTML = html;
-        return;
-    }
-
-    // Ulanyjy login bolan -> lobi kody synanys
-    try {
-        const lobiRes = await apiGet('/api/lobi-kodu');
-        if (lobiRes.success && lobiRes.data) {
-            const d = lobiRes.data;
-            const kody = d.lobi_kodu || 'Heniz bellenmedi';
-            html += `
-                <div style="text-align:center; padding:24px; background:rgba(0,200,83,0.05); border-radius:16px; border:1px solid rgba(0,200,83,0.2);">
-                    <p style="font-size:11px; text-transform:uppercase; letter-spacing:3px; opacity:0.6; margin-bottom:8px; color:#a0a0c0;">${escapeHtml(d.turnir_ady)}</p>
-                    <p style="font-size:12px; opacity:0.7; margin-bottom:12px;">PUBG Lobi Kody:</p>
-                    <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:16px;">
-                        <code id="lobi-kod-text" style="font-family:'Orbitron',monospace; font-size:28px; color:#00c853; text-shadow:0 0 20px rgba(0,200,83,0.4); letter-spacing:2px;">${escapeHtml(kody)}</code>
-                        <button onclick="copyLobiKodu()" type="button" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:8px 14px; color:#e8e8e8; cursor:pointer; font-size:12px; transition:all 0.3s;">
-                            <i class="fas fa-copy"></i> Kopyala
-                        </button>
+            // Ulanyjy login bolan -> lobi kody synanys
+            try {
+                const lobiRes = await apiGet('/api/lobi-kodu');
+                if (lobiRes.success && lobiRes.data) {
+                    const d = lobiRes.data;
+                    const kody = d.lobi_kodu || 'Heniz bellenmedi';
+                    html += `
+                        <div style="text-align:center; padding:24px; background:rgba(0,200,83,0.05); border-radius:16px; border:1px solid rgba(0,200,83,0.2);">
+                            <p style="font-size:11px; text-transform:uppercase; letter-spacing:3px; opacity:0.6; margin-bottom:8px; color:#a0a0c0;">${escapeHtml(d.turnir_ady)}</p>
+                            <p style="font-size:12px; opacity:0.7; margin-bottom:12px;">PUBG Lobi Kody:</p>
+                            <div style="display:flex; align-items:center; justify-content:center; gap:12px; margin-bottom:16px;">
+                                <code id="lobi-kod-text" style="font-family:'Orbitron',monospace; font-size:28px; color:#00c853; text-shadow:0 0 20px rgba(0,200,83,0.4); letter-spacing:2px;">${escapeHtml(kody)}</code>
+                                <button onclick="copyLobiKodu()" type="button" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); border-radius:10px; padding:8px 14px; color:#e8e8e8; cursor:pointer; font-size:12px; transition:all 0.3s;">
+                                    <i class="fas fa-copy"></i> Kopyala
+                                </button>
+                            </div>
+                            ${d.görkezilme_sebabi === 'tassyklandy' ? '<p style="font-size:12px; color:#00c853;"><i class="fas fa-check-circle"></i> Admin tarapyndan tassyklandy</p>' : ''}
+                            ${d.görkezilme_sebabi === 'tölegsiz' ? '<p style="font-size:12px; color:#0096ff;"><i class="fas fa-info-circle"></i> Tölegsiz turnir</p>' : ''}
+                        </div>
+                    `;
+                } else {
+                    // Backendden yalnyslyk geldi
+                    const errMsg = lobiRes.message || '';
+                    let displayMsg = 'Lobi kody almakda yalnyslyk yuze cykdy.';
+                    if (errMsg.includes('tassyklamasyndan soň') || errMsg.includes('admin')) {
+                        displayMsg = '⏳ Lobi kody diňe admin tassyklamasyndan soň görkezilýär. Garaşyň!';
+                    } else if (errMsg.includes('ret edildi')) {
+                        displayMsg = '❌ Katylyjyňyz ret edildi.';
+                    } else if (errMsg.includes('gatnaşmadynyz')) {
+                        displayMsg = 'Siz entek haýsydyr bir turnira gatnaşmadynyz. Turnirler bölüminden gatnaşyň!';
+                    }
+                    html += `
+                        <div style="text-align:center; padding:20px; background:rgba(255,140,0,0.05); border-radius:16px; border:1px solid rgba(255,140,0,0.2); margin-top:16px;">
+                            <i class="fas fa-hourglass-half" style="font-size:24px; color:#ff8c00; margin-bottom:10px;"></i>
+                            <p style="font-size:14px; opacity:0.9;">${displayMsg}</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                html += `
+                    <div style="text-align:center; padding:20px; background:rgba(255,45,85,0.05); border-radius:16px; border:1px solid rgba(255,45,85,0.15); margin-top:16px;">
+                        <i class="fas fa-exclamation-circle" style="font-size:24px; color:#ff2d55; margin-bottom:10px;"></i>
+                        <p style="font-size:14px; opacity:0.9;">Internet baglanyşygy ýok ýa-da serwerde yalnyslyk.</p>
                     </div>
-                    ${d.görkezilme_sebabi === 'tassyklandy' ? '<p style="font-size:12px; color:#00c853;"><i class="fas fa-check-circle"></i> Admin tarapyndan tassyklandy</p>' : ''}
-                    ${d.görkezilme_sebabi === 'tölegsiz' ? '<p style="font-size:12px; color:#0096ff;"><i class="fas fa-info-circle"></i> Tölegsiz turnir</p>' : ''}
-                </div>
-            `;
+                `;
+            }
+
+            container.innerHTML = html;
         }
-    } catch (error) {
-        // Yalnyslyk -> garamyk ýa-da ret edilen
-        const errMsg = error.message || '';
-        let displayMsg = 'Lobi kody almakda yalnyslyk yuze cykdy.';
-        
-        if (errMsg.includes('tassyklamasyndan soň') || errMsg.includes('admin')) {
-            displayMsg = '⏳ Lobi kody diňe admin tassyklamasyndan soň görkezilýär. Garaşyň!';
-        } else if (errMsg.includes('ret edildi')) {
-            displayMsg = '❌ Katylyjyňyz ret edildi.';
-        } else if (errMsg.includes('gatnaşmadynyz')) {
-            displayMsg = 'Siz entek haýsydyr bir turnira gatnaşmadynyz. Turnirler bölüminden gatnaşyň!';
+
+        function copyLobiKodu() {
+            const kodText = document.getElementById('lobi-kod-text');
+            if (!kodText) return;
+            const text = kodText.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Lobi kody kopyalandy!');
+            }).catch(() => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand('copy');
+                document.body.removeChild(ta);
+                showToast('Lobi kody kopyalandy!');
+            });
         }
-        
-        html += `
-            <div style="text-align:center; padding:20px; background:rgba(255,140,0,0.05); border-radius:16px; border:1px solid rgba(255,140,0,0.2); margin-top:16px;">
-                <i class="fas fa-hourglass-half" style="font-size:24px; color:#ff8c00; margin-bottom:10px;"></i>
-                <p style="font-size:14px; opacity:0.9;">${displayMsg}</p>
-            </div>
-        `;
-    }
 
-    container.innerHTML = html;
-}
+        function showToast(msg) {
+            let toast = document.getElementById('lobi-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'lobi-toast';
+                toast.className = 'toast-notification';
+                document.body.appendChild(toast);
+            }
+            toast.innerHTML = '<i class="fas fa-check-circle"></i> ' + msg;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2500);
+        }
 
-function copyLobiKodu() {
-    const kodText = document.getElementById('lobi-kod-text');
-    if (!kodText) return;
-    const text = kodText.textContent;
-    navigator.clipboard.writeText(text).then(() => {
-        showToast('Lobi kody kopyalandy!');
-    }).catch(() => {
-        // Fallback
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand('copy');
-        document.body.removeChild(ta);
-        showToast('Lobi kody kopyalandy!');
-    });
-}
-
-function showToast(msg) {
-    // Eger onki toast bar bolsa ony ulan, yoksa täze döret
-    let toast = document.getElementById('lobi-toast');
-    if (!toast) {
-        toast = document.createElement('div');
-        toast.id = 'lobi-toast';
-        toast.className = 'toast-notification';
-        document.body.appendChild(toast);
-    }
-    toast.innerHTML = '<i class="fas fa-check-circle"></i> ' + msg;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 2500);
-}
-
-// Lobi modal üçin click/escape handlers
-document.addEventListener('click', function(e) {
-    const modal = document.getElementById('lobi-modal');
-    if (e.target === modal) closeLobiModal();
-});
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLobiModal();
-});
+        // Lobi modal üçin click/escape handlers
+        document.addEventListener('click', function(e) {
+            const modal = document.getElementById('lobi-modal');
+            if (e.target === modal) closeLobiModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLobiModal();
+        });
 
         // ===================== DATA LOADING =====================
         async function loadStats() {

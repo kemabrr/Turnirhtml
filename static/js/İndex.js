@@ -23,9 +23,7 @@
         }
 
         async function apiGet(endpoint) {
-            const res = await fetch(API_URL + endpoint, { 
-                headers: getAuthHeaders()
-            });
+            const res = await fetch(API_URL + endpoint, { headers: getAuthHeaders() });
             return res.json();
         }
 
@@ -131,6 +129,8 @@
             window.location.href = './takim.html';
         }
 
+
+
         // ===================== TÄZE - LOBI KODY =====================
         function showLobiKodu() {
             if (!isUserLoggedIn) {
@@ -226,7 +226,6 @@
                 });
             }
         }
-
         function showSection(section) {
             ['turnir', 'bayrak', 'duzgun'].forEach(s => {
                 const el = document.getElementById('section-' + s);

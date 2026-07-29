@@ -97,10 +97,15 @@
         document.addEventListener('click', function(e) {
             const modal = document.getElementById('auth-modal');
             if (e.target === modal) closeAuthModal();
+            const lobiModal = document.getElementById('lobi-kodu-modal');
+            if (e.target === lobiModal) closeLobiKodu();
         });
 
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeAuthModal();
+            if (e.key === 'Escape') {
+                closeAuthModal();
+                closeLobiKodu();
+            }
         });
 
         function showAuthTab(tab, btn) {
@@ -122,6 +127,102 @@
                 return;
             }
             window.location.href = './takim.html';
+        }
+
+        // ===================== TÄZE - LOBI KODY =====================
+        function showLobiKodu() {
+            if (!isUserLoggedIn) {
+                openAuthModal();
+                return;
+            }
+            if (!userTurnirId) {
+                const toast = document.getElementById('lobi-toast');
+                toast.textContent = 'Siz entek turnira gatnaşmadynyz!';
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 3000);
+                return;
+            }
+            const modal = document.getElementById('lobi-kodu-modal');
+            if (modal) {
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                loadLobiKodu();
+                loadLobiKanallar();
+            }
+        }
+
+        function closeLobiKodu() {
+            const modal = document.getElementById('lobi-kodu-modal');
+            if (modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        }
+
+        async function loadLobiKodu() {
+            const kodBox = document.getElementById('lobi-kodu-value');
+            const turnirAdy = document.getElementById('lobi-turnir-ady');
+            const errorMsg = document.getElementById('lobi-error-msg');
+
+            kodBox.textContent = 'Ýüklenýär...';
+            turnirAdy.textContent = '-';
+            errorMsg.textContent = '';
+            errorMsg.style.display = 'none';
+
+            try {
+                const result = await apiGet('/api/lobi-kodu');
+                if (result.success && result.data) {
+                    kodBox.textContent = result.data.lobi_kodu || 'Heniz bellenmedi';
+                    turnirAdy.textContent = result.data.turnir_ady || 'Turnir';
+                } else {
+                    kodBox.textContent = '---';
+                    errorMsg.textContent = result.message || 'Kod alyp bolmady';
+                    errorMsg.style.display = 'block';
+                }
+            } catch (e) {
+                kodBox.textContent = '---';
+                errorMsg.textContent = 'Baglanyşyk ýalňyşlygy';
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        async function loadLobiKanallar() {
+            const grid = document.getElementById('lobi-kanallar-grid');
+            grid.innerHTML = '<span class="kanal-loading">Kanallar ýüklenýär...</span>';
+
+            try {
+                const result = await apiGet('/api/lobi-kanallar');
+                if (result.success && result.data && result.data.kanallar) {
+                    const kanallar = result.data.kanallar;
+                    let html = '';
+                    kanallar.forEach(k => {
+                        const iconClass = k.icon === 'telegram' ? 'fa-telegram' : (k.icon === 'imo' ? 'fa-rocketchat' : 'fa-link');
+                        html += `
+                            <a href="${k.url}" target="_blank" class="kanal-btn ${k.icon}">
+                                <i class="fab ${iconClass}"></i>
+                                <span>${k.name}</span>
+                            </a>
+                        `;
+                    });
+                    grid.innerHTML = html;
+                } else {
+                    grid.innerHTML = '<span class="kanal-loading">Kanallar tapylmady</span>';
+                }
+            } catch (e) {
+                grid.innerHTML = '<span class="kanal-loading">Kanallar ýüklenmedi</span>';
+            }
+        }
+
+        function copyLobiKodu() {
+            const kod = document.getElementById('lobi-kodu-value').textContent;
+            if (kod && kod !== '---' && kod !== 'Ýüklenýär...' && kod !== 'Heniz bellenmedi') {
+                navigator.clipboard.writeText(kod).then(() => {
+                    const btn = document.querySelector('.btn-copy-kod');
+                    const original = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i> KOPYALANDY';
+                    setTimeout(() => btn.innerHTML = original, 2000);
+                });
+            }
         }
 
         function showSection(section) {

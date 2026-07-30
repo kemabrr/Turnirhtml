@@ -2,18 +2,17 @@
 <html lang="tk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="PUBG Mobile Turnir 2026 - Turkmenistan">
     <title>PUBG Turnir 2026</title>
-    <link rel="stylesheet" href="/static/css/base.css?v=1.0.1">
+    <link rel="stylesheet" href="/static/css/base.css?v=1.0.2">
     <link rel="stylesheet" href="/static/css/index.css?v=1.0.2">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-
 </head>
 <body>
     <div class="bg-animation">
+        <div class="particle"></div>
         <div class="particle"></div>
         <div class="particle"></div>
         <div class="particle"></div>
@@ -29,7 +28,17 @@
         <div class="nav-container">
             <div class="nav-left">
                 <div class="logo">
-                    <span class="logo-icon"><i class="fas fa-gamepad"></i></span>
+                    <span class="logo-icon">
+                        <!-- PUBG Helmet SVG Icon -->
+                        <svg class="pubg-helmet" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 48 C18 22 32 15 50 15 C68 15 82 22 82 48 L82 58 C82 68 74 72 66 72 L62 72 L62 80 C62 88 56 92 50 92 C44 92 38 88 38 80 L38 72 L34 72 C26 72 18 68 18 58 Z"/>
+                            <rect x="24" y="48" width="22" height="16" rx="4"/>
+                            <circle cx="72" cy="54" r="5" fill="currentColor" stroke="none"/>
+                            <path d="M18 48 L82 48" stroke-width="2" opacity="0.5"/>
+                            <path d="M38 72 L38 80" stroke-width="2" opacity="0.3"/>
+                            <path d="M62 72 L62 80" stroke-width="2" opacity="0.3"/>
+                        </svg>
+                    </span>
                     <div class="logo-text">
                         <span class="logo-title">PUBG</span>
                         <span class="logo-subtitle">TURNİR</span>
@@ -38,17 +47,31 @@
             </div>
             <div class="nav-right" id="nav-buttons">
                 <button class="btn-nav-primary nav-btn-hidden" id="btn-kayit" onclick="openAuthModal()">REGISTRASYA</button>
-                <a href="./profil.html" class="btn-nav-primary nav-btn-hidden" id="btn-profil"><i class="fas fa-user"></i></a>
+                <a href="./profil.html" class="btn-nav-primary nav-btn-hidden" id="btn-profil">
+                    <svg class="profile-helmet" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 48 C18 22 32 15 50 15 C68 15 82 22 82 48 L82 58 C82 68 74 72 66 72 L62 72 L62 80 C62 88 56 92 50 92 C44 92 38 88 38 80 L38 72 L34 72 C26 72 18 68 18 58 Z"/>
+                        <rect x="24" y="48" width="22" height="16" rx="4"/>
+                        <circle cx="72" cy="54" r="5" fill="currentColor" stroke="none"/>
+                    </svg>
+                </a>
             </div>
         </div>
     </header>
 
     <div class="container main-content" style="padding-bottom: 80px;">
         <section class="hero-section">
-            <div class="hero-icon"><i class="fas fa-gamepad"></i></div>
+            <div class="hero-icon">
+                <!-- Large PUBG Helmet SVG -->
+                <svg class="hero-helmet" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 48 C18 22 32 15 50 15 C68 15 82 22 82 48 L82 58 C82 68 74 72 66 72 L62 72 L62 80 C62 88 56 92 50 92 C44 92 38 88 38 80 L38 72 L34 72 C26 72 18 68 18 58 Z"/>
+                    <rect x="24" y="48" width="22" height="16" rx="4"/>
+                    <circle cx="72" cy="54" r="5" fill="currentColor" stroke="none"/>
+                    <path d="M18 48 L82 48" stroke-width="2" opacity="0.4"/>
+                    <path d="M38 72 L38 80" stroke-width="2" opacity="0.3"/>
+                    <path d="M62 72 L62 80" stroke-width="2" opacity="0.3"/>
+                </svg>
+            </div>
             <h1 class="hero-title">PUBG MOBILE</h1>
-            <h2 class="hero-subtitle">TURNİR</h2>
-            <p class="hero-desc">Hakyky oyuncular gatnasya!</p>
         </section>
 
         <section class="counter-section">
@@ -72,11 +95,10 @@
                 Maglumatlar ýüklenýär...
             </div>
         </section>
-        
+
         <section class="categories-section">
             <h2 class="section-title">KATEGORIYALAR</h2>
             <div class="categories-grid">
-                <!-- TÄZE - Turnir Kody -->
                 <button class="category-card" onclick="showLobiKodu()" type="button">
                     <div class="category-icon"><i class="fas fa-key"></i></div>
                     <div class="category-info"><h3>Turnir Kody</h3><p>PUBG lobi kodyny gör</p></div>
@@ -104,7 +126,7 @@
                 </button>
             </div>
         </section>
-        
+
         <section class="info-section" id="section-turnir" style="display:none;">
             <h2 class="section-title">TURNIR MAGLUMATLARY</h2>
             <div id="turnir-content">
@@ -167,7 +189,7 @@
             </a>
         </div>
     </nav>
-    
+
     <div class="auth-modal-overlay" id="auth-modal">
         <div class="auth-modal">
             <button class="auth-modal-close" onclick="closeAuthModal()" type="button">
@@ -228,7 +250,6 @@
         </div>
     </div>
 
-    <!-- TÄZE - Lobi Kody Modal -->
     <div class="lobi-modal-overlay" id="lobi-kodu-modal">
         <div class="lobi-modal">
             <button class="lobi-modal-close" onclick="closeLobiKodu()" type="button">
@@ -255,10 +276,8 @@
     </div>
 
     <script>
-        // ===================== CONFIG =====================
-        const API_URL = 'https://web-production-413a9.up.railway.app'; // BUNI ÖZ BACKEND URL-iňiz bilen çalyň
+        const API_URL = 'https://web-production-413a9.up.railway.app';
 
-        // ===================== HELPERS =====================
         function getToken() {
             return localStorage.getItem('pubg_token');
         }
@@ -293,7 +312,6 @@
             return res.json();
         }
 
-        // ===================== AUTH =====================
         let isUserLoggedIn = false;
         let userTurnirId = null;
 
@@ -386,7 +404,6 @@
             window.location.href = './takim.html';
         }
 
-        // ===================== TÄZE - LOBI KODY =====================
         function showLobiKodu() {
             if (!isUserLoggedIn) {
                 openAuthModal();
@@ -489,7 +506,6 @@
             }
         }
 
-        // ===================== DATA LOADING =====================
         async function loadStats() {
             try {
                 const result = await apiGet('/api/stats');
@@ -500,7 +516,7 @@
                     document.getElementById('remaining-count').textContent = s.galan;
                     const pct = s.yer_sany > 0 ? (s.onaylanan / s.yer_sany * 100) : 0;
                     document.getElementById('progress-bar').style.width = pct + '%';
-                    
+
                     const alertEl = document.getElementById('counter-alert');
                     if (s.yer_sany > 0 && s.onaylanan >= s.yer_sany) {
                         alertEl.textContent = 'TURNIR BASLADY! Ahli yerler doldu!';
@@ -530,7 +546,7 @@
                     apiGet('/api/turnir-data?turnir_id=' + userTurnirId),
                     apiGet('/api/bayraklar?turnir_id=' + userTurnirId)
                 ]);
-                
+
                 if (turnirRes.success && turnirRes.turnir) {
                     const t = turnirRes.turnir;
                     document.getElementById('turnir-content').innerHTML = `
@@ -587,7 +603,7 @@
                         </div>
                     `;
                 }
-                
+
                 if (bayrakRes.success && bayrakRes.bayraklar) {
                     const b = bayrakRes.bayraklar;
                     document.getElementById('bayrak-content').innerHTML = `
@@ -631,14 +647,12 @@
             return div.innerHTML;
         }
 
-        // ===================== FORMS =====================
         document.addEventListener('DOMContentLoaded', async function() {
             await checkLoginStatus();
             await loadStats();
             await loadTurnirData();
             await loadUserTurnir();
 
-            // Login form
             const loginForm = document.getElementById('login-form');
             if (loginForm) {
                 loginForm.addEventListener('submit', async function(e) {
@@ -678,7 +692,6 @@
                 });
             }
 
-            // Register form
             const registerForm = document.getElementById('register-form');
             if (registerForm) {
                 registerForm.addEventListener('submit', async function(e) {

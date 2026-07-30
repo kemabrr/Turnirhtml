@@ -26,12 +26,25 @@
     border: 1px solid rgba(255, 255, 255, 0.08); position: relative; overflow: hidden;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
+/* PUBG Helmet watermark */
 .counter-section::before {
+    content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 160px; height: 160px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke='rgba(255,45,85,0.07)' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 48 C18 22 32 15 50 15 C68 15 82 22 82 48 L82 58 C82 68 74 72 66 72 L62 72 L62 80 C62 88 56 92 50 92 C44 92 38 88 38 80 L38 72 L34 72 C26 72 18 68 18 58 Z'/%3E%3Crect x='24' y='48' width='22' height='16' rx='4'/%3E%3Ccircle cx='72' cy='54' r='5' fill='rgba(255,45,85,0.07)' stroke='none'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    pointer-events: none;
+    z-index: 0;
+}
+/* Animated radial glow */
+.counter-section::after {
     content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
     background: radial-gradient(circle, rgba(255, 45, 85, 0.05) 0%, transparent 60%);
     animation: pulse-bg 6s ease-in-out infinite;
+    pointer-events: none;
 }
-@keyframes pulse-bg { 0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.5; } 50% { transform: scale(1.1) rotate(3deg); opacity: 1; } }
+@keyframes pulse-bg { 0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.4; } 50% { transform: scale(1.1) rotate(3deg); opacity: 0.8; } } 50% { transform: scale(1.1) rotate(3deg); opacity: 1; } }
 .counter-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; position: relative; z-index: 1; }
 .counter-left, .counter-right { text-align: left; }
 .counter-right { text-align: right; }
@@ -172,38 +185,84 @@
 
 /* ===================== PRIZES ===================== */
 .prizes-section { margin-bottom: 28px; }
-.prizes-grid { display: flex; flex-direction: column; gap: 12px; }
+.prizes-grid { display: flex; flex-direction: column; gap: 14px; }
 .prize-card {
-    display: flex; align-items: center; gap: 18px; padding: 20px 24px; border-radius: 16px;
-    border-left: 3px solid; position: relative; overflow: hidden; transition: all 0.3s;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
+    display: flex; align-items: center; gap: 20px; padding: 22px 26px; border-radius: 20px;
+    border: 1px solid; position: relative; overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
-.prize-card:hover { transform: translateX(4px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35); }
-.prize-card.gold { background: linear-gradient(145deg, rgba(255, 215, 0, 0.08), rgba(255, 215, 0, 0.02)); border-left-color: rgba(255, 215, 0, 0.5); }
-.prize-card.gold:hover { background: linear-gradient(145deg, rgba(255, 215, 0, 0.12), rgba(255, 215, 0, 0.04)); }
-.prize-card.silver { background: linear-gradient(145deg, rgba(192, 192, 192, 0.06), rgba(192, 192, 192, 0.015)); border-left-color: rgba(192, 192, 192, 0.4); }
-.prize-card.silver:hover { background: linear-gradient(145deg, rgba(192, 192, 192, 0.1), rgba(192, 192, 192, 0.03)); }
-.prize-card.bronze { background: linear-gradient(145deg, rgba(205, 127, 50, 0.06), rgba(205, 127, 50, 0.015)); border-left-color: rgba(205, 127, 50, 0.4); }
-.prize-card.bronze:hover { background: linear-gradient(145deg, rgba(205, 127, 50, 0.1), rgba(205, 127, 50, 0.03)); }
-.prize-rank { font-size: 36px; filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.25)); }
-.prize-info h3 { font-size: 15px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.5px; }
-.prize-card.gold .prize-info h3 { color: #ffd700; text-shadow: 0 0 8px rgba(255, 215, 0, 0.25); }
-.prize-card.silver .prize-info h3 { color: #c0c0c0; text-shadow: 0 0 8px rgba(192, 192, 192, 0.25); }
-.prize-card.bronze .prize-info h3 { color: #cd7f32; text-shadow: 0 0 8px rgba(205, 127, 50, 0.25); }
-.prize-amount { font-size: 20px; font-weight: 800; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
-.prize-bonus { font-size: 12px; opacity: 0.75; color: #ffd700; }
+.prize-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+}
+.prize-card:hover { transform: translateX(6px) translateY(-2px); box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4); }
+
+/* GOLD - 1st Place */
+.prize-card.gold {
+    background: linear-gradient(145deg, rgba(255, 215, 0, 0.12), rgba(255, 215, 0, 0.03));
+    border-color: rgba(255, 215, 0, 0.25);
+    box-shadow: 0 4px 25px rgba(255, 215, 0, 0.08), 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.prize-card.gold:hover {
+    background: linear-gradient(145deg, rgba(255, 215, 0, 0.18), rgba(255, 215, 0, 0.05));
+    border-color: rgba(255, 215, 0, 0.4);
+    box-shadow: 0 8px 35px rgba(255, 215, 0, 0.15), 0 12px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* SILVER - 2nd Place */
+.prize-card.silver {
+    background: linear-gradient(145deg, rgba(192, 192, 192, 0.1), rgba(192, 192, 192, 0.02));
+    border-color: rgba(192, 192, 192, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.prize-card.silver:hover {
+    background: linear-gradient(145deg, rgba(192, 192, 192, 0.14), rgba(192, 192, 192, 0.04));
+    border-color: rgba(192, 192, 192, 0.35);
+}
+
+/* BRONZE - 3rd Place */
+.prize-card.bronze {
+    background: linear-gradient(145deg, rgba(205, 127, 50, 0.1), rgba(205, 127, 50, 0.02));
+    border-color: rgba(205, 127, 50, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+.prize-card.bronze:hover {
+    background: linear-gradient(145deg, rgba(205, 127, 50, 0.14), rgba(205, 127, 50, 0.04));
+    border-color: rgba(205, 127, 50, 0.35);
+}
+
+.prize-rank { font-size: 40px; filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.3)); }
+.prize-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.5px; }
+.prize-card.gold .prize-info h3 { color: #ffd700; text-shadow: 0 0 12px rgba(255, 215, 0, 0.3); }
+.prize-card.silver .prize-info h3 { color: #e0e0e0; text-shadow: 0 0 10px rgba(192, 192, 192, 0.3); }
+.prize-card.bronze .prize-info h3 { color: #e8a87c; text-shadow: 0 0 10px rgba(205, 127, 50, 0.3); }
+.prize-amount { font-size: 22px; font-weight: 800; font-family: 'Orbitron', sans-serif; letter-spacing: 1px; }
+.prize-card.gold .prize-amount { color: #ffd700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.3); }
+.prize-card.silver .prize-amount { color: #e0e0e0; }
+.prize-card.bronze .prize-amount { color: #e8a87c; }
+.prize-bonus { font-size: 12px; opacity: 0.85; color: #ffd700; margin-top: 4px; }
+
+/* JEMI BAYRAK Total */
 .prize-total {
-    text-align: center; margin-top: 20px; padding: 18px;
-    background: linear-gradient(145deg, rgba(255,45,85,0.05), rgba(0,150,255,0.02), rgba(255,140,0,0.02));
-    border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.06); position: relative; overflow: hidden;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
+    text-align: center; margin-top: 24px; padding: 22px;
+    background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative; overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
 }
 .prize-total::before {
     content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent); animation: shimmer 3s infinite;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+    animation: shimmer 3s infinite;
 }
-.prize-total span { font-size: 12px; opacity: 0.65; display: block; margin-bottom: 6px; letter-spacing: 2px; position: relative; z-index: 1; }
-.prize-total strong { font-family: 'Orbitron', sans-serif; font-size: 24px; color: #ffd700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.35); position: relative; z-index: 1; }
+.prize-total::after {
+    content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
+}
+.prize-total span { font-size: 11px; opacity: 0.6; display: block; margin-bottom: 8px; letter-spacing: 3px; position: relative; z-index: 1; color: #a0a0c0; }
+.prize-total strong { font-family: 'Orbitron', sans-serif; font-size: 28px; color: #ffd700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.4); position: relative; z-index: 1; }
 
 /* ===================== RULES ===================== */
 .rules-section { margin-bottom: 28px; }

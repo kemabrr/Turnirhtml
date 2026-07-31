@@ -38,18 +38,18 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
                 const result = await fetch(API_URL + '/api/gatnasylan-turnirler', {
                     headers: { 'Authorization': 'Bearer ' + token }
                 }).then(r => r.json());
-                
+
                 if (result.success && result.turnirler && result.turnirler.length > 0) {
                     const container = document.getElementById('my-tournaments-list');
                     const section = document.getElementById('my-tournaments-section');
                     section.style.display = 'block';
-                    
+
                     container.innerHTML = result.turnirler.map(t => {
                         let statusClass = 'status-waiting';
                         let statusText = 'Garasylýar';
                         if (t.admin_onay === 1) { statusClass = 'status-approved'; statusText = 'Tassyklandy'; }
                         else if (t.admin_onay === 2) { statusClass = 'status-rejected'; statusText = 'Ret edildi'; }
-                        
+
                         return `
                             <div class="my-tournament-card">
                                 <div class="my-tournament-info">
@@ -101,7 +101,7 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
             list.innerHTML = turnirler.map(t => {
                 const isFull = t.onaylanan >= t.yer_sany;
                 const isJoined = myTurnirId === t.id;
-                
+
                 let btnHtml;
                 if (isJoined) {
                     btnHtml = `
@@ -115,7 +115,7 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
                         </button>`;
                 } else if (t.tolekli === 0) {
                     btnHtml = `
-                        <button class="btn-join-tournament" class="btn-free" onclick="joinTournament(${t.id})" type="button">
+                        <button class="btn-join-tournament btn-free" onclick="joinTournament(${t.id})" type="button">
                             <i class="fas fa-plus-circle"></i> TÖLEGSIZ GOŞUL
                         </button>`;
                 } else {
@@ -124,14 +124,14 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
                             <i class="fas fa-plus-circle"></i> TURNIRA GOŞUL
                         </button>`;
                 }
-                
+
                 return `
                     <div class="tournament-card" data-status="${escapeHtml(t.status)}" data-mode="${escapeHtml(t.mode)}">
                         <div class="tournament-header">
                             <div class="tournament-info">
                                 <h3>${escapeHtml(t.ad)}</h3>
                                 <p>
-                                    ${t.tolekli === 0 ? '<span class="status-badge" class="badge-free">TÖLEGSIZ</span>' : ''}
+                                    ${t.tolekli === 0 ? '<span class="status-badge badge-free">TÖLEGSIZ</span>' : ''}
                                     <span class="status-badge status-${escapeHtml(t.status)}">${escapeHtml(t.status)}</span>
                                 </p>
                             </div>
@@ -160,7 +160,8 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
         async function joinTournament(turnirId) {
             await checkLoginStatus();
             if (!isUserLoggedIn) {
-                window.location.href = './login.html?redirect=./turnir.html';
+                // TÄZE: Login soňra turnir_gosul.html-e gaýdyp gelýär
+                window.location.href = './login.html?redirect=./turnir_gosul.html?id=' + turnirId;
                 return;
             }
             // Eger eýýäm gatnaşan bolsa

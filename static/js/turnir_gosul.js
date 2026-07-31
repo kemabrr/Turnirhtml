@@ -1,188 +1,161 @@
-const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND URL-iňiz bilen çalyň
+const API_URL = 'https://web-production-413a9.up.railway.app';
 
+// 1. LOGIN BARLA - Sahypa ýüklenende ilkinji iş
+(function checkAuth() {
+    const token = localStorage.getItem('pubg_token');
+    if (!token) {
+        // Login bolmadyk bolsa -> adaty login sahypasyna gönümdir
         const urlParams = new URLSearchParams(window.location.search);
-        const turnirId = urlParams.get('id') || '';
+        const turnirId = urlParams.get('id');
+        window.location.href = './login.html?redirect=./turnir_gosul.html?id=' + (turnirId || '');
+        return;
+    }
+})();
 
-        function getAuthHeaders() {
-            const token = localStorage.getItem('pubg_token');
-            return {
-                'Content-Type': 'application/json',
-                ...(token ? { 'Authorization': 'Bearer ' + token } : {})
-            };
-        }
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('pubg_token');
+    if (!token) return; // Ýokarda gönümdirildi
 
-        function escapeHtml(text) {
-            if (!text) return '';
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
+    // URL-dan turnir ID-sini al
+    const urlParams = new URLSearchParams(window.location.search);
+    const turnirId = urlParams.get('id');
 
-        async function loadTurnir() {
-            if (!turnirId) {
-                alert('Turnir ID tapylmady!');
-                window.location.href = './turnir.html';
-                return;
-            }
-            
-            // Ilki barla: eýýäm gatnaşanmy?
-            try {
-                const durumRes = await fetch(API_URL + '/api/gatnas-durum/' + turnirId, {
-                    headers: getAuthHeaders()
-                });
-                
-                if (durumRes.ok) {
-                    const durum = await durumRes.json();
-                    if (durum.success && durum.is_joined) {
-                        // Eýýäm gatnaşan - form gizle, habar görkez
-                        showAlreadyJoined(durum.admin_onay, durum.odeme_durumu);
-                        return;
-                    }
-                }
-            } catch (e) {
-                console.error('Gatnas durum barlanylmady:', e);
-            }
-            
-            // Turnir maglumatlaryny yükle
-            try {
-                const result = await fetch(API_URL + '/api/turnir-data?turnir_id=' + turnirId, {
-                    headers: getAuthHeaders()
-                }).then(r => r.json());
+    if (!turnirId) {
+        alert('Turnir ID tapylmady!');
+        window.location.href = './turnir.html';
+        return;
+    }
 
-                if (result.success && result.turnir) {
-                    const t = result.turnir;
-                    document.getElementById('tournament-summary').innerHTML = `
-                        <h3><i class="fas fa-trophy"></i> ${escapeHtml(t.ad)}</h3>
-                        <p><strong>Sene:</strong> ${escapeHtml(t.senesi)}</p>
-                        <p><strong>Wagt:</strong> ${escapeHtml(t.wagty)}</p>
-                        <p><strong>Karta:</strong> ${escapeHtml(t.karta)}</p>
-                        <p><strong>Gatnaşyk:</strong> ${escapeHtml(t.gatnasym)}</p>
-                        <p><strong>Toleg:</strong> ${escapeHtml(t.tolek)}</p>
-                    `;
-                    document.getElementById('turnir_id').value = t.id;
-                    document.getElementById('turnir_tolekli').value = t.tolekli;
+    document.getElementById('turnir_id').value = turnirId;
 
-                    const paymentGroup = document.getElementById('payment-phone-group');
-                    const paymentInfo = document.getElementById('payment-info-box');
-                    const submitBtn = document.getElementById('submit-btn');
+    // Turnir maglumatlaryny we gatnaşyk ýagdaýyny ýükle
+    await loadTurnirData(turnirId);
+    await checkJoinStatus(turnirId, token);
+});
 
-                    if (t.tolekli !== 1) {
-                        if (paymentGroup) paymentGroup.style.display = 'none';
-                        if (paymentInfo) paymentInfo.style.display = 'none';
-                        submitBtn.innerHTML = '<span class="btn-text">TURNIRA GOŞUL</span>';
-                    } else {
-                        if (paymentGroup) paymentGroup.style.display = 'block';
-                        if (paymentInfo) paymentInfo.style.display = 'block';
-                        submitBtn.innerHTML = '<span class="btn-text">TÖLEGE GIT</span>';
-                        document.getElementById('info-tolek').textContent = escapeHtml(t.tolek);
-                        document.getElementById('info-tolek-usuly').textContent = escapeHtml(t.tolek_usuly);
-                    }
+async function loadTurnirData(turnirId) {
+    try {
+        const response = await fetch(API_URL + '/api/turnir-data?turnir_id=' + turnirId);
+        const result = await response.json();
 
-                    document.getElementById('loading-area').style.display = 'none';
-                    document.getElementById('content-area').style.display = 'block';
-                } else {
-                    alert('Turnir tapylmady!');
-                    window.location.href = './turnir.html';
-                }
-            } catch (e) {
-                alert('Turnir yuklenmedi: ' + e.message);
-                window.location.href = './turnir.html';
+        if (result.success && result.turnir) {
+            const t = result.turnir;
+            document.getElementById('tournament-summary').innerHTML = `
+                <h3>${escapeHtml(t.ad)}</h3>
+                <p>${escapeHtml(t.senesi)} | ${escapeHtml(t.wagty)} | ${escapeHtml(t.karta)}</p>
+            `;
+
+            document.getElementById('info-tolek').textContent = t.tolek || '-';
+            document.getElementById('info-tolek-usuly').textContent = t.tolek_usuly || '-';
+            document.getElementById('turnir_tolekli').value = t.tolekli || 1;
+
+            // Tölegsiz turnir bolsa töleg meýdanlaryny gizle
+            if (t.tolekli === 0) {
+                document.getElementById('payment-phone-group').style.display = 'none';
+                document.getElementById('payment-info-box').style.display = 'none';
+                document.getElementById('submit-btn').innerHTML = '<span class="btn-text">TÖLEGSIZ GOŞUL</span>';
             }
         }
+    } catch (e) {
+        console.error('Turnir yuklenmedi:', e);
+    }
+}
 
-        function showAlreadyJoined(adminOnay, odemeDurumu) {
-            // Turnir maglumatlaryny görkez
-            fetch(API_URL + '/api/turnir-data?turnir_id=' + turnirId, { headers: getAuthHeaders() })
-                .then(r => r.json())
-                .then(result => {
-                    if (result.success && result.turnir) {
-                        const t = result.turnir;
-                        document.getElementById('joined-tournament-summary').innerHTML = `
-                            <h3><i class="fas fa-trophy"></i> ${escapeHtml(t.ad)}</h3>
-                            <p><strong>Sene:</strong> ${escapeHtml(t.senesi)}</p>
-                            <p><strong>Wagt:</strong> ${escapeHtml(t.wagty)}</p>
-                            <p><strong>Karta:</strong> ${escapeHtml(t.karta)}</p>
-                            <p><strong>Gatnaşyk:</strong> ${escapeHtml(t.gatnasym)}</p>
-                            <p><strong>Toleg:</strong> ${escapeHtml(t.tolek)}</p>
-                        `;
-                    }
-                });
-            
-            let statusText = '';
-            if (adminOnay === 0) statusText = 'Status: Garasylýar (Admin tassyklamagy garaşylýar)';
-            else if (adminOnay === 1) statusText = 'Status: Tassyklandy ✅';
-            else if (adminOnay === 2) statusText = 'Status: Ret edildi ❌';
-            
-            if (odemeDurumu === 1) statusText += ' | Toleg: Edilen 💰';
-            else statusText += ' | Toleg: Edilmedi';
-            
-            document.getElementById('joined-status-text').textContent = statusText;
-            
+async function checkJoinStatus(turnirId, token) {
+    try {
+        const response = await fetch(API_URL + '/api/gatnas-durum/' + turnirId, {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const result = await response.json();
+
+        if (result.success && result.is_joined) {
+            // Eýýäm gatnaşan -> "eýýäm gatnaşdyňyz" görkez
             document.getElementById('loading-area').style.display = 'none';
+            document.getElementById('content-area').style.display = 'none';
             document.getElementById('already-joined-area').style.display = 'block';
+
+            let statusText = '';
+            if (result.admin_onay === 0) statusText = 'Garasylýar';
+            else if (result.admin_onay === 1) statusText = 'Tassyklandy';
+            else if (result.admin_onay === 2) statusText = 'Ret edildi';
+
+            document.getElementById('joined-status-text').textContent = 'Ýagdaýy: ' + statusText;
+        } else {
+            // Gatnaşmadyk -> formy görkez
+            document.getElementById('loading-area').style.display = 'none';
+            document.getElementById('content-area').style.display = 'block';
         }
+    } catch (e) {
+        console.error('Durum barlanmady:', e);
+        document.getElementById('loading-area').style.display = 'none';
+        document.getElementById('content-area').style.display = 'block';
+    }
+}
 
-        const paymentPhoneInput = document.getElementById('payment_phone');
-        if (paymentPhoneInput) {
-            paymentPhoneInput.addEventListener('input', function(e) {
-                document.getElementById('display-phone').textContent = e.target.value || '-';
-            });
-        }
+// Form submit
+document.getElementById('join-tournament-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        document.getElementById('join-tournament-form').addEventListener('submit', async function(e) {
-            e.preventDefault();
+    const token = localStorage.getItem('pubg_token');
+    if (!token) {
+        window.location.href = './login.html?redirect=' + encodeURIComponent(window.location.href);
+        return;
+    }
 
-            const pubgId = document.getElementById('pubg_id').value.trim();
-            const tid = document.getElementById('turnir_id').value;
-            const paymentPhoneInput = document.getElementById('payment_phone');
-            const paymentPhone = paymentPhoneInput ? paymentPhoneInput.value.trim() : '';
-            const tolekli = parseInt(document.getElementById('turnir_tolekli').value) === 1;
+    const turnirId = document.getElementById('turnir_id').value;
+    const pubgId = document.getElementById('pubg_id').value.trim();
+    const paymentPhone = document.getElementById('payment_phone').value.trim();
 
-            if (!pubgId || pubgId.length < 8) {
-                alert('PUBG ID 8 sanly bolmaly!');
-                return;
-            }
-            if (tolekli && !paymentPhone) {
-                alert('Toleg telefon belgisini girizin!');
-                return;
-            }
-            if (!tid) {
-                alert('Turnir ID tapylmady!');
-                return;
-            }
+    if (!pubgId || pubgId.length < 8 || !/^\d+$/.test(pubgId)) {
+        alert('PUBG ID diňe san bolmaly (minimum 8)!');
+        return;
+    }
 
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
+    const btn = document.getElementById('submit-btn');
+    const originalText = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Ugradylýar...';
 
-            try {
-                const response = await fetch(API_URL + '/api/turnir-gosul', {
-                    method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({
-                        turnir_id: parseInt(tid),
-                        tournament_id: 'turnir-' + tid,
-                        pubg_id: pubgId,
-                        payment_phone: paymentPhone
-                    })
-                });
-
-                const result = await response.json();
-
-                if (result.success) {
-                    if (result.data && result.data.auto_approved) {
-                        alert('Turnira üstünlikli goşuldyňyz!');
-                        window.location.href = './index.html';
-                    } else {
-                        window.location.href = './odeme.html?turnir=' + tid;
-                    }
-                } else {
-                    alert(result.message || 'Yalnyslyk yuze cykdy');
-                    btn.disabled = false;
-                }
-            } catch (error) {
-                alert('Yalnyslyk: ' + error.message);
-                btn.disabled = false;
-            }
+    try {
+        const response = await fetch(API_URL + '/api/turnir-gosul', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+            body: JSON.stringify({
+                pubg_id: pubgId,
+                payment_phone: paymentPhone,
+                turnir_id: parseInt(turnirId)
+            })
         });
 
-        document.addEventListener('DOMContentLoaded', loadTurnir);
+        const result = await response.json();
+
+        if (result.success) {
+            if (result.data && result.data.auto_approved) {
+                // Tölegsiz turnir -> üstünlikli
+                alert('Turnira üstünlikli goşuldyňyz!');
+                window.location.href = './turnir.html';
+            } else {
+                // Tölegli turnir -> töleg sahypasyna git
+                window.location.href = './payment.html?turnir_id=' + turnirId;
+            }
+        } else {
+            alert(result.message || 'Ýalňyşlyk ýüze çykdy!');
+            btn.disabled = false;
+            btn.innerHTML = originalText;
+        }
+    } catch (e) {
+        alert('Baglanyşyk ýalňyşlygy!');
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+    }
+});
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}

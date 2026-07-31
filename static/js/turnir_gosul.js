@@ -1,225 +1,188 @@
-const API_URL = 'https://web-production-413a9.up.railway.app';
+const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND URL-iňiz bilen çalyň
 
-let allTurnirler = [];
-let isUserLoggedIn = false;
-let myTurnirId = null;
-let loginCheckPromise = null;
+        const urlParams = new URLSearchParams(window.location.search);
+        const turnirId = urlParams.get('id') || '';
 
-async function checkLoginStatus() {
-    if (loginCheckPromise) return loginCheckPromise;
-    loginCheckPromise = new Promise(async (resolve) => {
-        try {
+        function getAuthHeaders() {
             const token = localStorage.getItem('pubg_token');
-            if (!token) { isUserLoggedIn = false; resolve(false); return; }
-            const response = await fetch(API_URL + '/api/katilimci/me', {
-                headers: { 'Authorization': 'Bearer ' + token }
-            });
-            if (response.ok) {
-                const result = await response.json();
-                isUserLoggedIn = result.success === true;
-                if (result.katilimci && result.katilimci.turnir_id) {
-                    myTurnirId = result.katilimci.turnir_id;
-                }
-            } else {
-                isUserLoggedIn = false;
+            return {
+                'Content-Type': 'application/json',
+                ...(token ? { 'Authorization': 'Bearer ' + token } : {})
+            };
+        }
+
+        function escapeHtml(text) {
+            if (!text) return '';
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        async function loadTurnir() {
+            if (!turnirId) {
+                alert('Turnir ID tapylmady!');
+                window.location.href = './turnir.html';
+                return;
             }
-        } catch (error) {
-            isUserLoggedIn = false;
-        }
-        resolve(isUserLoggedIn);
-    });
-    return loginCheckPromise;
-}
+            
+            // Ilki barla: eýýäm gatnaşanmy?
+            try {
+                const durumRes = await fetch(API_URL + '/api/gatnas-durum/' + turnirId, {
+                    headers: getAuthHeaders()
+                });
+                
+                if (durumRes.ok) {
+                    const durum = await durumRes.json();
+                    if (durum.success && durum.is_joined) {
+                        // Eýýäm gatnaşan - form gizle, habar görkez
+                        showAlreadyJoined(durum.admin_onay, durum.odeme_durumu);
+                        return;
+                    }
+                }
+            } catch (e) {
+                console.error('Gatnas durum barlanylmady:', e);
+            }
+            
+            // Turnir maglumatlaryny yükle
+            try {
+                const result = await fetch(API_URL + '/api/turnir-data?turnir_id=' + turnirId, {
+                    headers: getAuthHeaders()
+                }).then(r => r.json());
 
-async function loadMyTournaments() {
-    if (!isUserLoggedIn) return;
-    try {
-        const token = localStorage.getItem('pubg_token');
-        const result = await fetch(API_URL + '/api/gatnasylan-turnirler', {
-            headers: { 'Authorization': 'Bearer ' + token }
-        }).then(r => r.json());
+                if (result.success && result.turnir) {
+                    const t = result.turnir;
+                    document.getElementById('tournament-summary').innerHTML = `
+                        <h3><i class="fas fa-trophy"></i> ${escapeHtml(t.ad)}</h3>
+                        <p><strong>Sene:</strong> ${escapeHtml(t.senesi)}</p>
+                        <p><strong>Wagt:</strong> ${escapeHtml(t.wagty)}</p>
+                        <p><strong>Karta:</strong> ${escapeHtml(t.karta)}</p>
+                        <p><strong>Gatnaşyk:</strong> ${escapeHtml(t.gatnasym)}</p>
+                        <p><strong>Toleg:</strong> ${escapeHtml(t.tolek)}</p>
+                    `;
+                    document.getElementById('turnir_id').value = t.id;
+                    document.getElementById('turnir_tolekli').value = t.tolekli;
 
-        if (result.success && result.turnirler && result.turnirler.length > 0) {
-            const container = document.getElementById('my-tournaments-list');
-            const section = document.getElementById('my-tournaments-section');
-            section.style.display = 'block';
+                    const paymentGroup = document.getElementById('payment-phone-group');
+                    const paymentInfo = document.getElementById('payment-info-box');
+                    const submitBtn = document.getElementById('submit-btn');
 
-            container.innerHTML = result.turnirler.map(t => {
-                let statusClass = 'status-waiting';
-                let statusText = 'Garasylýar';
-                if (t.admin_onay === 1) { statusClass = 'status-approved'; statusText = 'Tassyklandy'; }
-                else if (t.admin_onay === 2) { statusClass = 'status-rejected'; statusText = 'Ret edildi'; }
+                    if (t.tolekli !== 1) {
+                        if (paymentGroup) paymentGroup.style.display = 'none';
+                        if (paymentInfo) paymentInfo.style.display = 'none';
+                        submitBtn.innerHTML = '<span class="btn-text">TURNIRA GOŞUL</span>';
+                    } else {
+                        if (paymentGroup) paymentGroup.style.display = 'block';
+                        if (paymentInfo) paymentInfo.style.display = 'block';
+                        submitBtn.innerHTML = '<span class="btn-text">TÖLEGE GIT</span>';
+                        document.getElementById('info-tolek').textContent = escapeHtml(t.tolek);
+                        document.getElementById('info-tolek-usuly').textContent = escapeHtml(t.tolek_usuly);
+                    }
 
-                return `
-                    <div class="my-tournament-card">
-                        <div class="my-tournament-info">
-                            <h4>${escapeHtml(t.ad)}</h4>
-                            <p>${escapeHtml(t.senesi)} | ${escapeHtml(t.wagty)} | ${escapeHtml(t.karta)}</p>
-                        </div>
-                        <span class="my-tournament-status ${statusClass}">${statusText}</span>
-                    </div>
-                `;
-            }).join('');
-        }
-    } catch (e) {
-        console.error('Gatnasylan turnirler yuklenmedi:', e);
-    }
-}
-
-function escapeHtml(text) {
-    if (!text) return '';
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-}
-
-async function loadTurnirler() {
-    try {
-        const result = await fetch(API_URL + '/api/turnirler').then(r => r.json());
-        if (result.success && result.turnirler) {
-            allTurnirler = result.turnirler;
-            renderTurnirler(allTurnirler);
-        } else {
-            showEmpty('Turnirler yuklenmedi');
-        }
-    } catch (e) {
-        showEmpty('Baglanyşyk yalnyslygy');
-    }
-}
-
-function renderTurnirler(turnirler) {
-    const list = document.getElementById('tournament-list');
-    if (!turnirler || !turnirler.length) {
-        list.innerHTML = `
-            <div class="empty-state">
-                <i class="fas fa-calendar-times"></i>
-                <h3>Turnir Ýok</h3>
-                <p>Häzirki wagtda elýeterli turnir ýok.</p>
-            </div>`;
-        return;
-    }
-    list.innerHTML = turnirler.map(t => {
-        const isFull = t.onaylanan >= t.yer_sany;
-        const isJoined = myTurnirId === t.id;
-
-        let btnHtml;
-        if (isJoined) {
-            btnHtml = `
-                <button class="btn-join-tournament btn-joined" type="button" disabled>
-                    <i class="fas fa-check-circle"></i> GATNAŞDYŇYZ
-                </button>`;
-        } else if (isFull) {
-            btnHtml = `
-                <button class="btn-join-tournament btn-full" type="button" disabled>
-                    <i class="fas fa-lock"></i> YERLER DOLDY
-                </button>`;
-        } else if (t.tolekli === 0) {
-            btnHtml = `
-                <button class="btn-join-tournament btn-free" onclick="joinTournament(${t.id})" type="button">
-                    <i class="fas fa-plus-circle"></i> TÖLEGSIZ GOŞUL
-                </button>`;
-        } else {
-            btnHtml = `
-                <button class="btn-join-tournament" onclick="joinTournament(${t.id})" type="button">
-                    <i class="fas fa-plus-circle"></i> TURNIRA GOŞUL
-                </button>`;
+                    document.getElementById('loading-area').style.display = 'none';
+                    document.getElementById('content-area').style.display = 'block';
+                } else {
+                    alert('Turnir tapylmady!');
+                    window.location.href = './turnir.html';
+                }
+            } catch (e) {
+                alert('Turnir yuklenmedi: ' + e.message);
+                window.location.href = './turnir.html';
+            }
         }
 
-        return `
-            <div class="tournament-card" data-status="${escapeHtml(t.status)}" data-mode="${escapeHtml(t.mode)}">
-                <div class="tournament-header">
-                    <div class="tournament-info">
-                        <h3>${escapeHtml(t.ad)}</h3>
-                        <p>
-                            ${t.tolekli === 0 ? '<span class="status-badge badge-free">TÖLEGSIZ</span>' : ''}
-                            <span class="status-badge status-${escapeHtml(t.status)}">${escapeHtml(t.status)}</span>
-                        </p>
-                    </div>
-                    <div class="tournament-prize">${escapeHtml(t.bayrak_jemi)}</div>
-                </div>
-                <div class="tournament-meta">
-                    <span><i class="fas fa-calendar"></i> ${escapeHtml(t.senesi)}</span>
-                    <span><i class="fas fa-clock"></i> ${escapeHtml(t.wagty)}</span>
-                    <span><i class="fas fa-users"></i> ${t.onaylanan}/${t.yer_sany}</span>
-                    <span><i class="fas fa-gamepad"></i> ${escapeHtml(t.gatnasym)}</span>
-                </div>
-                ${btnHtml}
-            </div>
-        `;
-    }).join('');
-}
+        function showAlreadyJoined(adminOnay, odemeDurumu) {
+            // Turnir maglumatlaryny görkez
+            fetch(API_URL + '/api/turnir-data?turnir_id=' + turnirId, { headers: getAuthHeaders() })
+                .then(r => r.json())
+                .then(result => {
+                    if (result.success && result.turnir) {
+                        const t = result.turnir;
+                        document.getElementById('joined-tournament-summary').innerHTML = `
+                            <h3><i class="fas fa-trophy"></i> ${escapeHtml(t.ad)}</h3>
+                            <p><strong>Sene:</strong> ${escapeHtml(t.senesi)}</p>
+                            <p><strong>Wagt:</strong> ${escapeHtml(t.wagty)}</p>
+                            <p><strong>Karta:</strong> ${escapeHtml(t.karta)}</p>
+                            <p><strong>Gatnaşyk:</strong> ${escapeHtml(t.gatnasym)}</p>
+                            <p><strong>Toleg:</strong> ${escapeHtml(t.tolek)}</p>
+                        `;
+                    }
+                });
+            
+            let statusText = '';
+            if (adminOnay === 0) statusText = 'Status: Garasylýar (Admin tassyklamagy garaşylýar)';
+            else if (adminOnay === 1) statusText = 'Status: Tassyklandy ✅';
+            else if (adminOnay === 2) statusText = 'Status: Ret edildi ❌';
+            
+            if (odemeDurumu === 1) statusText += ' | Toleg: Edilen 💰';
+            else statusText += ' | Toleg: Edilmedi';
+            
+            document.getElementById('joined-status-text').textContent = statusText;
+            
+            document.getElementById('loading-area').style.display = 'none';
+            document.getElementById('already-joined-area').style.display = 'block';
+        }
 
-function showEmpty(msg) {
-    document.getElementById('tournament-list').innerHTML = `
-        <div class="empty-state">
-            <i class="fas fa-calendar-times"></i>
-            <h3>${msg}</h3>
-        </div>`;
-}
+        const paymentPhoneInput = document.getElementById('payment_phone');
+        if (paymentPhoneInput) {
+            paymentPhoneInput.addEventListener('input', function(e) {
+                document.getElementById('display-phone').textContent = e.target.value || '-';
+            });
+        }
 
-async function joinTournament(turnirId) {
-    await checkLoginStatus();
-    if (!isUserLoggedIn) {
-        // TÄZE: Modal stildäki login.html-a gönümdir (1-nji surat)
-        window.location.href = './login.html?redirect=./turnir_gosul.html?id=' + turnirId;
-        return;
-    }
-    if (myTurnirId === turnirId) {
-        alert('Siz eýýäm bu turnira gatnaşdyňyz!');
-        return;
-    }
-    window.location.href = './turnir_gosul.html?id=' + turnirId;
-}
+        document.getElementById('join-tournament-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
 
-function filterTournaments(status, btn) {
-    document.querySelectorAll('.tournament-tab').forEach(t => t.classList.remove('active'));
-    btn.classList.add('active');
-    applyFilters();
-}
+            const pubgId = document.getElementById('pubg_id').value.trim();
+            const tid = document.getElementById('turnir_id').value;
+            const paymentPhoneInput = document.getElementById('payment_phone');
+            const paymentPhone = paymentPhoneInput ? paymentPhoneInput.value.trim() : '';
+            const tolekli = parseInt(document.getElementById('turnir_tolekli').value) === 1;
 
-function filterMode(mode, btn) {
-    document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    applyFilters();
-}
+            if (!pubgId || pubgId.length < 8) {
+                alert('PUBG ID 8 sanly bolmaly!');
+                return;
+            }
+            if (tolekli && !paymentPhone) {
+                alert('Toleg telefon belgisini girizin!');
+                return;
+            }
+            if (!tid) {
+                alert('Turnir ID tapylmady!');
+                return;
+            }
 
-function applyFilters() {
-    const statusBtn = document.querySelector('.tournament-tab.active');
-    const modeBtn = document.querySelector('.mode-btn.active');
-    const status = statusBtn ? statusBtn.textContent.toLowerCase() === 'hemme' ? 'all' : 
-        statusBtn.textContent.toLowerCase() === 'gelejek' ? 'upcoming' :
-        statusBtn.textContent.toLowerCase() === 'häzirki' ? 'current' : 'past' : 'all';
-    const mode = modeBtn ? modeBtn.textContent.toLowerCase().trim().split(' ')[0] : 'all';
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
 
-    document.querySelectorAll('.tournament-card').forEach(card => {
-        const cardStatus = card.dataset.status;
-        const cardMode = card.dataset.mode;
-        const statusMatch = status === 'all' || cardStatus === status;
-        const modeMatch = mode === 'all' || cardMode === mode;
-        card.style.display = (statusMatch && modeMatch) ? 'block' : 'none';
-    });
-    checkEmptyState();
-}
+            try {
+                const response = await fetch(API_URL + '/api/turnir-gosul', {
+                    method: 'POST',
+                    headers: getAuthHeaders(),
+                    body: JSON.stringify({
+                        turnir_id: parseInt(tid),
+                        tournament_id: 'turnir-' + tid,
+                        pubg_id: pubgId,
+                        payment_phone: paymentPhone
+                    })
+                });
 
-function checkEmptyState() {
-    const visibleCards = Array.from(document.querySelectorAll('.tournament-card')).filter(c => c.style.display !== 'none');
-    const list = document.getElementById('tournament-list');
-    const existingEmpty = list.querySelector('.empty-state');
-    if (existingEmpty) existingEmpty.remove();
-    if (visibleCards.length === 0 && allTurnirler.length > 0) {
-        const emptyDiv = document.createElement('div');
-        emptyDiv.className = 'empty-state';
-        emptyDiv.innerHTML = `
-            <i class="fas fa-filter"></i>
-            <h3>Netije Ýok</h3>
-            <p>Saýlanan kriteriýalara laýyk turnir ýok.</p>
-        `;
-        list.appendChild(emptyDiv);
-    }
-}
+                const result = await response.json();
 
-document.addEventListener('DOMContentLoaded', async () => {
-    await checkLoginStatus();
-    await loadMyTournaments();
-    loadTurnirler();
-});
+                if (result.success) {
+                    if (result.data && result.data.auto_approved) {
+                        alert('Turnira üstünlikli goşuldyňyz!');
+                        window.location.href = './index.html';
+                    } else {
+                        window.location.href = './odeme.html?turnir=' + tid;
+                    }
+                } else {
+                    alert(result.message || 'Yalnyslyk yuze cykdy');
+                    btn.disabled = false;
+                }
+            } catch (error) {
+                alert('Yalnyslyk: ' + error.message);
+                btn.disabled = false;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', loadTurnir);

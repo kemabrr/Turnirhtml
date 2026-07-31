@@ -69,38 +69,38 @@
 
 /* ===================== CATEGORIES ===================== */
 .categories-section { margin-bottom: 28px; }
-.categories-grid { display: flex; flex-direction: column; gap: 14px; }
+.categories-grid { display: flex; flex-direction: column; gap: 16px; }
 .category-card {
-    display: flex; align-items: center; gap: 18px; padding: 18px 20px;
-    background: rgba(255, 255, 255, 0.03); border-radius: 20px;
-    border: 1.5px solid rgba(255, 255, 255, 0.1); text-decoration: none; color: #e8e8e8;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative; overflow: hidden;
+    display: flex; align-items: center; gap: 18px; padding: 22px 24px;
+    background: rgba(18, 18, 22, 0.95); border-radius: 24px;
+    border: 1.5px solid rgba(255, 255, 255, 0.08); text-decoration: none; color: #e8e8e8;
+    transition: all 0.3s ease; cursor: pointer; position: relative; overflow: hidden;
 }
 .category-card::before {
     content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    background: linear-gradient(90deg, rgba(255, 45, 85, 0.06), transparent); opacity: 0; transition: opacity 0.3s;
+    background: linear-gradient(90deg, rgba(255, 45, 85, 0.04), transparent); opacity: 0; transition: opacity 0.3s;
 }
 .category-card:hover::before { opacity: 1; }
 .category-card:hover { 
-    background: rgba(255, 45, 85, 0.05); 
-    border-color: rgba(255, 45, 85, 0.35); 
-    transform: translateX(4px); 
-    box-shadow: 0 4px 20px rgba(255, 45, 85, 0.12), 0 0 0 1px rgba(255, 45, 85, 0.15);
+    background: rgba(22, 18, 20, 0.98); 
+    border-color: rgba(255, 45, 85, 0.3); 
+    transform: translateX(3px); 
+    box-shadow: 0 4px 25px rgba(255, 45, 85, 0.1);
 }
 .category-icon {
     font-size: 22px; width: 56px; height: 56px; display: flex; align-items: center; justify-content: center;
-    background: rgba(255, 45, 85, 0.08); border-radius: 16px;
-    border: 1.5px solid rgba(255, 45, 85, 0.2); color: #ff2d55; flex-shrink: 0; transition: all 0.3s;
+    background: rgba(255, 45, 85, 0.1); border-radius: 18px;
+    border: 1.5px solid rgba(255, 45, 85, 0.25); color: #ff2d55; flex-shrink: 0; transition: all 0.3s;
 }
 .category-card:hover .category-icon { 
-    background: rgba(255, 45, 85, 0.15); 
-    border-color: rgba(255, 45, 85, 0.4);
-    box-shadow: 0 0 15px rgba(255, 45, 85, 0.2);
+    background: rgba(255, 45, 85, 0.18); 
+    border-color: rgba(255, 45, 85, 0.45);
+    box-shadow: 0 0 20px rgba(255, 45, 85, 0.15);
 }
 .category-info { flex: 1; position: relative; z-index: 1; text-align: center; }
-.category-info h3 { font-size: 17px; font-weight: 700; margin-bottom: 5px; letter-spacing: 0.5px; }
-.category-info p { font-size: 12px; opacity: 0.5; color: #a0a0c0; }
-.category-arrow { font-size: 18px; opacity: 0.5; color: #ff2d55; transition: all 0.3s; position: relative; z-index: 1; }
+.category-info h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.3px; color: #ffffff; }
+.category-info p { font-size: 13px; opacity: 0.45; color: #a0a0c0; }
+.category-arrow { font-size: 18px; opacity: 0.6; color: #ff2d55; transition: all 0.3s; position: relative; z-index: 1; }
 .category-card:hover .category-arrow { opacity: 1; transform: translateX(3px); }
 
 /* ===================== INFO SECTION ===================== */

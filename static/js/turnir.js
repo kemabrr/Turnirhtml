@@ -31,47 +31,6 @@ async function checkLoginStatus() {
     return loginCheckPromise;
 }
 
-async function loadMyTournaments() {
-    const section = document.getElementById('my-tournaments-section');
-    if (!isUserLoggedIn) {
-        if (section) section.style.display = 'none';
-        return;
-    }
-    try {
-        const token = localStorage.getItem('pubg_token');
-        const result = await fetch(API_URL + '/api/gatnasylan-turnirler', {
-            headers: { 'Authorization': 'Bearer ' + token }
-        }).then(r => r.json());
-
-        if (result.success && result.turnirler && result.turnirler.length > 0) {
-            const container = document.getElementById('my-tournaments-list');
-            if (section) section.style.display = 'block';
-
-            container.innerHTML = result.turnirler.map(t => {
-                let statusClass = 'status-waiting';
-                let statusText = 'Garasylýar';
-                if (t.admin_onay === 1) { statusClass = 'status-approved'; statusText = 'Tassyklandy'; }
-                else if (t.admin_onay === 2) { statusClass = 'status-rejected'; statusText = 'Ret edildi'; }
-
-                return `
-                    <div class="my-tournament-card">
-                        <div class="my-tournament-info">
-                            <h4>${escapeHtml(t.ad)}</h4>
-                            <p>${escapeHtml(t.senesi)} | ${escapeHtml(t.wagty)} | ${escapeHtml(t.karta)}</p>
-                        </div>
-                        <span class="my-tournament-status ${statusClass}">${statusText}</span>
-                    </div>
-                `;
-            }).join('');
-        } else {
-            if (section) section.style.display = 'none';
-        }
-    } catch (e) {
-        console.error('Gatnasylan turnirler yuklenmedi:', e);
-        if (section) section.style.display = 'none';
-    }
-}
-
 function escapeHtml(text) {
     if (!text) return '';
     const div = document.createElement('div');
@@ -131,9 +90,9 @@ function renderTurnirler(turnirler) {
                 </button>`;
         }
 
-        // Gatnasylan turnir ucin adyna ✓ belgisi
+        // Gatnasylan turnir ucin adyna GOK ✓ belgisi
         const adDisplay = isJoined 
-            ? escapeHtml(t.ad) + ' <span style="color:#00c853;margin-left:6px;font-size:0.85em;"><i class="fas fa-check-circle"></i></span>' 
+            ? escapeHtml(t.ad) + ' <span style="color:#0096ff;margin-left:6px;font-size:0.85em;"><i class="fas fa-check-circle"></i></span>' 
             : escapeHtml(t.ad);
 
         return `
@@ -196,7 +155,6 @@ function filterMode(mode, btn) {
 function applyFilters() {
     const list = document.getElementById('tournament-list');
 
-    // Eger turnirler heniz yuklenmedik bolsa, yuklenyar gorkez (tazelemede yok bolmaz)
     if (allTurnirler.length === 0) {
         list.innerHTML = `
             <div class="empty-state">
@@ -244,6 +202,5 @@ function checkEmptyState() {
 
 document.addEventListener('DOMContentLoaded', async () => {
     await checkLoginStatus();
-    await loadMyTournaments();
     loadTurnirler();
 });

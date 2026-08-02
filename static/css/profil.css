@@ -78,7 +78,7 @@
     transform: translateY(-2px);
 }
 
-/* ===================== KATEGORIYALAR - 2-nji surat ýaly ===================== */
+/* ===================== KATEGORIYALAR - INDEX STILI ===================== */
 .profile-categories {
     display: flex;
     flex-direction: column;
@@ -86,98 +86,179 @@
     margin-bottom: 100px;
 }
 
-/* Karta - gaty gara, tekiz */
+/* Indexdäki ýaly glassmorphism karta */
 .category-card {
     display: flex;
     align-items: center;
-    gap: 0;
-    padding: 18px 20px;
-    background: #0c0c10;
+    gap: 18px;
+    padding: 20px 22px;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.07) 0%,
+        rgba(255, 255, 255, 0.03) 50%,
+        rgba(255, 255, 255, 0.01) 100%
+    );
     border-radius: 20px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.08);
     cursor: pointer;
-    transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
-}
-.category-card:hover {
-    background: #111118;
-}
-.category-card:active {
-    transform: scale(0.985);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow:
+        0 4px 24px rgba(0, 0, 0, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Icon container - gaty gara, dörtburçluk */
-.cat-icon {
+/* Top highlight line */
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 15%;
+    right: 15%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+}
+
+/* Subtle bottom glow on hover */
+.category-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50%;
+    background: linear-gradient(to top, rgba(255,45,85,0.02), transparent);
+    opacity: 0;
+    transition: opacity 0.35s;
+    pointer-events: none;
+}
+.category-card:hover::after { opacity: 1; }
+
+.category-card:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0.04) 50%,
+        rgba(255, 255, 255, 0.02) 100%
+    );
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+        0 12px 40px rgba(0, 0, 0, 0.4),
+        0 0 30px rgba(255, 45, 85, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+.category-card:active {
+    transform: translateY(0) scale(0.995);
+    transition-duration: 0.1s;
+}
+
+/* Icon - indexdäki ýaly */
+.cat-icon,
+.category-icon {
+    font-size: 22px;
     width: 48px;
     height: 48px;
-    border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #ff2d55;
     flex-shrink: 0;
-    transition: all 0.3s;
-    background: #16161c;
-    margin-right: 16px;
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
-/* Diňe icon reňki dürli */
-.cat-icon-red { color: #ff2d55; }
-.cat-icon-orange { color: #ff8c00; }
-.cat-icon-pink { color: #ff69b4; }
-.cat-icon-green { color: #00c853; }
 
-/* Tekst merkezde */
-.cat-info {
+.category-card:hover .cat-icon,
+.category-card:hover .category-icon {
+    background: rgba(255, 45, 85, 0.1);
+    border-color: rgba(255, 45, 85, 0.2);
+    transform: scale(1.08);
+}
+
+/* Dürli icon reňkleri */
+.cat-icon-red,
+.category-icon-red { color: #ff2d55; }
+.cat-icon-orange,
+.category-icon-orange { color: #ff8c00; }
+.cat-icon-pink,
+.category-icon-pink { color: #ff69b4; }
+.cat-icon-green,
+.category-icon-green { color: #00c853; }
+
+/* Info - indexdäki ýaly */
+.cat-info,
+.category-info {
     flex: 1;
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
     gap: 4px;
-    text-align: center;
 }
-.cat-title {
-    font-size: 17px;
+
+.cat-title,
+.category-info h3 {
+    font-size: 16px;
     font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 0.2px;
     color: #ffffff;
-    font-family: 'Rajdhani', sans-serif;
-    letter-spacing: 0.3px;
 }
-.cat-subtitle {
-    font-size: 13px;
-    color: #555560;
-    font-weight: 400;
+
+.cat-subtitle,
+.category-info p {
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.2px;
 }
-.cat-arrow {
-    font-size: 15px;
-    color: #333340;
-    transition: all 0.3s;
-    margin-left: 12px;
+
+/* Arrow - indexdäki ýaly */
+.cat-arrow,
+.category-arrow {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.25);
+    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    z-index: 1;
 }
-.category-card:hover .cat-arrow {
-    color: #ff2d55;
-    transform: translateX(3px);
+
+.category-card:hover .cat-arrow,
+.category-card:hover .category-arrow {
+    color: rgba(255, 255, 255, 0.6);
+    transform: translateX(4px);
 }
 
 /* Logout */
 .category-logout {
-    background: #0c0c10;
+    border: 1px solid rgba(255, 45, 85, 0.08);
 }
 .category-logout:hover {
-    background: #111118;
+    border-color: rgba(255, 45, 85, 0.15);
 }
 
 /* ===================== ACYLJAK BÖLEKLER ===================== */
 .category-expand {
-    background: #08080c;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.03) 0%,
+        rgba(255, 255, 255, 0.01) 100%
+    );
     border-radius: 0 0 20px 20px;
-    padding: 0 20px 16px;
+    padding: 0 22px 18px;
     margin-top: -10px;
     margin-bottom: 10px;
     margin-left: 4px;
     margin-right: 4px;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: none;
     animation: expandIn 0.3s ease;
+    backdrop-filter: blur(10px);
 }
 @keyframes expandIn {
     from { opacity: 0; transform: translateY(-8px); }
@@ -265,7 +346,7 @@
 .team-code-display {
     text-align: center;
     padding: 16px;
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 16px;
 }
 .team-code-label {
@@ -279,7 +360,7 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.35);
     padding: 14px 18px;
     border-radius: 14px;
     border: 1px solid rgba(255, 45, 85, 0.15);
@@ -367,8 +448,11 @@
     .profile-header-card { padding: 24px 16px; }
     .profile-avatar-large { width: 68px; height: 68px; font-size: 30px; }
     .profile-header-card h2 { font-size: 20px; }
-    .category-card { padding: 16px 18px; }
-    .cat-icon { width: 44px; height: 44px; border-radius: 12px; font-size: 18px; margin-right: 14px; }
-    .cat-title { font-size: 16px; }
-    .cat-subtitle { font-size: 12px; }
+    .category-card { padding: 18px 20px; }
+    .cat-icon,
+    .category-icon { width: 44px; height: 44px; font-size: 20px; }
+    .cat-title,
+    .category-info h3 { font-size: 15px; }
+    .cat-subtitle,
+    .category-info p { font-size: 12px; }
 }

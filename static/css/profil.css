@@ -78,7 +78,7 @@
     transform: translateY(-2px);
 }
 
-/* ===================== KATEGORIYALAR - 2-nji surat stili ===================== */
+/* ===================== KATEGORIYALAR ===================== */
 .profile-categories {
     display: flex;
     flex-direction: column;
@@ -86,13 +86,13 @@
     margin-bottom: 100px;
 }
 
-/* Ähli kartalar BIR reňkli gara */
+/* Karta - gara fon */
 .category-card {
     display: flex;
     align-items: center;
     gap: 18px;
     padding: 20px 22px;
-    background: #121214;
+    background: #0f0f14;
     border-radius: 22px;
     border: 1px solid rgba(255, 255, 255, 0.03);
     cursor: pointer;
@@ -101,15 +101,15 @@
     overflow: hidden;
 }
 .category-card:hover {
-    background: #18181c;
-    border-color: rgba(255, 255, 255, 0.06);
+    background: #15151c;
+    border-color: rgba(255, 255, 255, 0.05);
     transform: translateX(2px);
 }
 .category-card:active {
     transform: scale(0.985);
 }
 
-/* Icon container - ähli bir reňkli gara fon, diňe icon reňki dürli */
+/* Icon container - ähli bir reňkli gara fon */
 .cat-icon {
     width: 50px;
     height: 50px;
@@ -120,10 +120,10 @@
     font-size: 20px;
     flex-shrink: 0;
     transition: all 0.3s;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #181820;
+    border: 1px solid rgba(255, 255, 255, 0.04);
 }
-/* Diňe icon reňki dürli - fon bir reňkli */
+/* Diňe icon reňki dürli */
 .cat-icon-red { color: #ff2d55; }
 .cat-icon-orange { color: #ff8c00; }
 .cat-icon-pink { color: #ff69b4; }
@@ -158,17 +158,17 @@
     transform: translateX(3px);
 }
 
-/* Logout aýratyn */
+/* Logout */
 .category-logout {
     border: 1px solid rgba(255, 45, 85, 0.05);
 }
 .category-logout:hover {
-    border-color: rgba(255, 45, 85, 0.12);
+    border-color: rgba(255, 45, 85, 0.1);
 }
 
 /* ===================== ACYLJAK BÖLEKLER ===================== */
 .category-expand {
-    background: #0c0c10;
+    background: #0a0a0e;
     border-radius: 0 0 22px 22px;
     padding: 0 22px 18px;
     margin-top: -12px;

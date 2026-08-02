@@ -86,32 +86,30 @@
     margin-bottom: 100px;
 }
 
-/* Karta - gaty garaňky, tekiz */
+/* Ähli kartalar BIR reňkli gara */
 .category-card {
     display: flex;
     align-items: center;
     gap: 18px;
     padding: 20px 22px;
-    background: #14141c;
+    background: #121214;
     border-radius: 22px;
-    border: 1px solid rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.03);
     cursor: pointer;
     transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 .category-card:hover {
-    background: #1a1a24;
-    border-color: rgba(255, 45, 85, 0.1);
+    background: #18181c;
+    border-color: rgba(255, 255, 255, 0.06);
     transform: translateX(2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
 }
 .category-card:active {
     transform: scale(0.985);
 }
 
-/* Icon container - garaňky, dörtburçluk, çalt border */
+/* Icon container - ähli bir reňkli gara fon, diňe icon reňki dürli */
 .cat-icon {
     width: 50px;
     height: 50px;
@@ -122,24 +120,14 @@
     font-size: 20px;
     flex-shrink: 0;
     transition: all 0.3s;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 }
-.cat-icon-red {
-    background: rgba(255, 45, 85, 0.08);
-    color: #ff2d55;
-}
-.cat-icon-orange {
-    background: rgba(255, 140, 0, 0.08);
-    color: #ff8c00;
-}
-.cat-icon-pink {
-    background: rgba(255, 105, 180, 0.08);
-    color: #ff69b4;
-}
-.cat-icon-green {
-    background: rgba(0, 200, 83, 0.08);
-    color: #00c853;
-}
+/* Diňe icon reňki dürli - fon bir reňkli */
+.cat-icon-red { color: #ff2d55; }
+.cat-icon-orange { color: #ff8c00; }
+.cat-icon-pink { color: #ff69b4; }
+.cat-icon-green { color: #00c853; }
 
 .cat-info {
     flex: 1;
@@ -156,12 +144,12 @@
 }
 .cat-subtitle {
     font-size: 13px;
-    color: #666680;
+    color: #555560;
     font-weight: 400;
 }
 .cat-arrow {
     font-size: 15px;
-    color: #444455;
+    color: #3a3a45;
     transition: all 0.3s;
     margin-left: 6px;
 }
@@ -172,22 +160,22 @@
 
 /* Logout aýratyn */
 .category-logout {
-    border: 1px solid rgba(255, 45, 85, 0.06);
+    border: 1px solid rgba(255, 45, 85, 0.05);
 }
 .category-logout:hover {
-    border-color: rgba(255, 45, 85, 0.15);
+    border-color: rgba(255, 45, 85, 0.12);
 }
 
 /* ===================== ACYLJAK BÖLEKLER ===================== */
 .category-expand {
-    background: #0f0f16;
+    background: #0c0c10;
     border-radius: 0 0 22px 22px;
     padding: 0 22px 18px;
     margin-top: -12px;
     margin-bottom: 10px;
     margin-left: 6px;
     margin-right: 6px;
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.02);
     border-top: none;
     animation: expandIn 0.3s ease;
 }
@@ -222,7 +210,7 @@
 .step-icon .fa-times-circle { color: #ff2d55; }
 .step-info { display: flex; flex-direction: column; }
 .step-title { font-weight: 700; font-size: 14px; color: #e0e0e8; }
-.step-date { font-size: 12px; color: #606070; margin-top: 3px; }
+.step-date { font-size: 12px; color: #505050; margin-top: 3px; }
 
 .status-badge {
     padding: 12px 18px;
@@ -284,7 +272,7 @@
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #606070;
+    color: #505050;
     margin-bottom: 10px;
 }
 .team-code-box {
@@ -321,7 +309,7 @@
 }
 .team-code-hint {
     font-size: 11px;
-    color: #505060;
+    color: #404050;
 }
 .team-empty-inner {
     text-align: center;
@@ -329,7 +317,7 @@
 }
 .team-empty-inner p {
     font-size: 14px;
-    color: #606070;
+    color: #505050;
     margin-bottom: 14px;
 }
 .btn-team-action {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profilim - PUBG Turnuvasy</title>
     <link rel="stylesheet" href="/static/css/base.css?v=1.0.1">
-    <link rel="stylesheet" href="/static/css/profil.css?v=1.0.2">
+    <link rel="stylesheet" href="/static/css/profil.css?v=1.0.1">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
@@ -18,70 +18,89 @@
         <div class="particle"></div>
     </div>
 
-    <div class="container main-content" style="padding-bottom: 80px;">
-        <!-- Profil Kartasy -->
-        <div class="profile-hero-card">
+    <div class="container main-content">
+        <!-- PROFIL KARTASY -->
+        <div class="profile-header-card">
             <div class="profile-avatar-large">
                 <i class="fas fa-user"></i>
             </div>
-            <h2 class="profile-name" id="profil-ad">-</h2>
+            <h2 id="profil-ad">-</h2>
             <p class="profile-phone" id="profil-telefon">-</p>
             <p class="profile-ref-code" id="profil-ref">-</p>
-            <a href="#" class="btn-settings" onclick="alert('Sazlamalar geljekde!'); return false;">
+            <button class="btn-sazlamalar" onclick="goSazlamalar()">
                 <i class="fas fa-cog"></i> SAZLAMALAR
-            </a>
-        </div>
-
-        <!-- Kategoriýalar -->
-        <div class="profile-menu">
-            <a href="./takim.html" class="profile-menu-item">
-                <div class="menu-item-icon">
-                    <i class="fas fa-users"></i>
-                </div>
-                <div class="menu-item-text">
-                    <span>Toparlarym</span>
-                </div>
-                <div class="menu-item-arrow">
-                    <i class="fas fa-chevron-right"></i>
-                </div>
-            </a>
-
-            <a href="#" class="profile-menu-item" onclick="alert('Statistika geljekde!'); return false;">
-                <div class="menu-item-icon">
-                    <i class="fas fa-chart-bar"></i>
-                </div>
-                <div class="menu-item-text">
-                    <span>Oýun Statistikasy</span>
-                </div>
-                <div class="menu-item-arrow">
-                    <i class="fas fa-chevron-right"></i>
-                </div>
-            </a>
-
-            <a href="#" class="profile-menu-item" onclick="alert('Goldaw geljekde!'); return false;">
-                <div class="menu-item-icon">
-                    <i class="fas fa-life-ring"></i>
-                </div>
-                <div class="menu-item-text">
-                    <span>Goldaw ýazmak</span>
-                </div>
-                <div class="menu-item-arrow">
-                    <i class="fas fa-chevron-right"></i>
-                </div>
-            </a>
-
-            <button type="button" class="profile-menu-item logout-item" onclick="logout()">
-                <div class="menu-item-icon">
-                    <i class="fas fa-sign-out-alt"></i>
-                </div>
-                <div class="menu-item-text">
-                    <span>Çykyş</span>
-                </div>
-                <div class="menu-item-arrow">
-                    <i class="fas fa-chevron-right"></i>
-                </div>
             </button>
         </div>
+
+        <!-- KATEGORIYALAR -->
+        <div class="profile-categories">
+            
+            <!-- 1. Toparlarym -->
+            <div class="category-card" id="cat-topar" onclick="toggleTopar()">
+                <div class="cat-icon cat-icon-red">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="cat-info">
+                    <span class="cat-title">Toparlarym</span>
+                    <span class="cat-subtitle" id="topar-subtitle">Yüklenýär...</span>
+                </div>
+                <i class="fas fa-chevron-right cat-arrow"></i>
+            </div>
+            <div class="category-expand" id="expand-topar" style="display:none">
+                <div id="topar-content">
+                    <!-- JS bilen doldurylar -->
+                </div>
+            </div>
+
+            <!-- 2. Oýun Statistikasý (Statusym) -->
+            <div class="category-card" id="cat-status" onclick="toggleStatus()">
+                <div class="cat-icon cat-icon-orange">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <div class="cat-info">
+                    <span class="cat-title">Oýun Statistikasý</span>
+                    <span class="cat-subtitle" id="status-subtitle">Statusyňyzy görüň</span>
+                </div>
+                <i class="fas fa-chevron-right cat-arrow"></i>
+            </div>
+            <div class="category-expand" id="expand-status" style="display:none">
+                <div class="status-steps" id="status-steps">
+                    <!-- JS bilen doldurylar -->
+                </div>
+                <div id="status-action"></div>
+            </div>
+
+            <!-- 3. Goldaw ýazmak -->
+            <div class="category-card" onclick="goGoldaw()">
+                <div class="cat-icon cat-icon-pink">
+                    <i class="fas fa-life-ring"></i>
+                </div>
+                <div class="cat-info">
+                    <span class="cat-title">Goldaw ýazmak</span>
+                    <span class="cat-subtitle">Admina habar ýazyň</span>
+                </div>
+                <i class="fas fa-chevron-right cat-arrow"></i>
+            </div>
+
+            <!-- 4. Çykyş -->
+            <div class="category-card category-logout" onclick="logout()">
+                <div class="cat-icon cat-icon-red">
+                    <i class="fas fa-sign-out-alt"></i>
+                </div>
+                <div class="cat-info">
+                    <span class="cat-title">Çykyş</span>
+                    <span class="cat-subtitle">Hasapdan çykyş</span>
+                </div>
+                <i class="fas fa-chevron-right cat-arrow"></i>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- YUKLENME -->
+    <div id="profil-loading" class="loading-full">
+        <i class="fas fa-spinner fa-spin"></i>
+        <p>Maglumatlar yüklenýär...</p>
     </div>
 
     <nav class="bottom-nav">
@@ -105,6 +124,6 @@
         </div>
     </nav>
 
-    <script src="/static/js/profil.js?v=1.0.2"></script>
+    <script src="/static/js/profil.js?v=1.0.1"></script>
 </body>
 </html>

@@ -78,7 +78,7 @@
     transform: translateY(-2px);
 }
 
-/* ===================== KATEGORIYALAR - INDEX STILI ===================== */
+/* ===================== KATEGORIYALAR ===================== */
 .profile-categories {
     display: flex;
     flex-direction: column;
@@ -86,78 +86,28 @@
     margin-bottom: 100px;
 }
 
-/* Indexdäki ýaly glassmorphism karta */
+/* Karta - gaty gara, tekiz */
 .category-card {
     display: flex;
     align-items: center;
     gap: 18px;
     padding: 20px 22px;
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.07) 0%,
-        rgba(255, 255, 255, 0.03) 50%,
-        rgba(255, 255, 255, 0.01) 100%
-    );
+    background: #0c0c10;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: none;
     cursor: pointer;
     position: relative;
     overflow: hidden;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    box-shadow:
-        0 4px 24px rgba(0, 0, 0, 0.3),
-        inset 0 1px 0 rgba(255, 255, 255, 0.1);
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
 }
-
-/* Top highlight line */
-.category-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 15%;
-    right: 15%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-}
-
-/* Subtle bottom glow on hover */
-.category-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 50%;
-    background: linear-gradient(to top, rgba(255,45,85,0.02), transparent);
-    opacity: 0;
-    transition: opacity 0.35s;
-    pointer-events: none;
-}
-.category-card:hover::after { opacity: 1; }
-
 .category-card:hover {
-    transform: translateY(-2px);
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.1) 0%,
-        rgba(255, 255, 255, 0.04) 50%,
-        rgba(255, 255, 255, 0.02) 100%
-    );
-    border-color: rgba(255, 255, 255, 0.15);
-    box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.4),
-        0 0 30px rgba(255, 45, 85, 0.06),
-        inset 0 1px 0 rgba(255, 255, 255, 0.12);
+    background: #121218;
 }
-
 .category-card:active {
-    transform: translateY(0) scale(0.995);
-    transition-duration: 0.1s;
+    transform: scale(0.985);
 }
 
-/* Icon - indexdäki ýaly */
+/* Icon - ähli bir reňkli qyzyl */
 .cat-icon,
 .category-icon {
     font-size: 22px;
@@ -166,32 +116,33 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 14px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     color: #ff2d55;
     flex-shrink: 0;
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s ease;
+}
+
+/* Ähli icon klasslary bir reňkli */
+.cat-icon-red,
+.cat-icon-orange,
+.cat-icon-pink,
+.cat-icon-green,
+.category-icon-red,
+.category-icon-orange,
+.category-icon-pink,
+.category-icon-green {
+    color: #ff2d55;
 }
 
 .category-card:hover .cat-icon,
 .category-card:hover .category-icon {
-    background: rgba(255, 45, 85, 0.1);
-    border-color: rgba(255, 45, 85, 0.2);
-    transform: scale(1.08);
+    background: rgba(255, 45, 85, 0.08);
+    border-color: rgba(255, 45, 85, 0.15);
 }
 
-/* Dürli icon reňkleri */
-.cat-icon-red,
-.category-icon-red { color: #ff2d55; }
-.cat-icon-orange,
-.category-icon-orange { color: #ff8c00; }
-.cat-icon-pink,
-.category-icon-pink { color: #ff69b4; }
-.cat-icon-green,
-.category-icon-green { color: #00c853; }
-
-/* Info - indexdäki ýaly */
+/* Info */
 .cat-info,
 .category-info {
     flex: 1;
@@ -214,51 +165,45 @@
 .cat-subtitle,
 .category-info p {
     font-size: 12.5px;
-    color: rgba(255, 255, 255, 0.4);
+    color: rgba(255, 255, 255, 0.35);
     letter-spacing: 0.2px;
 }
 
-/* Arrow - indexdäki ýaly */
+/* Arrow */
 .cat-arrow,
 .category-arrow {
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.25);
-    transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    color: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
     position: relative;
     z-index: 1;
 }
 
 .category-card:hover .cat-arrow,
 .category-card:hover .category-arrow {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.5);
     transform: translateX(4px);
 }
 
 /* Logout */
 .category-logout {
-    border: 1px solid rgba(255, 45, 85, 0.08);
+    background: #0c0c10;
 }
 .category-logout:hover {
-    border-color: rgba(255, 45, 85, 0.15);
+    background: #121218;
 }
 
 /* ===================== ACYLJAK BÖLEKLER ===================== */
 .category-expand {
-    background: linear-gradient(
-        135deg,
-        rgba(255, 255, 255, 0.03) 0%,
-        rgba(255, 255, 255, 0.01) 100%
-    );
+    background: #08080c;
     border-radius: 0 0 20px 20px;
     padding: 0 22px 18px;
     margin-top: -10px;
     margin-bottom: 10px;
     margin-left: 4px;
     margin-right: 4px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-top: none;
+    border: none;
     animation: expandIn 0.3s ease;
-    backdrop-filter: blur(10px);
 }
 @keyframes expandIn {
     from { opacity: 0; transform: translateY(-8px); }

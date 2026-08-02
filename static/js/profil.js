@@ -166,7 +166,7 @@ function toggleTopar() {
     } else {
         expand.style.display = 'none';
         arrow.style.transform = 'rotate(0deg)';
-        arrow.style.color = '#606070';
+        arrow.style.color = '#555570';
     }
 }
 
@@ -180,17 +180,15 @@ function toggleStatus() {
     } else {
         expand.style.display = 'none';
         arrow.style.transform = 'rotate(0deg)';
-        arrow.style.color = '#606070';
+        arrow.style.color = '#555570';
     }
 }
 
 function goSazlamalar() {
-    // Sazlamalar sahypasyna gider
     window.location.href = './sazlamalar.html';
 }
 
 function goGoldaw() {
-    // Admina ýazmak sahypasyna gider
     window.location.href = './goldaw.html';
 }
 

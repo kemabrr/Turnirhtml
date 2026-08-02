@@ -1,14 +1,14 @@
 /* ===================== PROFIL HEADER KARTASY ===================== */
 .profile-header-card {
-    background: linear-gradient(180deg, rgba(30, 30, 40, 0.95), rgba(20, 20, 30, 0.98));
+    background: linear-gradient(180deg, rgba(35, 35, 50, 0.95), rgba(28, 28, 42, 0.98));
     border-radius: 24px;
     padding: 32px 24px;
     margin-bottom: 20px;
     text-align: center;
-    border: 1px solid rgba(255, 45, 85, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     position: relative;
     overflow: hidden;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
 }
 .profile-header-card::before {
     content: '';
@@ -22,20 +22,20 @@
     animation: progress-shimmer 3s linear infinite;
 }
 .profile-avatar-large {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     background: linear-gradient(135deg, #ff2d55, #ff6b35);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40px;
+    font-size: 36px;
     color: white;
-    margin: 0 auto 16px;
-    box-shadow: 0 0 40px rgba(255, 45, 85, 0.35);
+    margin: 0 auto 14px;
+    box-shadow: 0 0 30px rgba(255, 45, 85, 0.3);
 }
 .profile-header-card h2 {
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 700;
     color: #fff;
     margin-bottom: 6px;
@@ -44,26 +44,25 @@
 }
 .profile-phone {
     font-size: 15px;
-    color: #a0a0c0;
+    color: #a0a0b8;
     margin-bottom: 4px;
-    opacity: 0.8;
 }
 .profile-ref-code {
     font-family: 'Orbitron', monospace;
-    font-size: 16px;
+    font-size: 15px;
     color: #ff2d55;
-    margin-bottom: 20px;
-    text-shadow: 0 0 10px rgba(255, 45, 85, 0.3);
+    margin-bottom: 18px;
+    text-shadow: 0 0 8px rgba(255, 45, 85, 0.25);
     letter-spacing: 2px;
 }
 .btn-sazlamalar {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 14px;
-    color: #e0e0e0;
+    color: #d0d0e0;
     padding: 12px 32px;
     font-family: 'Orbitron', sans-serif;
     font-size: 13px;
@@ -73,128 +72,132 @@
     transition: all 0.3s;
 }
 .btn-sazlamalar:hover {
-    background: rgba(255, 45, 85, 0.15);
-    border-color: rgba(255, 45, 85, 0.3);
+    background: rgba(255, 45, 85, 0.12);
+    border-color: rgba(255, 45, 85, 0.25);
     color: #ff2d55;
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(255, 45, 85, 0.2);
 }
 
 /* ===================== KATEGORIYALAR ===================== */
 .profile-categories {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     margin-bottom: 100px;
 }
 .category-card {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
     padding: 18px 20px;
-    background: linear-gradient(135deg, rgba(25, 25, 35, 0.95), rgba(18, 18, 28, 0.98));
-    border-radius: 18px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(145deg, rgba(40, 40, 55, 0.9), rgba(32, 32, 48, 0.95));
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
     position: relative;
     overflow: hidden;
 }
 .category-card:hover {
-    background: linear-gradient(135deg, rgba(35, 35, 50, 0.95), rgba(25, 25, 40, 0.98));
-    border-color: rgba(255, 45, 85, 0.15);
-    transform: translateX(4px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(145deg, rgba(50, 50, 70, 0.92), rgba(42, 42, 60, 0.95));
+    border-color: rgba(255, 45, 85, 0.12);
+    transform: translateX(3px);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.2);
 }
 .category-card:active {
-    transform: scale(0.98);
+    transform: scale(0.985);
 }
+
+/* Icon container - rounded square with subtle colored bg */
 .cat-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 14px;
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
+    font-size: 22px;
     flex-shrink: 0;
     transition: all 0.3s;
 }
 .cat-icon-red {
-    background: rgba(255, 45, 85, 0.12);
+    background: rgba(255, 45, 85, 0.1);
     color: #ff2d55;
-    box-shadow: 0 0 15px rgba(255, 45, 85, 0.1);
 }
 .cat-icon-orange {
-    background: rgba(255, 140, 0, 0.12);
+    background: rgba(255, 140, 0, 0.1);
     color: #ff8c00;
-    box-shadow: 0 0 15px rgba(255, 140, 0, 0.1);
 }
 .cat-icon-pink {
-    background: rgba(255, 105, 180, 0.12);
+    background: rgba(255, 105, 180, 0.1);
     color: #ff69b4;
-    box-shadow: 0 0 15px rgba(255, 105, 180, 0.1);
 }
 .cat-icon-green {
-    background: rgba(0, 200, 83, 0.12);
+    background: rgba(0, 200, 83, 0.1);
     color: #00c853;
-    box-shadow: 0 0 15px rgba(0, 200, 83, 0.1);
 }
+
 .cat-info {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 5px;
 }
 .cat-title {
-    font-size: 16px;
+    font-size: 17px;
     font-weight: 700;
-    color: #e8e8e8;
+    color: #f0f0f5;
     font-family: 'Rajdhani', sans-serif;
+    letter-spacing: 0.5px;
 }
 .cat-subtitle {
-    font-size: 12px;
-    color: #808090;
-    opacity: 0.8;
+    font-size: 13px;
+    color: #8888a0;
+    font-weight: 400;
 }
 .cat-arrow {
-    font-size: 14px;
-    color: #606070;
+    font-size: 16px;
+    color: #555570;
     transition: all 0.3s;
+    margin-left: 8px;
 }
 .category-card:hover .cat-arrow {
     color: #ff2d55;
-    transform: translateX(4px);
+    transform: translateX(3px);
 }
+
+/* Logout special styling */
 .category-logout {
-    border: 1px solid rgba(255, 45, 85, 0.1);
+    border: 1px solid rgba(255, 45, 85, 0.08);
 }
 .category-logout:hover {
-    border-color: rgba(255, 45, 85, 0.3);
+    border-color: rgba(255, 45, 85, 0.2);
 }
 
 /* ===================== ACYLJAK BÖLEKLER ===================== */
 .category-expand {
-    background: rgba(20, 20, 30, 0.6);
-    border-radius: 0 0 18px 18px;
-    padding: 0 20px 20px;
-    margin-top: -8px;
-    margin-bottom: 8px;
+    background: rgba(30, 30, 45, 0.7);
+    border-radius: 0 0 20px 20px;
+    padding: 0 20px 18px;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    margin-left: 4px;
+    margin-right: 4px;
     border: 1px solid rgba(255, 255, 255, 0.03);
     border-top: none;
     animation: expandIn 0.3s ease;
 }
 @keyframes expandIn {
-    from { opacity: 0; transform: translateY(-10px); }
+    from { opacity: 0; transform: translateY(-8px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ===================== STATUS STEPS (ACYLAN BÖLEKDE) ===================== */
+/* ===================== STATUS STEPS ===================== */
 .status-steps {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    padding-top: 12px;
+    gap: 10px;
+    padding-top: 10px;
 }
 .status-step {
     display: flex;
@@ -202,33 +205,33 @@
     gap: 14px;
     padding: 14px 16px;
     background: rgba(255, 255, 255, 0.02);
-    border-radius: 12px;
-    border-left: 3px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    border-left: 3px solid rgba(255, 255, 255, 0.08);
     transition: all 0.3s;
 }
 .status-step.completed { border-left-color: #00c853; background: rgba(0, 200, 83, 0.04); }
 .status-step.pending { border-left-color: #ff8c00; background: rgba(255, 140, 0, 0.04); }
 .status-step.rejected { border-left-color: #ff2d55; background: rgba(255, 45, 85, 0.04); }
-.step-icon { font-size: 22px; width: 32px; text-align: center; flex-shrink: 0; }
+.step-icon { font-size: 20px; width: 28px; text-align: center; flex-shrink: 0; }
 .step-icon .fa-check-circle { color: #00c853; }
 .step-icon .fa-hourglass-half { color: #ff8c00; }
 .step-icon .fa-times-circle { color: #ff2d55; }
 .step-info { display: flex; flex-direction: column; }
-.step-title { font-weight: 700; font-size: 14px; color: #e0e0e0; }
-.step-date { font-size: 11px; color: #808090; margin-top: 3px; }
+.step-title { font-weight: 700; font-size: 14px; color: #e0e0e8; }
+.step-date { font-size: 12px; color: #8080a0; margin-top: 3px; }
 
 .status-badge {
-    padding: 12px 20px;
+    padding: 12px 18px;
     border-radius: 12px;
     font-weight: 700;
     text-align: center;
-    margin-top: 14px;
+    margin-top: 12px;
     font-size: 13px;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
-.status-badge.approved { background: rgba(0, 200, 83, 0.1); color: #00c853; border: 1px solid rgba(0, 200, 83, 0.2); }
-.status-badge.rejected { background: rgba(255, 45, 85, 0.1); color: #ff2d55; border: 1px solid rgba(255, 45, 85, 0.2); }
-.status-badge.waiting { background: rgba(255, 140, 0, 0.1); color: #ff8c00; border: 1px solid rgba(255, 140, 0, 0.2); }
+.status-badge.approved { background: rgba(0, 200, 83, 0.1); color: #00c853; border: 1px solid rgba(0, 200, 83, 0.15); }
+.status-badge.rejected { background: rgba(255, 45, 85, 0.1); color: #ff2d55; border: 1px solid rgba(255, 45, 85, 0.15); }
+.status-badge.waiting { background: rgba(255, 140, 0, 0.1); color: #ff8c00; border: 1px solid rgba(255, 140, 0, 0.15); }
 
 .btn-status-action {
     display: block;
@@ -237,55 +240,57 @@
     padding: 14px;
     background: linear-gradient(135deg, #ff2d55, #ff6b35);
     color: white;
-    border-radius: 12px;
+    border-radius: 14px;
     text-decoration: none;
     font-weight: 700;
     font-size: 13px;
     margin-top: 12px;
     letter-spacing: 1px;
     transition: all 0.3s;
+    border: none;
+    cursor: pointer;
 }
 .btn-status-action:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(255, 45, 85, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 45, 85, 0.25);
 }
 
-/* ===================== TOPAR BÖLEGI (ACYLAN) ===================== */
+/* ===================== TOPAR BÖLEGI ===================== */
 .team-card-inner {
-    padding-top: 12px;
+    padding-top: 10px;
 }
 .team-header-inner {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
 }
 .team-header-inner h4 {
     font-size: 16px;
     font-weight: 700;
-    color: #e0e0e0;
+    color: #e0e0e8;
 }
 .team-code-display {
     text-align: center;
     padding: 16px;
-    background: rgba(0, 0, 0, 0.25);
-    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
 }
 .team-code-label {
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 2px;
-    color: #808090;
+    color: #8080a0;
     margin-bottom: 10px;
 }
 .team-code-box {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.35);
     padding: 14px 18px;
-    border-radius: 12px;
-    border: 1px solid rgba(255, 45, 85, 0.2);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 45, 85, 0.15);
     margin-bottom: 8px;
 }
 .team-code-box code {
@@ -294,12 +299,12 @@
     font-size: 18px;
     color: #ff2d55;
     letter-spacing: 2px;
-    text-shadow: 0 0 10px rgba(255, 45, 85, 0.3);
+    text-shadow: 0 0 8px rgba(255, 45, 85, 0.2);
     text-align: center;
 }
 .team-code-box button {
-    background: rgba(255, 45, 85, 0.15);
-    border: 1px solid rgba(255, 45, 85, 0.3);
+    background: rgba(255, 45, 85, 0.12);
+    border: 1px solid rgba(255, 45, 85, 0.25);
     border-radius: 10px;
     padding: 8px 14px;
     color: #ff2d55;
@@ -308,12 +313,11 @@
     font-size: 14px;
 }
 .team-code-box button:hover {
-    background: rgba(255, 45, 85, 0.25);
-    box-shadow: 0 0 15px rgba(255, 45, 85, 0.2);
+    background: rgba(255, 45, 85, 0.22);
 }
 .team-code-hint {
     font-size: 11px;
-    color: #606070;
+    color: #606080;
 }
 .team-empty-inner {
     text-align: center;
@@ -321,7 +325,7 @@
 }
 .team-empty-inner p {
     font-size: 14px;
-    color: #808090;
+    color: #8080a0;
     margin-bottom: 14px;
 }
 .btn-team-action {
@@ -329,7 +333,7 @@
     padding: 12px 28px;
     background: linear-gradient(135deg, #ff2d55, #ff6b35);
     color: white;
-    border-radius: 12px;
+    border-radius: 14px;
     text-decoration: none;
     font-weight: 700;
     font-size: 13px;
@@ -338,7 +342,7 @@
 }
 .btn-team-action:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(255, 45, 85, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 45, 85, 0.25);
 }
 
 /* ===================== YUKLENME ===================== */
@@ -348,7 +352,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(10, 10, 15, 0.95);
+    background: rgba(15, 15, 25, 0.92);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -357,20 +361,22 @@
     gap: 16px;
 }
 .loading-full i {
-    font-size: 40px;
+    font-size: 36px;
     color: #ff2d55;
     animation: spin 1s linear infinite;
 }
 .loading-full p {
-    color: #a0a0c0;
+    color: #a0a0b8;
     font-size: 14px;
 }
 
 /* ===================== RESPONSIVE ===================== */
 @media (max-width: 480px) {
     .profile-header-card { padding: 24px 16px; }
-    .profile-avatar-large { width: 72px; height: 72px; font-size: 32px; }
+    .profile-avatar-large { width: 68px; height: 68px; font-size: 30px; }
     .profile-header-card h2 { font-size: 20px; }
-    .category-card { padding: 14px 16px; }
-    .cat-icon { width: 42px; height: 42px; font-size: 18px; }
-}
+    .category-card { padding: 16px 18px; gap: 16px; }
+    .cat-icon { width: 46px; height: 46px; border-radius: 14px; font-size: 20px; }
+    .cat-title { font-size: 16px; }
+    .cat-subtitle { font-size: 12px; }
+    }

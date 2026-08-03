@@ -4,7 +4,843 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MAGAZYN - PUBG Turnir</title>
-    <link rel="stylesheet" href="magazyn.css">
+    <style>
+/* ===== MAGAZYN CSS - PUBG Turnir Stili ===== */
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-card: #1a1a25;
+    --bg-card-hover: #222230;
+    --accent-primary: #ff2d55;
+    --accent-secondary: #ff6b35;
+    --accent-gradient: linear-gradient(135deg, #ff2d55 0%, #ff6b35 100%);
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --text-muted: #6b6b7b;
+    --border-color: #2a2a3a;
+    --success: #34c759;
+    --warning: #ff9500;
+    --danger: #ff3b30;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 20px rgba(255, 45, 85, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.app-container {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding-bottom: 90px;
+    position: relative;
+}
+
+/* ===== HEADER ===== */
+.magazyn-header {
+    padding: 20px 16px 16px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(255,45,85,0.1) 0%, transparent 100%);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 32px;
+    filter: drop-shadow(0 0 10px rgba(255,45,85,0.5));
+}
+
+.logo-text h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 4px;
+}
+
+.logo-text p {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-top: 2px;
+}
+
+/* ===== CATEGORY TABS ===== */
+.category-tabs {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.category-tabs::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-btn {
+    flex: 1;
+    min-width: 100px;
+    padding: 12px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.tab-btn .tab-icon {
+    font-size: 20px;
+}
+
+.tab-btn.active {
+    background: var(--accent-gradient);
+    border-color: transparent;
+    color: white;
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 20px 16px 12px;
+}
+
+.title-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+}
+
+.section-title h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent-primary);
+    letter-spacing: 3px;
+    white-space: nowrap;
+}
+
+/* ===== TAB CONTENT ===== */
+.tab-content {
+    display: none;
+    padding: 0 16px;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== UC GRID ===== */
+.uc-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding-bottom: 20px;
+}
+
+.uc-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 20px 16px;
+    text-align: center;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.uc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent-gradient);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.uc-card:hover::before,
+.uc-card:active::before {
+    opacity: 1;
+}
+
+.uc-card:hover {
+    background: var(--bg-card-hover);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: var(--accent-primary);
+}
+
+.uc-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+    filter: drop-shadow(0 0 8px rgba(255,107,53,0.4));
+}
+
+.uc-amount {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.uc-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.uc-price {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 12px;
+}
+
+.btn-buy {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 12px;
+    background: var(--accent-gradient);
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-buy:hover {
+    box-shadow: var(--shadow-glow);
+    transform: scale(1.02);
+}
+
+.btn-buy:active {
+    transform: scale(0.98);
+}
+
+/* ===== AKKAUNT LIST ===== */
+.akkaunt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 20px;
+}
+
+.akkaunt-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.akkaunt-card:hover {
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow);
+}
+
+.akkaunt-images {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+}
+
+.akkaunt-images img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.akkaunt-card:hover .akkaunt-images img {
+    transform: scale(1.05);
+}
+
+.akkaunt-image-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+}
+
+.image-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.image-dot.active {
+    background: var(--accent-primary);
+    width: 20px;
+    border-radius: 4px;
+}
+
+.akkaunt-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: var(--accent-gradient);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.akkaunt-info {
+    padding: 16px;
+}
+
+.akkaunt-title {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--text-primary);
+}
+
+.akkaunt-stats {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 14px;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--text-secondary);
+}
+
+.stat-item .stat-icon {
+    font-size: 16px;
+}
+
+.stat-item .stat-value {
+    font-weight: 600;
+    color: var(--accent-primary);
+}
+
+.akkaunt-taryh {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 14px;
+}
+
+.akkaunt-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.akkaunt-price {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.akkaunt-price span {
+    font-size: 12px;
+    color: var(--text-muted);
+    -webkit-text-fill-color: var(--text-muted);
+}
+
+/* ===== SARGYT LIST ===== */
+.sargyt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-bottom: 20px;
+}
+
+.sargyt-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 16px;
+    transition: all 0.3s;
+}
+
+.sargyt-card:hover {
+    border-color: var(--accent-primary);
+}
+
+.sargyt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sargyt-type {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.sargyt-type-icon {
+    font-size: 20px;
+}
+
+.sargyt-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background: rgba(255, 149, 0, 0.15);
+    color: var(--warning);
+    border: 1px solid rgba(255, 149, 0, 0.3);
+}
+
+.status-completed {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--success);
+    border: 1px solid rgba(52, 199, 89, 0.3);
+}
+
+.status-cancelled {
+    background: rgba(255, 59, 48, 0.15);
+    color: var(--danger);
+    border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+.sargyt-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.sargyt-details span {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.sargyt-date {
+    margin-top: 10px;
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: right;
+}
+
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+
+.empty-state h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+.empty-state p {
+    font-size: 13px;
+}
+
+/* ===== MODAL ===== */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    align-items: flex-end;
+    justify-content: center;
+    animation: fadeIn 0.2s;
+}
+
+.modal-overlay.active {
+    display: flex;
+}
+
+.modal {
+    background: var(--bg-secondary);
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    max-width: 480px;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: slideUp 0.3s ease;
+    border-top: 1px solid var(--border-color);
+}
+
+@keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 20px 0;
+}
+
+.modal-header h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 18px;
+    color: var(--accent-primary);
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 28px;
+    cursor: pointer;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s;
+}
+
+.modal-close:hover {
+    background: var(--bg-card);
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.product-info {
+    background: var(--bg-card);
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+}
+
+.product-info h4 {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.product-info .product-price {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 14px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    transition: all 0.3s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(255, 45, 85, 0.1);
+}
+
+.form-group input::placeholder {
+    color: var(--text-muted);
+}
+
+.payment-methods {
+    display: flex;
+    gap: 10px;
+}
+
+.payment-method {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.payment-method span:first-child {
+    font-size: 24px;
+}
+
+.payment-method.selected {
+    border-color: var(--accent-primary);
+    background: rgba(255, 45, 85, 0.1);
+    color: var(--accent-primary);
+}
+
+.modal-footer {
+    display: flex;
+    gap: 12px;
+    padding: 0 20px 20px;
+}
+
+.btn-cancel,
+.btn-confirm {
+    flex: 1;
+    padding: 14px;
+    border-radius: 14px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+}
+
+.btn-cancel {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-cancel:hover {
+    background: var(--bg-card-hover);
+    color: var(--text-primary);
+}
+
+.btn-confirm {
+    background: var(--accent-gradient);
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 45, 85, 0.4);
+}
+
+.btn-confirm:active {
+    transform: translateY(0);
+}
+
+/* ===== TOAST ===== */
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 2000;
+    opacity: 0;
+    transition: all 0.4s ease;
+    box-shadow: var(--shadow);
+    max-width: 90%;
+    text-align: center;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast.success {
+    border-color: var(--success);
+    color: var(--success);
+}
+
+.toast.error {
+    border-color: var(--danger);
+    color: var(--danger);
+}
+
+/* ===== BOTTOM NAV ===== */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: rgba(18, 18, 26, 0.95);
+    backdrop-filter: blur(20px);
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-around;
+    padding: 8px 0 20px;
+    z-index: 100;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 600;
+    transition: all 0.3s;
+    padding: 4px 12px;
+}
+
+.nav-item svg {
+    width: 24px;
+    height: 24px;
+    fill: currentColor;
+}
+
+.nav-item.active {
+    color: var(--accent-primary);
+}
+
+.nav-item.active svg {
+    filter: drop-shadow(0 0 6px rgba(255, 45, 85, 0.5));
+}
+
+/* ===== LOADING ===== */
+.loading-skeleton {
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 16px;
+    height: 120px;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (min-width: 481px) {
+    .app-container {
+        border-left: 1px solid var(--border-color);
+        border-right: 1px solid var(--border-color);
+    }
+}
+
+@media (max-width: 360px) {
+    .uc-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tab-btn {
+        min-width: 80px;
+        padding: 10px 12px;
+        font-size: 10px;
+    }
+
+    .tab-btn .tab-icon {
+        font-size: 16px;
+    }
+}
+
+</style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -134,6 +970,365 @@
         </nav>
     </div>
 
-    <script src="magazyn.js"></script>
+    <script>
+/* ===== MAGAZYN JS ===== */
+const API_BASE = 'https://sizin-backend.railway.app'; // ÖZ BACKEND URL-ŇYZI GOYUN
+
+let currentTab = 'uc';
+let selectedProduct = null;
+let ucPaketler = [];
+let akkauntlar = [];
+
+// ===== DOM ELEMENTS =====
+const tabBtns = document.querySelectorAll('.tab-btn');
+const tabContents = document.querySelectorAll('.tab-content');
+const ucGrid = document.getElementById('uc-grid');
+const akkauntList = document.getElementById('akkaunt-list');
+const sargytList = document.getElementById('sargyt-list');
+const modalOverlay = document.getElementById('modal-overlay');
+const modalTitle = document.getElementById('modal-title');
+const modalProductInfo = document.getElementById('modal-product-info');
+const modalClose = document.getElementById('modal-close');
+const btnCancel = document.getElementById('btn-cancel');
+const btnConfirm = document.getElementById('btn-confirm');
+const inputPubgId = document.getElementById('input-pubg-id');
+const inputTelegram = document.getElementById('input-telegram');
+const toast = document.getElementById('toast');
+
+// ===== INIT =====
+document.addEventListener('DOMContentLoaded', () => {
+    initTabs();
+    loadUCPaketler();
+    loadAkkauntlar();
+
+    modalClose.addEventListener('click', closeModal);
+    btnCancel.addEventListener('click', closeModal);
+    btnConfirm.addEventListener('click', confirmSargyt);
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) closeModal();
+    });
+
+    // Payment method selection
+    document.querySelectorAll('.payment-method').forEach(pm => {
+        pm.addEventListener('click', () => {
+            document.querySelectorAll('.payment-method').forEach(p => p.classList.remove('selected'));
+            pm.classList.add('selected');
+        });
+    });
+});
+
+// ===== TABS =====
+function initTabs() {
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tab = btn.dataset.tab;
+            switchTab(tab);
+        });
+    });
+}
+
+function switchTab(tab) {
+    currentTab = tab;
+
+    tabBtns.forEach(b => b.classList.remove('active'));
+    tabContents.forEach(c => c.classList.remove('active'));
+
+    document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+    document.getElementById(`tab-${tab}`).classList.add('active');
+
+    if (tab === 'sargyt') {
+        loadSargytlar();
+    }
+}
+
+// ===== API CALLS =====
+async function apiGet(endpoint) {
+    const token = localStorage.getItem('token');
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    try {
+        const res = await fetch(`${API_BASE}${endpoint}`, { headers });
+        return await res.json();
+    } catch (err) {
+        showToast('Baglanyşyk ýalňyşlygy!', 'error');
+        return null;
+    }
+}
+
+async function apiPost(endpoint, body) {
+    const token = localStorage.getItem('token');
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    try {
+        const res = await fetch(`${API_BASE}${endpoint}`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify(body)
+        });
+        return await res.json();
+    } catch (err) {
+        showToast('Baglanyşyk ýalňyşlygy!', 'error');
+        return null;
+    }
+}
+
+// ===== LOAD UC PAKETLER =====
+async function loadUCPaketler() {
+    ucGrid.innerHTML = '<div class="loading-skeleton"></div><div class="loading-skeleton"></div>';
+
+    const data = await apiGet('/api/uc-paketler');
+    if (!data || !data.success) {
+        ucGrid.innerHTML = getEmptyState('💎', 'UC paketler elýeterli däl', 'Soňra synanyşyň');
+        return;
+    }
+
+    ucPaketler = data.data || [];
+    renderUCPaketler();
+}
+
+function renderUCPaketler() {
+    if (ucPaketler.length === 0) {
+        ucGrid.innerHTML = getEmptyState('💎', 'Häzirlikçe UC paket ýok', 'Admin täze paket goşar');
+        return;
+    }
+
+    ucGrid.innerHTML = ucPaketler.map(p => `
+        <div class="uc-card">
+            <div class="uc-icon">💎</div>
+            <div class="uc-amount">${p.uc_sany} UC</div>
+            <div class="uc-label">PUBG Mobile</div>
+            <div class="uc-price">${p.bahasy} TMT</div>
+            <button class="btn-buy" onclick="openSargytModal('uc', ${p.id})">Satyn al</button>
+        </div>
+    `).join('');
+}
+
+// ===== LOAD AKKAUNTLAR =====
+async function loadAkkauntlar() {
+    akkauntList.innerHTML = '<div class="loading-skeleton" style="height:200px"></div>';
+
+    const data = await apiGet('/api/akkauntlar');
+    if (!data || !data.success) {
+        akkauntList.innerHTML = getEmptyState('👤', 'Akkauntlar elýeterli däl', 'Soňra synanyşyň');
+        return;
+    }
+
+    akkauntlar = data.data || [];
+    renderAkkauntlar();
+}
+
+function renderAkkauntlar() {
+    if (akkauntlar.length === 0) {
+        akkauntList.innerHTML = getEmptyState('👤', 'Häzirlikçe satlyk akkaunt ýok', 'Admin täze akkaunt goşar');
+        return;
+    }
+
+    akkauntList.innerHTML = akkauntlar.map((a, idx) => {
+        const images = a.suratlar || [];
+        const firstImage = images[0] || 'https://via.placeholder.com/400x200/1a1a25/ff2d55?text=PUBG+Account';
+
+        return `
+        <div class="akkaunt-card">
+            <div class="akkaunt-images">
+                <img src="${firstImage}" alt="${a.ad}" id="akkaunt-img-${idx}">
+                ${images.length > 1 ? `
+                <div class="akkaunt-image-dots">
+                    ${images.map((_, i) => `<div class="image-dot ${i === 0 ? 'active' : ''}" onclick="changeAkkauntImage(${idx}, ${i}, '${images.join(",")}')"></div>`).join('')}
+                </div>
+                ` : ''}
+                <div class="akkaunt-badge">${a.rank || 'Unranked'}</div>
+            </div>
+            <div class="akkaunt-info">
+                <div class="akkaunt-title">${a.ad}</div>
+                <div class="akkaunt-stats">
+                    <div class="stat-item">
+                        <span class="stat-icon">⭐</span>
+                        <span>Level <span class="stat-value">${a.level}</span></span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-icon">🎨</span>
+                        <span>Skin <span class="stat-value">${a.skin_sany}</span></span>
+                    </div>
+                </div>
+                ${a.taryh ? `<div class="akkaunt-taryh">${a.taryh}</div>` : ''}
+                <div class="akkaunt-footer">
+                    <div class="akkaunt-price">${a.bahasy} <span>TMT</span></div>
+                    <button class="btn-buy" onclick="openSargytModal('akkaunt', ${a.id})">Satyn al</button>
+                </div>
+            </div>
+        </div>
+        `;
+    }).join('');
+}
+
+function changeAkkauntImage(cardIdx, imgIdx, imagesStr) {
+    const images = imagesStr.split(',');
+    const imgEl = document.getElementById(`akkaunt-img-${cardIdx}`);
+    if (imgEl) imgEl.src = images[imgIdx];
+
+    // Update dots
+    const card = imgEl.closest('.akkaunt-card');
+    card.querySelectorAll('.image-dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === imgIdx);
+    });
+}
+
+// ===== LOAD SARGYTLAR =====
+async function loadSargytlar() {
+    sargytList.innerHTML = '<div class="loading-skeleton" style="height:100px"></div>';
+
+    const data = await apiGet('/api/menin-sargytlarym');
+    if (!data || !data.success) {
+        sargytList.innerHTML = getEmptyState('📋', 'Sargytlaryňyz ýok', 'UC ýa-da akkaunt satyn alyň');
+        return;
+    }
+
+    const sargytlar = data.data || [];
+    renderSargytlar(sargytlar);
+}
+
+function renderSargytlar(sargytlar) {
+    if (sargytlar.length === 0) {
+        sargytList.innerHTML = getEmptyState('📋', 'Sargytlaryňyz ýok', 'UC ýa-da akkaunt satyn alyň');
+        return;
+    }
+
+    sargytList.innerHTML = sargytlar.map(s => {
+        const statusClass = s.status === 'completed' ? 'status-completed' : 
+                           s.status === 'cancelled' ? 'status-cancelled' : 'status-pending';
+        const statusText = s.status === 'completed' ? 'Üstünlikli' : 
+                          s.status === 'cancelled' ? 'Ýatyryldy' : 'Garaşylýar';
+        const icon = s.product_type === 'uc' ? '💎' : '👤';
+
+        return `
+        <div class="sargyt-card">
+            <div class="sargyt-header">
+                <div class="sargyt-type">
+                    <span class="sargyt-type-icon">${icon}</span>
+                    <span>${s.product_ady}</span>
+                </div>
+                <div class="sargyt-status ${statusClass}">${statusText}</div>
+            </div>
+            <div class="sargyt-details">
+                <div>Bahasy: <span>${s.bahasy} TMT</span></div>
+                <div>ID: <span>#${s.id}</span></div>
+                ${s.pubg_id ? `<div>PUBG ID: <span>${s.pubg_id}</span></div>` : ''}
+                ${s.telegram ? `<div>Aragatnaşyk: <span>${s.telegram}</span></div>` : ''}
+            </div>
+            <div class="sargyt-date">${formatDate(s.created_at)}</div>
+        </div>
+        `;
+    }).join('');
+}
+
+// ===== MODAL =====
+function openSargytModal(type, id) {
+    selectedProduct = { type, id };
+
+    let product;
+    if (type === 'uc') {
+        product = ucPaketler.find(p => p.id === id);
+        modalTitle.textContent = 'UC Satyn Al';
+        inputPubgId.parentElement.style.display = 'block';
+    } else {
+        product = akkauntlar.find(a => a.id === id);
+        modalTitle.textContent = 'Akkaunt Satyn Al';
+        inputPubgId.parentElement.style.display = 'none';
+    }
+
+    if (!product) return;
+
+    modalProductInfo.innerHTML = `
+        <h4>${product.ad || product.uc_sany + ' UC'}</h4>
+        <div class="product-price">${product.bahasy} TMT</div>
+    `;
+
+    inputPubgId.value = '';
+    inputTelegram.value = '';
+
+    modalOverlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    modalOverlay.classList.remove('active');
+    document.body.style.overflow = '';
+    selectedProduct = null;
+}
+
+async function confirmSargyt() {
+    if (!selectedProduct) return;
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showToast('Ilki giriş ediň!', 'error');
+        closeModal();
+        return;
+    }
+
+    const pubgId = inputPubgId.value.trim();
+    const telegram = inputTelegram.value.trim();
+
+    if (selectedProduct.type === 'uc' && !pubgId) {
+        showToast('PUBG ID girizin!', 'error');
+        return;
+    }
+
+    btnConfirm.disabled = true;
+    btnConfirm.textContent = 'Ugradylýar...';
+
+    const data = await apiPost('/api/satyn-al', {
+        product_type: selectedProduct.type,
+        product_id: selectedProduct.id,
+        pubg_id: pubgId || null,
+        telegram: telegram || null
+    });
+
+    btnConfirm.disabled = false;
+    btnConfirm.textContent = 'Sargyt et';
+
+    if (data && data.success) {
+        showToast(data.message, 'success');
+        closeModal();
+        if (currentTab === 'sargyt') loadSargytlar();
+    } else {
+        showToast(data?.message || 'Ýalňyşlyk ýüze çykdy!', 'error');
+    }
+}
+
+// ===== HELPERS =====
+function getEmptyState(icon, title, desc) {
+    return `
+        <div class="empty-state">
+            <div class="empty-state-icon">${icon}</div>
+            <h3>${title}</h3>
+            <p>${desc}</p>
+        </div>
+    `;
+}
+
+function showToast(message, type = 'success') {
+    toast.textContent = message;
+    toast.className = `toast ${type} show`;
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 3000);
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const d = new Date(dateStr);
+    return d.toLocaleDateString('tk-TM', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+}
+
+</script>
 </body>
 </html>

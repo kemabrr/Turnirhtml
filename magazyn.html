@@ -2,54 +2,138 @@
 <html lang="tk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magazyn - PUBG Turnuvasy</title>
-    <link rel="stylesheet" href="/static/css/base.css?v=1.0.1">
-    <link rel="stylesheet" href="/static/css/magazyn.css?v=1.0.1">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MAGAZYN - PUBG Turnir</title>
+    <link rel="stylesheet" href="magazyn.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="bg-animation">
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-        <div class="particle"></div>
-    </div>
-
-    <div class="container main-content">
-        <header class="form-header" style="padding: 20px 0 16px;">
-            <h1 style="font-family: 'Orbitron', sans-serif; font-size: 22px; color: #ff2d55; letter-spacing: 3px;">MAGAZYN</h1>
+    <div class="app-container">
+        <!-- HEADER -->
+        <header class="magazyn-header">
+            <div class="logo-section">
+                <div class="logo-icon">🛒</div>
+                <div class="logo-text">
+                    <h1>MAGAZYN</h1>
+                    <p>PUBG UC we Akkauntlar</p>
+                </div>
+            </div>
         </header>
 
-        <div class="coming-soon">
-            <i class="fas fa-shopping-cart"></i>
-            <h2>GELMEKDE</h2>
-            <p>Magazyn bolumi gowusylyk bilen tayarlanylýar</p>
+        <!-- KATEGORIYA TABS -->
+        <div class="category-tabs">
+            <button class="tab-btn active" data-tab="uc">
+                <span class="tab-icon">💎</span>
+                <span class="tab-text">UC PAKETLER</span>
+            </button>
+            <button class="tab-btn" data-tab="akkaunt">
+                <span class="tab-icon">👤</span>
+                <span class="tab-text">AKKAUNTLAR</span>
+            </button>
+            <button class="tab-btn" data-tab="sargyt">
+                <span class="tab-icon">📋</span>
+                <span class="tab-text">SARGYTLARYM</span>
+            </button>
         </div>
+
+        <!-- UC PAKETLER TAB -->
+        <div id="tab-uc" class="tab-content active">
+            <div class="section-title">
+                <div class="title-line"></div>
+                <h2>💎 UC PAKETLER</h2>
+                <div class="title-line"></div>
+            </div>
+            <div class="uc-grid" id="uc-grid">
+                <!-- UC kartlar JS bilen doldurular -->
+            </div>
+        </div>
+
+        <!-- AKKAUNTLAR TAB -->
+        <div id="tab-akkaunt" class="tab-content">
+            <div class="section-title">
+                <div class="title-line"></div>
+                <h2>👤 SATLYK AKKAUNTLAR</h2>
+                <div class="title-line"></div>
+            </div>
+            <div class="akkaunt-list" id="akkaunt-list">
+                <!-- Akkaunt kartlar JS bilen doldurular -->
+            </div>
+        </div>
+
+        <!-- SARGYTLAR TAB -->
+        <div id="tab-sargyt" class="tab-content">
+            <div class="section-title">
+                <div class="title-line"></div>
+                <h2>📋 MENIŇ SARGYTLARYM</h2>
+                <div class="title-line"></div>
+            </div>
+            <div class="sargyt-list" id="sargyt-list">
+                <!-- Sargytlar JS bilen doldurular -->
+            </div>
+        </div>
+
+        <!-- SATYN AL MODAL -->
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3 id="modal-title">Sargyt</h3>
+                    <button class="modal-close" id="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="product-info" id="modal-product-info"></div>
+                    <div class="form-group">
+                        <label>PUBG ID (UC ucin hökmany)</label>
+                        <input type="text" id="input-pubg-id" placeholder="PUBG ID girizin...">
+                    </div>
+                    <div class="form-group">
+                        <label>Telegram/Aragatnaşyk</label>
+                        <input type="text" id="input-telegram" placeholder="@username ýa-da telefon...">
+                    </div>
+                    <div class="form-group">
+                        <label>Töleg usuly</label>
+                        <div class="payment-methods">
+                            <div class="payment-method selected">
+                                <span>💳</span>
+                                <span>TMCell</span>
+                            </div>
+                            <div class="payment-method">
+                                <span>📱</span>
+                                <span>Altyn Asyr</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-cancel" id="btn-cancel">Ýatyr</button>
+                    <button class="btn-confirm" id="btn-confirm">Sargyt et</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TOAST -->
+        <div class="toast" id="toast"></div>
+
+        <!-- BOTTOM NAV -->
+        <nav class="bottom-nav">
+            <a href="index.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                <span>ESASY</span>
+            </a>
+            <a href="turnir.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.74 4.39 4.97A5.5 5.5 0 0 0 11.5 19.5H13v-2h-1.5a3.5 3.5 0 0 1-3.5-3.5V11h8v2.5a3.5 3.5 0 0 1-3.5 3.5H11v2h1.5a5.5 5.5 0 0 0 4.11-7.53C19.08 12.74 21 10.55 21 8V7c0-1.1-.9-2-2-2zM5 8V7h2v3.5c0 .76.28 1.45.74 2H5.26A3.01 3.01 0 0 1 5 8zm14 0a3.01 3.01 0 0 1-.26 2.5h-2.48c.46-.55.74-1.24.74-2V7h2v1z"/></svg>
+                <span>TURNIR</span>
+            </a>
+            <a href="magazyn.html" class="nav-item active">
+                <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+                <span>MAGAZYN</span>
+            </a>
+            <a href="menu.html" class="nav-item">
+                <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
+                <span>MENYÜ</span>
+            </a>
+        </nav>
     </div>
 
-    <nav class="bottom-nav">
-        <div class="bottom-nav-container">
-            <a href="./index.html" class="bottom-nav-item">
-                <i class="fas fa-home"></i>
-                <span>Esasy</span>
-            </a>
-            <a href="./turnir.html" class="bottom-nav-item">
-                <i class="fas fa-trophy"></i>
-                <span>Turnir</span>
-            </a>
-            <a href="./magazyn.html" class="bottom-nav-item active">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Magazyn</span>
-            </a>
-            <a href="./menyu.html" class="bottom-nav-item">
-                <i class="fas fa-bars"></i>
-                <span>Menýu</span>
-            </a>
-        </div>
-    </nav>
+    <script src="magazyn.js"></script>
 </body>
 </html>

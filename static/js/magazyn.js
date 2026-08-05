@@ -266,7 +266,7 @@ async function confirmSargyt() {
         product_type: selectedProduct.type,
         product_id: selectedProduct.id,
         pubg_id: pubgId || null,
-        telegram: telefon || null
+        telefon: telefon || null
     });
 
     btnConfirm.disabled = false;

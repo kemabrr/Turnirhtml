@@ -53,6 +53,7 @@
         <button class="tab-btn active" onclick="switchTab('uc')">💎 UC Paketler</button>
         <button class="tab-btn" onclick="switchTab('akkaunt')">👤 Akkauntlar</button>
         <button class="tab-btn" onclick="switchTab('sargyt')">📋 Sargytlar</button>
+        <button class="tab-btn" onclick="switchTab('ayarlar')">⚙️ Sazlamalar</button>
     </div>
 
     <!-- UC PAKETLER -->
@@ -141,6 +142,18 @@
         </div>
     </div>
 
+    <!-- SAZLAMALAR -->
+    <div id="tab-ayarlar" class="tab-content">
+        <div class="card">
+            <h3>⚙️ Sebet Sazlamalary</h3>
+            <div class="form-group">
+                <label>Admin Telefon Belgisi (Sebetdäki "Jaň et / SMS" düwmeleri üçin)</label>
+                <input type="text" id="admin-telefon" placeholder="+993 6X XXX XXX">
+            </div>
+            <button class="btn" onclick="saklaAyarlar()">Sazlamalary Sakla</button>
+        </div>
+    </div>
+
     <div class="toast" id="toast"></div>
 
     <script>
@@ -155,6 +168,7 @@
             if(tab==='uc') loadUCPaketler();
             if(tab==='akkaunt') loadAkkauntlar();
             if(tab==='sargyt') loadSargytlar();
+            if(tab==='ayarlar') loadAyarlar();
         }
 
         async function apiPost(url,body){
@@ -193,7 +207,17 @@
             const el=document.getElementById('uc-list');
             if(!res||!res.success||!res.data.length){el.innerHTML='<div class="empty">UC paket yok</div>';return;}
             el.innerHTML='<table><tr><th>ID</th><th>Ady</th><th>UC</th><th>Bahasy</th><th>Siralama</th><th></th></tr>'+
-                res.data.map(p=>`<tr><td>${p.id}</td><td>${p.ad}</td><td>${p.uc_sany}</td><td>${p.bahasy} TMT</td><td>${p.siralama}</td><td><button class="btn-danger" style="padding:4px 10px;border:none;border-radius:6px;cursor:pointer" onclick="silUCPaket(${p.id})">Poz</button></td></tr>`).join('')+'</table>';
+                res.data.map(p=>`<tr><td>${p.id}</td><td>${p.ad}</td><td>${p.uc_sany}</td><td>${p.bahasy} TMT</td><td>${p.siralama}</td><td class="actions"><button class="btn-ok" style="padding:6px 12px;border:none;border-radius:8px;cursor:pointer" onclick="uytgetUCBaha(${p.id},${p.bahasy})">Baha</button><button class="btn-danger" style="padding:4px 10px;border:none;border-radius:6px;cursor:pointer" onclick="silUCPaket(${p.id})">Poz</button></td></tr>`).join('')+'</table>';
+        }
+
+        async function uytgetUCBaha(id,eskiBaha){
+            const taze=prompt('Taze baha (TMT):',eskiBaha);
+            if(taze===null)return;
+            const bahasy=parseFloat(taze);
+            if(isNaN(bahasy)||bahasy<=0){showToast('Nadogry baha!','error');return;}
+            const res=await apiPost('/api/admin/uc-paket-uytget/'+id,{bahasy});
+            if(res&&res.success){showToast('Baha uytgedildi!');loadUCPaketler();}
+            else showToast(res?.message||'Yalnyshlyk','error');
         }
 
         async function silUCPaket(id){
@@ -258,6 +282,21 @@
             if(!confirm('Sargydy yzyna chekmek isleyanizmi?'))return;
             const res=await apiPost('/api/admin/sargyt-yzyna/'+id,{});
             if(res&&res.success){showToast('Yzyna chekildi!');loadSargytlar();}
+            else showToast(res?.message||'Yalnyshlyk','error');
+        }
+
+        // Sazlamalar
+        async function loadAyarlar(){
+            const res=await apiGet('/api/magazyn-ayarlar');
+            if(res&&res.success){
+                document.getElementById('admin-telefon').value=res.data.admin_telefon||'';
+            }
+        }
+
+        async function saklaAyarlar(){
+            const telefon=document.getElementById('admin-telefon').value.trim();
+            const res=await apiPost('/api/admin/magazyn-ayar-sakla',{admin_telefon:telefon});
+            if(res&&res.success){showToast('Sazlamalar saklandy!');}
             else showToast(res?.message||'Yalnyshlyk','error');
         }
 

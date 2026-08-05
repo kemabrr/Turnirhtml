@@ -1,0 +1,306 @@
+/* ===== SEBET CSS ===== */
+:root {
+    --bg-primary: #0a0a0f;
+    --bg-secondary: #12121a;
+    --bg-card: #1a1a25;
+    --bg-card-hover: #222230;
+    --accent-primary: #ff2d55;
+    --accent-secondary: #ff6b35;
+    --accent-gradient: linear-gradient(135deg, #ff2d55 0%, #ff6b35 100%);
+    --text-primary: #ffffff;
+    --text-secondary: #a0a0b0;
+    --text-muted: #6b6b7b;
+    --border-color: #2a2a3a;
+    --success: #34c759;
+    --warning: #ff9500;
+    --danger: #ff3b30;
+    --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --shadow-glow: 0 0 20px rgba(255, 45, 85, 0.3);
+}
+
+.app-container {
+    max-width: 480px;
+    margin: 0 auto;
+    min-height: 100vh;
+    padding-bottom: 90px;
+    position: relative;
+}
+
+/* ===== HEADER ===== */
+.sebet-header {
+    padding: 20px 16px 16px;
+    text-align: center;
+    background: linear-gradient(180deg, rgba(255,45,85,0.1) 0%, transparent 100%);
+}
+
+.logo-section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 32px;
+    color: var(--accent-primary);
+    filter: drop-shadow(0 0 10px rgba(255,45,85,0.5));
+}
+
+.logo-text h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: 4px;
+}
+
+.logo-text p {
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 2px;
+    margin-top: 2px;
+}
+
+/* ===== SARGYT LIST ===== */
+.sargyt-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+}
+
+.sargyt-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 16px;
+    transition: all 0.3s;
+}
+
+.sargyt-card:hover {
+    border-color: var(--accent-primary);
+}
+
+.sargyt-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.sargyt-type {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.sargyt-type-icon {
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+    color: var(--accent-primary);
+}
+
+.sargyt-type-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+.sargyt-status {
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-pending {
+    background: rgba(255, 149, 0, 0.15);
+    color: var(--warning);
+    border: 1px solid rgba(255, 149, 0, 0.3);
+}
+
+.status-completed {
+    background: rgba(52, 199, 89, 0.15);
+    color: var(--success);
+    border: 1px solid rgba(52, 199, 89, 0.3);
+}
+
+.status-cancelled {
+    background: rgba(255, 59, 48, 0.15);
+    color: var(--danger);
+    border: 1px solid rgba(255, 59, 48, 0.3);
+}
+
+.sargyt-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+
+.sargyt-details span {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.sargyt-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+}
+
+.sargyt-actions {
+    display: flex;
+    gap: 10px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+}
+
+.btn-action {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.btn-action i { font-size: 15px; }
+
+.btn-action.btn-call {
+    color: var(--success);
+    border-color: rgba(52, 199, 89, 0.3);
+}
+
+.btn-action.btn-call:active {
+    background: rgba(52, 199, 89, 0.1);
+}
+
+.btn-action.btn-sms {
+    color: #0096ff;
+    border-color: rgba(0, 150, 255, 0.3);
+}
+
+.btn-action.btn-sms:active {
+    background: rgba(0, 150, 255, 0.1);
+}
+
+.sargyt-waiting-note {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-color);
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+/* ===== EMPTY STATE ===== */
+.empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
+    opacity: 0.5;
+}
+
+.empty-state-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+.empty-state h3 {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: var(--text-secondary);
+}
+
+.empty-state p {
+    font-size: 13px;
+}
+
+.empty-state a {
+    display: inline-block;
+    margin-top: 16px;
+    padding: 12px 24px;
+    border-radius: 14px;
+    background: var(--accent-gradient);
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 13px;
+}
+
+/* ===== LOADING ===== */
+.loading-skeleton {
+    background: linear-gradient(90deg, var(--bg-card) 25%, var(--bg-card-hover) 50%, var(--bg-card) 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+    border-radius: 16px;
+    height: 100px;
+    margin: 0 16px 12px;
+}
+
+@keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+/* ===== TOAST ===== */
+.toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100px);
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 2000;
+    opacity: 0;
+    transition: all 0.4s ease;
+    box-shadow: var(--shadow);
+    max-width: 90%;
+    text-align: center;
+}
+
+.toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.toast.success { border-color: var(--success); color: var(--success); }
+.toast.error { border-color: var(--danger); color: var(--danger); }
+
+@media (min-width: 481px) {
+    .app-container {
+        border-left: 1px solid var(--border-color);
+        border-right: 1px solid var(--border-color);
+    }
+}

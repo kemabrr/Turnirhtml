@@ -69,6 +69,11 @@ async function apiGet(endpoint) {
 
     try {
         const res = await fetch(`${API_BASE}${endpoint}`, { headers });
+        if (!res.ok) {
+            const text = await res.text();
+            console.error('API ýalňyşlygy:', res.status, text);
+            return { success: false, message: `Serwer ${res.status}: ${text.slice(0, 100)}` };
+        }
         return await res.json();
     } catch (err) {
         showToast('Baglanyşyk ýalňyşlygy!', 'error');
@@ -77,40 +82,27 @@ async function apiGet(endpoint) {
 }
 
 async function apiPost(endpoint, body) {
-async function apiGet(endpoint) {
-    const token = localStorage.getItem('admin_token') || localStorage.getItem('pubg_token');
+    const token = localStorage.getItem('pubg_token');
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     try {
-        const cleanEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
-        const res = await fetch(`${API_BASE}${cleanEndpoint}`, { headers });
-        return await res.json();
-    } catch (err) {
-        console.error("API Get Error:", err);
-        return { success: false, message: "Baglanyşyk ýalňyşlygy!" };
-    }
-}
-
-async function apiPost(endpoint, body) {
-    const token = localStorage.getItem('admin_token') || localStorage.getItem('pubg_token');
-    const headers = { 'Content-Type': 'application/json' };
-    if (token) headers['Authorization'] = `Bearer ${token}`;
-
-    try {
-        const cleanEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
-        const res = await fetch(`${API_BASE}${cleanEndpoint}`, {
+        const res = await fetch(`${API_BASE}${endpoint}`, {
             method: 'POST',
             headers,
             body: JSON.stringify(body)
         });
+        if (!res.ok) {
+            const text = await res.text();
+            console.error('API ýalňyşlygy:', res.status, text);
+            return { success: false, message: `Serwer ${res.status}: ${text.slice(0, 100)}` };
+        }
         return await res.json();
     } catch (err) {
-        console.error("API Post Error:", err);
-        return { success: false, message: "Baglanyşyk ýalňyşlygy!" };
+        showToast('Baglanyşyk ýalňyşlygy!', 'error');
+        return null;
     }
 }
-
 
 // ===== LOAD UC PAKETLER =====
 async function loadUCPaketler() {
@@ -284,7 +276,7 @@ async function confirmSargyt() {
         product_type: selectedProduct.type,
         product_id: selectedProduct.id,
         pubg_id: pubgId || null,
-        telefon: telefon || null
+        telegram: telefon || null
     });
 
     btnConfirm.disabled = false;

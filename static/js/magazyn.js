@@ -1,17 +1,22 @@
 /* ===== MAGAZYN JS ===== */
-const API_BASE = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND URL-ŇYZI GOYUN
+const API_BASE = 'https://web-production-413a9.up.railway.app';
 
 let currentTab = 'uc';
 let selectedProduct = null;
 let ucPaketler = [];
 let akkauntlar = [];
 
+// ===== SVG IKONLAR =====
+const ICON_UC = '<svg viewBox="0 0 24 24"><path d="M12 2 2 9l10 13L22 9 12 2zm0 2.5L19.2 9 12 18.5 4.8 9 12 4.5zM7.5 9h9L12 15.5 7.5 9z"/></svg>';
+const ICON_USER = '<svg viewBox="0 0 24 24"><path d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z"/></svg>';
+const ICON_STAR = '<svg viewBox="0 0 24 24"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>';
+const ICON_SKIN = '<svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>';
+
 // ===== DOM ELEMENTS =====
 const tabBtns = document.querySelectorAll('.tab-btn');
 const tabContents = document.querySelectorAll('.tab-content');
 const ucGrid = document.getElementById('uc-grid');
 const akkauntList = document.getElementById('akkaunt-list');
-const sargytList = document.getElementById('sargyt-list');
 const modalOverlay = document.getElementById('modal-overlay');
 const modalTitle = document.getElementById('modal-title');
 const modalProductInfo = document.getElementById('modal-product-info');
@@ -19,7 +24,7 @@ const modalClose = document.getElementById('modal-close');
 const btnCancel = document.getElementById('btn-cancel');
 const btnConfirm = document.getElementById('btn-confirm');
 const inputPubgId = document.getElementById('input-pubg-id');
-const inputTelegram = document.getElementById('input-telegram');
+const inputTelefon = document.getElementById('input-telefon');
 const toast = document.getElementById('toast');
 
 // ===== INIT =====
@@ -33,14 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
     btnConfirm.addEventListener('click', confirmSargyt);
     modalOverlay.addEventListener('click', (e) => {
         if (e.target === modalOverlay) closeModal();
-    });
-
-    // Payment method selection
-    document.querySelectorAll('.payment-method').forEach(pm => {
-        pm.addEventListener('click', () => {
-            document.querySelectorAll('.payment-method').forEach(p => p.classList.remove('selected'));
-            pm.classList.add('selected');
-        });
     });
 });
 
@@ -62,15 +59,11 @@ function switchTab(tab) {
 
     document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
     document.getElementById(`tab-${tab}`).classList.add('active');
-
-    if (tab === 'sargyt') {
-        loadSargytlar();
-    }
 }
 
 // ===== API CALLS =====
 async function apiGet(endpoint) {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('pubg_token');
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
@@ -84,7 +77,7 @@ async function apiGet(endpoint) {
 }
 
 async function apiPost(endpoint, body) {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('pubg_token');
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
@@ -107,7 +100,7 @@ async function loadUCPaketler() {
 
     const data = await apiGet('/api/uc-paketler');
     if (!data || !data.success) {
-        ucGrid.innerHTML = getEmptyState('💎', 'UC paketler elýeterli däl', 'Soňra synanyşyň');
+        ucGrid.innerHTML = getEmptyState(ICON_UC, 'UC paketler elýeterli däl', 'Soňra synanyşyň');
         return;
     }
 
@@ -117,13 +110,13 @@ async function loadUCPaketler() {
 
 function renderUCPaketler() {
     if (ucPaketler.length === 0) {
-        ucGrid.innerHTML = getEmptyState('💎', 'Häzirlikçe UC paket ýok', 'Admin täze paket goşar');
+        ucGrid.innerHTML = getEmptyState(ICON_UC, 'Häzirlikçe UC paket ýok', 'Admin täze paket goşar');
         return;
     }
 
     ucGrid.innerHTML = ucPaketler.map(p => `
         <div class="uc-card">
-            <div class="uc-icon">💎</div>
+            <div class="uc-icon">${p.surat ? `<img src="${p.surat}" alt="UC" style="width:100%;height:100%;object-fit:contain">` : ICON_UC}</div>
             <div class="uc-amount">${p.uc_sany} UC</div>
             <div class="uc-label">PUBG Mobile</div>
             <div class="uc-price">${p.bahasy} TMT</div>
@@ -138,7 +131,7 @@ async function loadAkkauntlar() {
 
     const data = await apiGet('/api/akkauntlar');
     if (!data || !data.success) {
-        akkauntList.innerHTML = getEmptyState('👤', 'Akkauntlar elýeterli däl', 'Soňra synanyşyň');
+        akkauntList.innerHTML = getEmptyState(ICON_USER, 'Akkauntlar elýeterli däl', 'Soňra synanyşyň');
         return;
     }
 
@@ -148,7 +141,7 @@ async function loadAkkauntlar() {
 
 function renderAkkauntlar() {
     if (akkauntlar.length === 0) {
-        akkauntList.innerHTML = getEmptyState('👤', 'Häzirlikçe satlyk akkaunt ýok', 'Admin täze akkaunt goşar');
+        akkauntList.innerHTML = getEmptyState(ICON_USER, 'Häzirlikçe satlyk akkaunt ýok', 'Admin täze akkaunt goşar');
         return;
     }
 
@@ -171,11 +164,11 @@ function renderAkkauntlar() {
                 <div class="akkaunt-title">${a.ad}</div>
                 <div class="akkaunt-stats">
                     <div class="stat-item">
-                        <span class="stat-icon">⭐</span>
+                        <span class="stat-icon">${ICON_STAR}</span>
                         <span>Level <span class="stat-value">${a.level}</span></span>
                     </div>
                     <div class="stat-item">
-                        <span class="stat-icon">🎨</span>
+                        <span class="stat-icon">${ICON_SKIN}</span>
                         <span>Skin <span class="stat-value">${a.skin_sany}</span></span>
                     </div>
                 </div>
@@ -195,63 +188,21 @@ function changeAkkauntImage(cardIdx, imgIdx, imagesStr) {
     const imgEl = document.getElementById(`akkaunt-img-${cardIdx}`);
     if (imgEl) imgEl.src = images[imgIdx];
 
-    // Update dots
     const card = imgEl.closest('.akkaunt-card');
     card.querySelectorAll('.image-dot').forEach((dot, i) => {
         dot.classList.toggle('active', i === imgIdx);
     });
 }
 
-// ===== LOAD SARGYTLAR =====
-async function loadSargytlar() {
-    sargytList.innerHTML = '<div class="loading-skeleton" style="height:100px"></div>';
-
-    const data = await apiGet('/api/menin-sargytlarym');
-    if (!data || !data.success) {
-        sargytList.innerHTML = getEmptyState('📋', 'Sargytlaryňyz ýok', 'UC ýa-da akkaunt satyn alyň');
-        return;
-    }
-
-    const sargytlar = data.data || [];
-    renderSargytlar(sargytlar);
-}
-
-function renderSargytlar(sargytlar) {
-    if (sargytlar.length === 0) {
-        sargytList.innerHTML = getEmptyState('📋', 'Sargytlaryňyz ýok', 'UC ýa-da akkaunt satyn alyň');
-        return;
-    }
-
-    sargytList.innerHTML = sargytlar.map(s => {
-        const statusClass = s.status === 'completed' ? 'status-completed' : 
-                           s.status === 'cancelled' ? 'status-cancelled' : 'status-pending';
-        const statusText = s.status === 'completed' ? 'Üstünlikli' : 
-                          s.status === 'cancelled' ? 'Ýatyryldy' : 'Garaşylýar';
-        const icon = s.product_type === 'uc' ? '💎' : '👤';
-
-        return `
-        <div class="sargyt-card">
-            <div class="sargyt-header">
-                <div class="sargyt-type">
-                    <span class="sargyt-type-icon">${icon}</span>
-                    <span>${s.product_ady}</span>
-                </div>
-                <div class="sargyt-status ${statusClass}">${statusText}</div>
-            </div>
-            <div class="sargyt-details">
-                <div>Bahasy: <span>${s.bahasy} TMT</span></div>
-                <div>ID: <span>#${s.id}</span></div>
-                ${s.pubg_id ? `<div>PUBG ID: <span>${s.pubg_id}</span></div>` : ''}
-                ${s.telegram ? `<div>Aragatnaşyk: <span>${s.telegram}</span></div>` : ''}
-            </div>
-            <div class="sargyt-date">${formatDate(s.created_at)}</div>
-        </div>
-        `;
-    }).join('');
-}
-
 // ===== MODAL =====
 function openSargytModal(type, id) {
+    const token = localStorage.getItem('pubg_token');
+    if (!token) {
+        showToast('Ilki giriş ediň!', 'error');
+        setTimeout(() => { window.location.href = './login.html'; }, 1000);
+        return;
+    }
+
     selectedProduct = { type, id };
 
     let product;
@@ -273,7 +224,7 @@ function openSargytModal(type, id) {
     `;
 
     inputPubgId.value = '';
-    inputTelegram.value = '';
+    inputTelefon.value = '';
 
     modalOverlay.classList.add('active');
     document.body.style.overflow = 'hidden';
@@ -288,7 +239,7 @@ function closeModal() {
 async function confirmSargyt() {
     if (!selectedProduct) return;
 
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('pubg_token');
     if (!token) {
         showToast('Ilki giriş ediň!', 'error');
         closeModal();
@@ -296,10 +247,15 @@ async function confirmSargyt() {
     }
 
     const pubgId = inputPubgId.value.trim();
-    const telegram = inputTelegram.value.trim();
+    const telefon = inputTelefon.value.trim();
 
     if (selectedProduct.type === 'uc' && !pubgId) {
-        showToast('PUBG ID girizin!', 'error');
+        showToast('Oýun ID-si girizin!', 'error');
+        return;
+    }
+
+    if (!telefon) {
+        showToast('Telefon belgiňizi girizin!', 'error');
         return;
     }
 
@@ -310,26 +266,25 @@ async function confirmSargyt() {
         product_type: selectedProduct.type,
         product_id: selectedProduct.id,
         pubg_id: pubgId || null,
-        telegram: telegram || null
+        telegram: telefon || null
     });
 
     btnConfirm.disabled = false;
     btnConfirm.textContent = 'Sargyt et';
 
     if (data && data.success) {
-        showToast(data.message, 'success');
+        showToast('Sargyt ugradyldy! Sebet bölüminden görüp bilersiňiz.', 'success');
         closeModal();
-        if (currentTab === 'sargyt') loadSargytlar();
     } else {
         showToast(data?.message || 'Ýalňyşlyk ýüze çykdy!', 'error');
     }
 }
 
 // ===== HELPERS =====
-function getEmptyState(icon, title, desc) {
+function getEmptyState(iconSvg, title, desc) {
     return `
         <div class="empty-state">
-            <div class="empty-state-icon">${icon}</div>
+            <div class="empty-state-icon">${iconSvg}</div>
             <h3>${title}</h3>
             <p>${desc}</p>
         </div>
@@ -342,16 +297,4 @@ function showToast(message, type = 'success') {
     setTimeout(() => {
         toast.classList.remove('show');
     }, 3000);
-}
-
-function formatDate(dateStr) {
-    if (!dateStr) return '';
-    const d = new Date(dateStr);
-    return d.toLocaleDateString('tk-TM', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
-    });
 }

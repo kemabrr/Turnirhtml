@@ -18,21 +18,6 @@
     --shadow-glow: 0 0 20px rgba(255, 45, 85, 0.3);
 }
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: var(--bg-primary);
-    color: var(--text-primary);
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
 .app-container {
     max-width: 480px;
     margin: 0 auto;
@@ -57,6 +42,7 @@ body {
 
 .logo-icon {
     font-size: 32px;
+    color: var(--accent-primary);
     filter: drop-shadow(0 0 10px rgba(255,45,85,0.5));
 }
 
@@ -99,7 +85,7 @@ body {
     border-radius: 16px;
     background: var(--bg-card);
     color: var(--text-secondary);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     font-size: 12px;
     font-weight: 600;
     cursor: pointer;
@@ -111,7 +97,15 @@ body {
 }
 
 .tab-btn .tab-icon {
-    font-size: 20px;
+    width: 22px;
+    height: 22px;
+    display: inline-flex;
+}
+
+.tab-btn .tab-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
 }
 
 .tab-btn.active {
@@ -205,9 +199,15 @@ body {
 }
 
 .uc-icon {
-    font-size: 40px;
-    margin-bottom: 8px;
+    width: 44px;
+    height: 44px;
+    margin: 0 auto 8px;
     filter: drop-shadow(0 0 8px rgba(255,107,53,0.4));
+}
+
+.uc-icon svg {
+    width: 100%;
+    height: 100%;
 }
 
 .uc-amount {
@@ -242,7 +242,7 @@ body {
     border-radius: 12px;
     background: var(--accent-gradient);
     color: white;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     font-size: 13px;
     font-weight: 700;
     cursor: pointer;
@@ -359,7 +359,15 @@ body {
 }
 
 .stat-item .stat-icon {
-    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    display: inline-flex;
+}
+
+.stat-item .stat-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
 }
 
 .stat-item .stat-value {
@@ -398,91 +406,6 @@ body {
     -webkit-text-fill-color: var(--text-muted);
 }
 
-/* ===== SARGYT LIST ===== */
-.sargyt-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding-bottom: 20px;
-}
-
-.sargyt-card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 16px;
-    padding: 16px;
-    transition: all 0.3s;
-}
-
-.sargyt-card:hover {
-    border-color: var(--accent-primary);
-}
-
-.sargyt-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.sargyt-type {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-    font-weight: 600;
-}
-
-.sargyt-type-icon {
-    font-size: 20px;
-}
-
-.sargyt-status {
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.status-pending {
-    background: rgba(255, 149, 0, 0.15);
-    color: var(--warning);
-    border: 1px solid rgba(255, 149, 0, 0.3);
-}
-
-.status-completed {
-    background: rgba(52, 199, 89, 0.15);
-    color: var(--success);
-    border: 1px solid rgba(52, 199, 89, 0.3);
-}
-
-.status-cancelled {
-    background: rgba(255, 59, 48, 0.15);
-    color: var(--danger);
-    border: 1px solid rgba(255, 59, 48, 0.3);
-}
-
-.sargyt-details {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    font-size: 12px;
-    color: var(--text-secondary);
-}
-
-.sargyt-details span {
-    color: var(--text-primary);
-    font-weight: 600;
-}
-
-.sargyt-date {
-    margin-top: 10px;
-    font-size: 11px;
-    color: var(--text-muted);
-    text-align: right;
-}
-
 .empty-state {
     text-align: center;
     padding: 60px 20px;
@@ -490,9 +413,16 @@ body {
 }
 
 .empty-state-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 16px;
     opacity: 0.5;
+}
+
+.empty-state-icon svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
 }
 
 .empty-state h3 {
@@ -624,7 +554,7 @@ body {
     border-radius: 14px;
     background: var(--bg-card);
     color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     font-size: 15px;
     transition: all 0.3s;
 }
@@ -639,38 +569,6 @@ body {
     color: var(--text-muted);
 }
 
-.payment-methods {
-    display: flex;
-    gap: 10px;
-}
-
-.payment-method {
-    flex: 1;
-    padding: 14px;
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    background: var(--bg-card);
-    color: var(--text-secondary);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-}
-
-.payment-method span:first-child {
-    font-size: 24px;
-}
-
-.payment-method.selected {
-    border-color: var(--accent-primary);
-    background: rgba(255, 45, 85, 0.1);
-    color: var(--accent-primary);
-}
-
 .modal-footer {
     display: flex;
     gap: 12px;
@@ -682,7 +580,7 @@ body {
     flex: 1;
     padding: 14px;
     border-radius: 14px;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Rajdhani', sans-serif;
     font-size: 14px;
     font-weight: 700;
     cursor: pointer;
@@ -749,50 +647,6 @@ body {
 .toast.error {
     border-color: var(--danger);
     color: var(--danger);
-}
-
-/* ===== BOTTOM NAV ===== */
-.bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 100%;
-    max-width: 480px;
-    background: rgba(18, 18, 26, 0.95);
-    backdrop-filter: blur(20px);
-    border-top: 1px solid var(--border-color);
-    display: flex;
-    justify-content: space-around;
-    padding: 8px 0 20px;
-    z-index: 100;
-}
-
-.nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    text-decoration: none;
-    color: var(--text-muted);
-    font-size: 10px;
-    font-weight: 600;
-    transition: all 0.3s;
-    padding: 4px 12px;
-}
-
-.nav-item svg {
-    width: 24px;
-    height: 24px;
-    fill: currentColor;
-}
-
-.nav-item.active {
-    color: var(--accent-primary);
-}
-
-.nav-item.active svg {
-    filter: drop-shadow(0 0 6px rgba(255, 45, 85, 0.5));
 }
 
 /* ===== LOADING ===== */

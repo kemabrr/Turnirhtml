@@ -77,22 +77,40 @@ async function apiGet(endpoint) {
 }
 
 async function apiPost(endpoint, body) {
-    const token = localStorage.getItem('pubg_token');
+async function apiGet(endpoint) {
+    const token = localStorage.getItem('admin_token') || localStorage.getItem('pubg_token');
     const headers = { 'Content-Type': 'application/json' };
     if (token) headers['Authorization'] = `Bearer ${token}`;
 
     try {
-        const res = await fetch(`${API_BASE}${endpoint}`, {
+        const cleanEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+        const res = await fetch(`${API_BASE}${cleanEndpoint}`, { headers });
+        return await res.json();
+    } catch (err) {
+        console.error("API Get Error:", err);
+        return { success: false, message: "Baglanyşyk ýalňyşlygy!" };
+    }
+}
+
+async function apiPost(endpoint, body) {
+    const token = localStorage.getItem('admin_token') || localStorage.getItem('pubg_token');
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    try {
+        const cleanEndpoint = endpoint.startsWith('/') ? endpoint : '/' + endpoint;
+        const res = await fetch(`${API_BASE}${cleanEndpoint}`, {
             method: 'POST',
             headers,
             body: JSON.stringify(body)
         });
         return await res.json();
     } catch (err) {
-        showToast('Baglanyşyk ýalňyşlygy!', 'error');
-        return null;
+        console.error("API Post Error:", err);
+        return { success: false, message: "Baglanyşyk ýalňyşlygy!" };
     }
 }
+
 
 // ===== LOAD UC PAKETLER =====
 async function loadUCPaketler() {

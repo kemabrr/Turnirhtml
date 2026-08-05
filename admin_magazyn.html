@@ -44,113 +44,134 @@
         .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
         .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
         @media(max-width:600px){.grid-2{grid-template-columns:1fr}}
+        
+        /* LOGIN FORM */
+        #login-section{max-width:400px;margin:60px auto}
+        #login-section h2{text-align:center;margin-bottom:20px;color:#ff2d55}
+        .logout-btn{position:fixed;top:15px;right:15px;padding:8px 16px;border:none;border-radius:8px;background:#ff3b30;color:#fff;font-size:12px;cursor:pointer;z-index:100}
     </style>
 </head>
 <body>
-    <h1>🛒 ADMIN MAGAZYN</h1>
-
-    <div class="tabs">
-        <button class="tab-btn active" onclick="switchTab('uc', this)">💎 UC Paketler</button>
-        <button class="tab-btn" onclick="switchTab('akkaunt', this)">👤 Akkauntlar</button>
-        <button class="tab-btn" onclick="switchTab('sargyt', this)">📋 Sargytlar</button>
-        <button class="tab-btn" onclick="switchTab('ayarlar', this)">⚙️ Sazlamalar</button>
-    </div>
-
-    <!-- UC PAKETLER -->
-    <div id="tab-uc" class="tab-content active">
+    <!-- LOGIN SECTION -->
+    <div id="login-section">
+        <h1>🔐 ADMIN GIRIŞ</h1>
         <div class="card">
-            <h3>➕ Taze UC Paket Gosh</h3>
-            <div class="grid-2">
-                <div class="form-group">
-                    <label>Ady (mysal: 60 UC)</label>
-                    <input type="text" id="uc-ad" placeholder="60 UC">
-                </div>
-                <div class="form-group">
-                    <label>UC Sany</label>
-                    <input type="number" id="uc-sany" placeholder="60">
-                </div>
-                <div class="form-group">
-                    <label>Bahasy (TMT)</label>
-                    <input type="number" id="uc-bahasy" placeholder="5" step="0.01">
-                </div>
-                <div class="form-group">
-                    <label>Siralama</label>
-                    <input type="number" id="uc-siralama" placeholder="0">
-                </div>
-            </div>
             <div class="form-group">
-                <label>Surat URL (hökmany dal)</label>
-                <input type="text" id="uc-surat" placeholder="https://...">
+                <label>Admin Paroly</label>
+                <input type="password" id="admin-sifre" placeholder="Parolyňyzy giriziň...">
             </div>
-            <button class="btn" onclick="addUCPaket()">UC Paket Gosh</button>
-        </div>
-
-        <div class="card">
-            <h3>📋 Bar UC Paketler</h3>
-            <div id="uc-list"><div class="empty">Yuklenyar...</div></div>
+            <button class="btn" onclick="adminLogin()">Giriş</button>
         </div>
     </div>
 
-    <!-- AKKAUNTLAR -->
-    <div id="tab-akkaunt" class="tab-content">
-        <div class="card">
-            <h3>➕ Taze Akkaunt Gosh</h3>
-            <div class="grid-2">
-                <div class="form-group">
-                    <label>Ady</label>
-                    <input type="text" id="ak-ad" placeholder="Level 50 - Ace">
-                </div>
-                <div class="form-group">
-                    <label>Level</label>
-                    <input type="number" id="ak-level" placeholder="50">
-                </div>
-                <div class="form-group">
-                    <label>Rank</label>
-                    <input type="text" id="ak-rank" placeholder="Ace">
-                </div>
-                <div class="form-group">
-                    <label>Skin Sany</label>
-                    <input type="number" id="ak-skin" placeholder="120">
-                </div>
-                <div class="form-group">
-                    <label>Bahasy (TMT)</label>
-                    <input type="number" id="ak-bahasy" placeholder="150" step="0.01">
-                </div>
-            </div>
-            <div class="form-group">
-                <label>Taryh / Beýany</label>
-                <textarea id="ak-taryh" placeholder="Akkaunt hakda maglumat..."></textarea>
-            </div>
-            <div class="form-group">
-                <label>Suratlar URL (JSON format: ["url1","url2"])</label>
-                <textarea id="ak-suratlar" placeholder='["https://...","https://..."]'></textarea>
-            </div>
-            <button class="btn" onclick="addAkkaunt()">Akkaunt Gosh</button>
+    <!-- MAIN APP (gizlen) -->
+    <div id="app-section" style="display:none">
+        <button class="logout-btn" onclick="adminLogout()">Çykyş</button>
+        <h1>🛒 ADMIN MAGAZYN</h1>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('uc', this)">💎 UC Paketler</button>
+            <button class="tab-btn" onclick="switchTab('akkaunt', this)">👤 Akkauntlar</button>
+            <button class="tab-btn" onclick="switchTab('sargyt', this)">📋 Sargytlar</button>
+            <button class="tab-btn" onclick="switchTab('ayarlar', this)">⚙️ Sazlamalar</button>
         </div>
 
-        <div class="card">
-            <h3>📋 Bar Akkauntlar</h3>
-            <div id="akkaunt-list"><div class="empty">Akkaunt yok</div></div>
-        </div>
-    </div>
-
-    <!-- SARGYTLAR -->
-    <div id="tab-sargyt" class="tab-content">
-        <div class="card">
-            <h3>📋 Ahli Sargytlar</h3>
-            <div id="sargyt-list"><div class="empty">Sargyt yok</div></div>
-        </div>
-    </div>
-
-    <!-- SAZLAMALAR -->
-    <div id="tab-ayarlar" class="tab-content">
-        <div class="card">
-            <h3>⚙️ Sebet Sazlamalary</h3>
-            <div class="form-group">
-                <label>Admin Telefon Belgisi (Sebetdäki "Jaň et / SMS" düwmeleri üçin)</label>
-                <input type="text" id="admin-telefon" placeholder="+993 6X XXX XXX">
+        <!-- UC PAKETLER -->
+        <div id="tab-uc" class="tab-content active">
+            <div class="card">
+                <h3>➕ Taze UC Paket Gosh</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Ady (mysal: 60 UC)</label>
+                        <input type="text" id="uc-ad" placeholder="60 UC">
+                    </div>
+                    <div class="form-group">
+                        <label>UC Sany</label>
+                        <input type="number" id="uc-sany" placeholder="60">
+                    </div>
+                    <div class="form-group">
+                        <label>Bahasy (TMT)</label>
+                        <input type="number" id="uc-bahasy" placeholder="5" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Siralama</label>
+                        <input type="number" id="uc-siralama" placeholder="0">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Surat URL (hökmany dal)</label>
+                    <input type="text" id="uc-surat" placeholder="https://...">
+                </div>
+                <button class="btn" onclick="addUCPaket()">UC Paket Gosh</button>
             </div>
-            <button class="btn" onclick="saklaAyarlar()">Sazlamalary Sakla</button>
+
+            <div class="card">
+                <h3>📋 Bar UC Paketler</h3>
+                <div id="uc-list"><div class="empty">Yuklenyar...</div></div>
+            </div>
+        </div>
+
+        <!-- AKKAUNTLAR -->
+        <div id="tab-akkaunt" class="tab-content">
+            <div class="card">
+                <h3>➕ Taze Akkaunt Gosh</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Ady</label>
+                        <input type="text" id="ak-ad" placeholder="Level 50 - Ace">
+                    </div>
+                    <div class="form-group">
+                        <label>Level</label>
+                        <input type="number" id="ak-level" placeholder="50">
+                    </div>
+                    <div class="form-group">
+                        <label>Rank</label>
+                        <input type="text" id="ak-rank" placeholder="Ace">
+                    </div>
+                    <div class="form-group">
+                        <label>Skin Sany</label>
+                        <input type="number" id="ak-skin" placeholder="120">
+                    </div>
+                    <div class="form-group">
+                        <label>Bahasy (TMT)</label>
+                        <input type="number" id="ak-bahasy" placeholder="150" step="0.01">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Taryh / Beýany</label>
+                    <textarea id="ak-taryh" placeholder="Akkaunt hakda maglumat..."></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Suratlar URL (JSON format: ["url1","url2"])</label>
+                    <textarea id="ak-suratlar" placeholder='["https://...","https://..."]'></textarea>
+                </div>
+                <button class="btn" onclick="addAkkaunt()">Akkaunt Gosh</button>
+            </div>
+
+            <div class="card">
+                <h3>📋 Bar Akkauntlar</h3>
+                <div id="akkaunt-list"><div class="empty">Akkaunt yok</div></div>
+            </div>
+        </div>
+
+        <!-- SARGYTLAR -->
+        <div id="tab-sargyt" class="tab-content">
+            <div class="card">
+                <h3>📋 Ahli Sargytlar</h3>
+                <div id="sargyt-list"><div class="empty">Sargyt yok</div></div>
+            </div>
+        </div>
+
+        <!-- SAZLAMALAR -->
+        <div id="tab-ayarlar" class="tab-content">
+            <div class="card">
+                <h3>⚙️ Sebet Sazlamalary</h3>
+                <div class="form-group">
+                    <label>Admin Telefon Belgisi (Sebetdäki "Jaň et / SMS" düwmeleri üçin)</label>
+                    <input type="text" id="admin-telefon" placeholder="+993 6X XXX XXX">
+                </div>
+                <button class="btn" onclick="saklaAyarlar()">Sazlamalary Sakla</button>
+            </div>
         </div>
     </div>
 
@@ -160,6 +181,49 @@
         const API = 'https://web-production-413a9.up.railway.app';
         let adminToken = localStorage.getItem('admin_token') || '';
 
+        // ===== AUTH CHECK =====
+        function checkAuth(){
+            if(!adminToken){
+                document.getElementById('login-section').style.display = 'block';
+                document.getElementById('app-section').style.display = 'none';
+            } else {
+                document.getElementById('login-section').style.display = 'none';
+                document.getElementById('app-section').style.display = 'block';
+                loadUCPaketler();
+            }
+        }
+
+        async function adminLogin(){
+            const sifre = document.getElementById('admin-sifre').value;
+            if(!sifre){showToast('Paroly giriziň!','error');return;}
+            
+            try{
+                const r = await fetch(API + '/api/admin/login', {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({sifre: sifre})
+                });
+                const data = await r.json();
+                if(data && data.access_token){
+                    adminToken = data.access_token;
+                    localStorage.setItem('admin_token', adminToken);
+                    checkAuth();
+                    showToast('Giriş ustuynlikli!');
+                } else {
+                    showToast(data?.message || 'Nadogry parol!','error');
+                }
+            }catch(e){
+                showToast('Baglanyşyk ýalňyşlygy!','error');
+            }
+        }
+
+        function adminLogout(){
+            localStorage.removeItem('admin_token');
+            adminToken = '';
+            checkAuth();
+        }
+
+        // ===== TABS =====
         function switchTab(tab, btn){
             document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
@@ -171,8 +235,14 @@
             if(tab==='ayarlar') loadAyarlar();
         }
 
+        // ===== API =====
         async function apiPost(url,body){
             const r=await fetch(API+url,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+adminToken},body:JSON.stringify(body)});
+            if(r.status===401 || r.status===403){
+                showToast('Session gutardy, täzeden giriň!','error');
+                adminLogout();
+                return {success:false,message:'Not authenticated'};
+            }
             if(!r.ok){
                 const text=await r.text();
                 console.error('API ýalňyşlygy:',r.status,text);
@@ -180,8 +250,14 @@
             }
             return await r.json();
         }
+        
         async function apiGet(url){
             const r=await fetch(API+url,{headers:{'Authorization':'Bearer '+adminToken}});
+            if(r.status===401 || r.status===403){
+                showToast('Session gutardy, täzeden giriň!','error');
+                adminLogout();
+                return {success:false,message:'Not authenticated'};
+            }
             if(!r.ok){
                 const text=await r.text();
                 console.error('API ýalňyşlygy:',r.status,text);
@@ -215,7 +291,7 @@
         async function loadUCPaketler(){
             const res=await apiGet('/api/uc-paketler');
             const el=document.getElementById('uc-list');
-            if(!res||!res.success||!res.data.length){el.innerHTML='<div class="empty">UC paket yok</div>';return;}
+            if(!res||!res.success||!res.data||!res.data.length){el.innerHTML='<div class="empty">UC paket yok</div>';return;}
             el.innerHTML='<table><tr><th>ID</th><th>Ady</th><th>UC</th><th>Bahasy</th><th>Siralama</th><th></th></tr>'+
                 res.data.map(p=>`<tr><td>${p.id}</td><td>${p.ad}</td><td>${p.uc_sany}</td><td>${p.bahasy} TMT</td><td>${p.siralama}</td><td class="actions"><button class="btn-ok" style="padding:6px 12px;border:none;border-radius:8px;cursor:pointer" onclick="uytgetUCBaha(${p.id},${p.bahasy})">Baha</button><button class="btn-danger" style="padding:4px 10px;border:none;border-radius:6px;cursor:pointer" onclick="silUCPaket(${p.id})">Poz</button></td></tr>`).join('')+'</table>';
         }
@@ -257,7 +333,7 @@
         async function loadAkkauntlar(){
             const res=await apiGet('/api/akkauntlar');
             const el=document.getElementById('akkaunt-list');
-            if(!res||!res.success||!res.data.length){el.innerHTML='<div class="empty">Akkaunt yok</div>';return;}
+            if(!res||!res.success||!res.data||!res.data.length){el.innerHTML='<div class="empty">Akkaunt yok</div>';return;}
             el.innerHTML='<table><tr><th>ID</th><th>Ady</th><th>Level</th><th>Rank</th><th>Bahasy</th><th></th></tr>'+
                 res.data.map(a=>`<tr><td>${a.id}</td><td>${a.ad}</td><td>${a.level}</td><td>${a.rank||'-'}</td><td>${a.bahasy} TMT</td><td><button class="btn-danger" style="padding:4px 10px;border:none;border-radius:6px;cursor:pointer" onclick="silAkkaunt(${a.id})">Poz</button></td></tr>`).join('')+'</table>';
         }
@@ -273,7 +349,7 @@
         async function loadSargytlar(){
             const res=await apiGet('/api/admin/sargytlar');
             const el=document.getElementById('sargyt-list');
-            if(!res||!res.success||!res.data.length){el.innerHTML='<div class="empty">Sargyt yok</div>';return;}
+            if(!res||!res.success||!res.data||!res.data.length){el.innerHTML='<div class="empty">Sargyt yok</div>';return;}
             el.innerHTML='<table><tr><th>ID</th><th>Katylyjy</th><th>Product</th><th>Bahasy</th><th>Status</th><th></th></tr>'+
                 res.data.map(s=>{
                     const stClass=s.status==='completed'?'status-completed':s.status==='cancelled'?'status-cancelled':'status-pending';
@@ -311,7 +387,7 @@
         }
 
         // Ilki yukle
-        loadUCPaketler();
+        checkAuth();
     </script>
 </body>
 </html>

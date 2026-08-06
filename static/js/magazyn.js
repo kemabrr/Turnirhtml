@@ -76,7 +76,7 @@ async function apiGet(endpoint) {
         }
         return data;
     } catch (err) {
-        showToast('BaglanyÅŸyk Ã½alÅˆyÅŸlygy!', 'error');
+        showToast('Baglanysyk yalnyslygy!', 'error');
         return null;
     }
 }
@@ -94,12 +94,12 @@ async function apiPost(endpoint, body) {
         });
         const data = await res.json();
         if (!res.ok) {
-            console.error('API Ã½alÅˆyÅŸlygy:', res.status, data);
+            console.error('API baglansygy:', res.status, data);
             return { success: false, message: data?.message || `Serwer ${res.status}` };
         }
         return data;
     } catch (err) {
-        showToast('BaglanyÅŸyk Ã½alÅˆyÅŸlygy!', 'error');
+        showToast('Baglanysyk yalnyslygy!', 'error');
         return null;
     }
 }
@@ -110,7 +110,7 @@ async function loadUCPaketler() {
 
     const data = await apiGet('/api/uc-paketler');
     if (!data || !data.success) {
-        ucGrid.innerHTML = getEmptyState(ICON_UC, 'UC paketler elÃ½eterli dÃ¤l', data?.message || 'SoÅˆra synanyÅŸyÅˆ');
+        ucGrid.innerHTML = getEmptyState(ICON_UC, 'UC paketler elyeterli dal', data?.message || 'Sonrak synansyn');
         return;
     }
 
@@ -120,13 +120,13 @@ async function loadUCPaketler() {
 
 function renderUCPaketler() {
     if (ucPaketler.length === 0) {
-        ucGrid.innerHTML = getEmptyState(ICON_UC, 'HÃ¤zirlikÃ§e UC paket Ã½ok', 'Admin tÃ¤ze paket goÅŸar');
+        ucGrid.innerHTML = getEmptyState(ICON_UC, 'Hazirlikce uc paket yok', 'Admin taze paket goyar');
         return;
     }
 
     ucGrid.innerHTML = ucPaketler.map(p => `
         <div class="uc-card">
-            <div class="uc-icon">${p.surat ? `<img src="${p.surat}" alt="UC">` : `<img src="/static/img/uc-icon.webp" alt="UC">`}</div>
+            <div class="uc-icon">${p.surat ? `<img src="${p.surat}" alt="UC">` : `<img src="/static/img/uc-icon1.webp" alt="UC">`}</div>
             <div class="uc-info">
                 <div class="uc-amount">${p.uc_sany} UC</div>
                 <div class="uc-label">PUBG Mobile</div>

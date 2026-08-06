@@ -126,7 +126,7 @@ function renderUCPaketler() {
 
     ucGrid.innerHTML = ucPaketler.map(p => `
         <div class="uc-card">
-            <div class="uc-icon">${p.surat ? `<img src="${p.surat}" alt="UC">` : `<img src="/static/img/uc-icon(1).webp" alt="UC">`}</div>
+            <div class="uc-icon">${p.surat ? `<img src="${p.surat}" alt="UC">` : `<img src="/static/img/uc-icon1.webp" alt="UC">`}</div>
             <div class="uc-info">
                 <div class="uc-amount">${p.uc_sany} UC</div>
                 <div class="uc-label">PUBG Mobile</div>

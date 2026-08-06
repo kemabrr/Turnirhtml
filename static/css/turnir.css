@@ -4,18 +4,29 @@
         .bottom-nav-item i { font-size: 20px; }
         .bottom-nav-item.active { color: #ff2d55; }
         .bottom-nav-item:hover { color: #ff2d55; }
-        .tournament-list { display: flex; flex-direction: column; gap: 16px; margin-bottom: 80px; }
-        .tournament-card { background: rgba(255, 255, 255, 0.03); border-radius: 20px; padding: 20px; border: 1px solid rgba(255, 255, 255, 0.06); position: relative; overflow: hidden; transition: all 0.3s; }
-        .tournament-card:hover { border-color: rgba(255, 45, 85, 0.2); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255, 45, 85, 0.1); }
-        .tournament-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: linear-gradient(90deg, #ff2d55, #ff6b35, #ff8c00, #ff2d55); background-size: 200% 100%; animation: progress-shimmer 3s linear infinite; }
-        .tournament-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-        .tournament-info h3 { font-family: 'Orbitron', sans-serif; font-size: 16px; font-weight: 700; color: #e8e8e8; margin-bottom: 6px; letter-spacing: 1px; }
-        .tournament-info p { font-size: 13px; opacity: 0.6; color: #a0a0c0; }
-        .tournament-prize { font-family: 'Orbitron', sans-serif; font-size: 18px; font-weight: 900; color: #0096ff; text-shadow: 0 0 15px rgba(0, 150, 255, 0.3); }
-        .tournament-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding: 12px 0; border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); flex-wrap: wrap; gap: 8px; }
-        .tournament-meta span { font-size: 12px; opacity: 0.7; color: #a0a0c0; display: flex; align-items: center; gap: 6px; }
-        .tournament-meta span i { color: #ff2d55; }
-        .btn-join-tournament { display: block; width: 100%; padding: 16px; background: linear-gradient(135deg, #ff2d55, #ff6b35); border: none; border-radius: 14px; color: white; font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 14px; text-align: center; text-transform: uppercase; letter-spacing: 3px; cursor: pointer; box-shadow: 0 8px 30px rgba(255, 45, 85, 0.4); transition: all 0.3s; text-decoration: none; }
+        .tournament-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 80px; }
+        .tournament-card { background: #101018; border-radius: 18px; padding: 16px; border: 1px solid rgba(255, 255, 255, 0.06); position: relative; overflow: hidden; transition: all 0.3s; }
+        .tournament-card:hover { border-color: rgba(255, 45, 85, 0.25); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
+
+        /* Ýokarky setir: sene/wagt (çep) + orunlar/rejim (sag) */
+        .tournament-card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 11px; color: #7c7d90; }
+        .tournament-card-top .meta-date { display: flex; align-items: center; gap: 6px; }
+        .tournament-card-top .meta-date i { color: #ff2d55; font-size: 10px; }
+        .tournament-card-top .meta-slots { display: flex; align-items: center; gap: 8px; }
+        .tournament-card-top .tag-mode { background: rgba(255, 255, 255, 0.06); padding: 3px 9px; border-radius: 7px; font-size: 9px; text-transform: uppercase; letter-spacing: 1px; color: #e8e8e8; font-weight: 700; }
+
+        /* Esasy setir: ikona + at + baýrak */
+        .tournament-card-main { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .tournament-icon { width: 52px; height: 52px; border-radius: 13px; background: linear-gradient(135deg, rgba(255, 45, 85, 0.22), rgba(255, 107, 53, 0.14)); display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid rgba(255, 45, 85, 0.25); }
+        .tournament-icon i { font-size: 22px; color: #ff2d55; }
+        .tournament-card-info { flex: 1; min-width: 0; }
+        .tournament-card-info h3 { font-family: 'Orbitron', sans-serif; font-size: 13px; font-weight: 700; color: #e8e8e8; line-height: 1.35; letter-spacing: 0.5px; }
+        .tournament-card-tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
+        .tournament-prize-box { flex-shrink: 0; text-align: right; }
+        .tournament-prize { font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 900; color: #0096ff; display: flex; align-items: center; gap: 6px; justify-content: flex-end; white-space: nowrap; }
+        .tournament-prize .prize-icon { color: #ffd700; font-size: 13px; filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.4)); }
+
+        .btn-join-tournament { display: block; width: 100%; margin-top: 14px; padding: 14px; background: linear-gradient(135deg, #ff2d55, #ff6b35); border: none; border-radius: 12px; color: white; font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 13px; text-align: center; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; box-shadow: 0 6px 20px rgba(255, 45, 85, 0.3); transition: all 0.3s; text-decoration: none; }
         .btn-join-tournament:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255, 45, 85, 0.5); }
         .btn-full { background: linear-gradient(135deg, #6b7280, #4b5563) !important; box-shadow: none !important; cursor: not-allowed !important; }
         .btn-joined { background: linear-gradient(135deg, #00c853, #00a844) !important; box-shadow: 0 8px 30px rgba(0,200,83,0.4) !important; cursor: default !important; }

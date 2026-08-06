@@ -69,7 +69,7 @@ function renderSargytlar(sargytlar) {
         const statusClass = s.status === 'completed' ? 'status-completed' :
                            s.status === 'cancelled' ? 'status-cancelled' : 'status-pending';
         const statusText = s.status === 'completed' ? 'Tamamlandy' :
-                          s.status === 'cancelled' ? 'Ýatyryldy' : 'Garaşylýar';
+                          s.status === 'cancelled' ? 'Ýatyryldy' : 'Garasylyar';
         const icon = s.product_type === 'uc' ? ICON_UC : ICON_USER;
 
         const telClean = adminTelefon.replace(/[^0-9+]/g, '');
@@ -84,7 +84,7 @@ function renderSargytlar(sargytlar) {
             </div>
         ` : s.status === 'pending' ? `
             <div class="sargyt-waiting-note">
-                <i class="fas fa-hourglass-half"></i> Admin tassyklamasyna garaşylýar...
+                <i class="fas fa-hourglass-half"></i> Admin tassyklamasyna garasylyar...
             </div>
         ` : '';
 

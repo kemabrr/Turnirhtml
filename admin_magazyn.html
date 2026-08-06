@@ -44,10 +44,7 @@
         .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
         .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:15px}
         @media(max-width:600px){.grid-2{grid-template-columns:1fr}}
-        
-        /* LOGIN FORM */
         #login-section{max-width:400px;margin:60px auto}
-        #login-section h2{text-align:center;margin-bottom:20px;color:#ff2d55}
         .logout-btn{position:fixed;top:15px;right:15px;padding:8px 16px;border:none;border-radius:8px;background:#ff3b30;color:#fff;font-size:12px;cursor:pointer;z-index:100}
     </style>
 </head>
@@ -58,13 +55,13 @@
         <div class="card">
             <div class="form-group">
                 <label>Admin Paroly</label>
-                <input type="password" id="admin-sifre" placeholder="Parolyňyzy giriziň...">
+                <input type="password" id="admin-sifre" placeholder="Parolyňyzy giriziň..." onkeydown="if(event.key==='Enter')adminLogin()">
             </div>
             <button class="btn" onclick="adminLogin()">Giriş</button>
         </div>
     </div>
 
-    <!-- MAIN APP (gizlen) -->
+    <!-- MAIN APP -->
     <div id="app-section" style="display:none">
         <button class="logout-btn" onclick="adminLogout()">Çykyş</button>
         <h1>🛒 ADMIN MAGAZYN</h1>
@@ -167,7 +164,7 @@
             <div class="card">
                 <h3>⚙️ Sebet Sazlamalary</h3>
                 <div class="form-group">
-                    <label>Admin Telefon Belgisi (Sebetdäki "Jaň et / SMS" düwmeleri üçin)</label>
+                    <label>Admin Telefon Belgisi</label>
                     <input type="text" id="admin-telefon" placeholder="+993 6X XXX XXX">
                 </div>
                 <button class="btn" onclick="saklaAyarlar()">Sazlamalary Sakla</button>
@@ -181,7 +178,7 @@
         const API = 'https://web-production-413a9.up.railway.app';
         let adminToken = localStorage.getItem('admin_token') || '';
 
-        // ===== AUTH CHECK =====
+        // ===== AUTH =====
         function checkAuth(){
             if(!adminToken){
                 document.getElementById('login-section').style.display = 'block';
@@ -203,9 +200,12 @@
                     headers: {'Content-Type':'application/json'},
                     body: JSON.stringify({sifre: sifre})
                 });
+                
                 const data = await r.json();
-                if(data && data.access_token){
-                    adminToken = data.access_token;
+                console.log('Login response:', data);
+                
+                if(data && data.success && data.data && data.data.access_token){
+                    adminToken = data.data.access_token;
                     localStorage.setItem('admin_token', adminToken);
                     checkAuth();
                     showToast('Giriş ustuynlikli!');
@@ -213,6 +213,7 @@
                     showToast(data?.message || 'Nadogry parol!','error');
                 }
             }catch(e){
+                console.error('Login error:', e);
                 showToast('Baglanyşyk ýalňyşlygy!','error');
             }
         }

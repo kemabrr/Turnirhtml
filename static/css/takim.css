@@ -1,0 +1,222 @@
+/* ===== TAKIM (TOPAR) CSS ===== */
+
+/* ===== CLOSE BUTTON ===== */
+.close-btn {
+    position: absolute;
+    right: 0;
+    top: 20px;
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 18px;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.close-btn:hover,
+.close-btn:active {
+    color: #ff2d55;
+    background: rgba(255, 45, 85, 0.12);
+    transform: rotate(90deg);
+}
+
+/* ===== LOADING ===== */
+.loading-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 14px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.loading-box i {
+    font-size: 32px;
+    color: #ff2d55;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== PENDING SCREEN ===== */
+.pending-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+}
+
+.pending-icon {
+    font-size: 56px;
+    color: #ff9500;
+    margin-bottom: 20px;
+    filter: drop-shadow(0 0 16px rgba(255, 149, 0, 0.4));
+}
+
+.pending-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+.pending-text {
+    font-size: 15px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 6px;
+}
+
+.pending-subtext {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 28px;
+}
+
+/* ===== TEAM TABS ===== */
+.team-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    background: linear-gradient(135deg, #ff2d55 0%, #ff6b35 100%);
+    border-color: transparent;
+    color: white;
+    box-shadow: 0 6px 20px rgba(255, 45, 85, 0.35);
+}
+
+/* ===== TAB CONTENT ===== */
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== TEAM FORM ===== */
+.team-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.team-preview {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    padding: 16px 18px;
+    margin-bottom: 18px;
+}
+
+.team-preview h4 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.45);
+    margin-bottom: 6px;
+}
+
+.team-preview p {
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.team-info-box {
+    background: rgba(255, 45, 85, 0.06);
+    border: 1px solid rgba(255, 45, 85, 0.15);
+    border-left: 3px solid #ff2d55;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 24px;
+}
+
+.team-info-box p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+    line-height: 1.6;
+}
+
+.team-info-box p + p {
+    margin-top: 4px;
+}
+
+/* ===== SUBMIT BUTTON ===== */
+.btn-submit {
+    width: 100%;
+    padding: 17px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ff2d55 0%, #ff6b35 100%);
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 8px 30px rgba(255, 45, 85, 0.3);
+}
+
+.btn-submit:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-submit:active { transform: translateY(0); }
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+/* ===== SUCCESS MODAL ===== */
+.success-modal {
+    text-align: center;
+}
+
+.success-icon {
+    font-size: 52px;
+    color: #34c759;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 16px rgba(52, 199, 89, 0.4));
+}
+
+#team-success-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 20px;
+    margin-bottom: 12px;
+    color: #ffffff;
+}
+
+#team-success-message {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }

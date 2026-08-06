@@ -97,21 +97,25 @@ function renderTurnirler(turnirler) {
 
         return `
             <div class="tournament-card" data-status="${escapeHtml(t.status)}" data-mode="${escapeHtml(t.mode)}">
-                <div class="tournament-header">
-                    <div class="tournament-info">
+                <div class="tournament-card-top">
+                    <span class="meta-date"><i class="fas fa-calendar"></i> ${escapeHtml(t.senesi)} · ${escapeHtml(t.wagty)}</span>
+                    <span class="meta-slots">
+                        <span class="tag-mode">${escapeHtml(t.gatnasym)}</span>
+                        <i class="fas fa-users"></i> ${t.onaylanan}/${t.yer_sany}
+                    </span>
+                </div>
+                <div class="tournament-card-main">
+                    <div class="tournament-icon"><i class="fas fa-gamepad"></i></div>
+                    <div class="tournament-card-info">
                         <h3>${adDisplay}</h3>
-                        <p>
+                        <div class="tournament-card-tags">
                             ${t.tolekli === 0 ? '<span class="status-badge badge-free">TÖLEGSIZ</span>' : ''}
                             <span class="status-badge status-${escapeHtml(t.status)}">${escapeHtml(t.status)}</span>
-                        </p>
+                        </div>
                     </div>
-                    <div class="tournament-prize">${escapeHtml(t.bayrak_jemi)}</div>
-                </div>
-                <div class="tournament-meta">
-                    <span><i class="fas fa-calendar"></i> ${escapeHtml(t.senesi)}</span>
-                    <span><i class="fas fa-clock"></i> ${escapeHtml(t.wagty)}</span>
-                    <span><i class="fas fa-users"></i> ${t.onaylanan}/${t.yer_sany}</span>
-                    <span><i class="fas fa-gamepad"></i> ${escapeHtml(t.gatnasym)}</span>
+                    <div class="tournament-prize-box">
+                        <div class="tournament-prize">${escapeHtml(t.bayrak_jemi)} <i class="fas fa-coins prize-icon"></i></div>
+                    </div>
                 </div>
                 ${btnHtml}
             </div>

@@ -126,11 +126,15 @@ function renderUCPaketler() {
 
     ucGrid.innerHTML = ucPaketler.map(p => `
         <div class="uc-card">
-            <div class="uc-icon">${p.surat ? `<img src="${p.surat}" alt="UC" style="width:100%;height:100%;object-fit:contain">` : ICON_UC}</div>
-            <div class="uc-amount">${p.uc_sany} UC</div>
-            <div class="uc-label">PUBG Mobile</div>
-            <div class="uc-price">${p.bahasy} TMT</div>
-            <button class="btn-buy" onclick="openSargytModal('uc', ${p.id})">Satyn al</button>
+            <div class="uc-icon">${p.surat ? `<img src="${p.surat}" alt="UC">` : `<img src="/static/img/uc-icon.webp" alt="UC">`}</div>
+            <div class="uc-info">
+                <div class="uc-amount">${p.uc_sany} UC</div>
+                <div class="uc-label">PUBG Mobile</div>
+            </div>
+            <div class="uc-right">
+                <div class="uc-price">${p.bahasy} TMT</div>
+                <button class="btn-buy" onclick="openSargytModal('uc', ${p.id})">Satyn al</button>
+            </div>
         </div>
     `).join('');
 }

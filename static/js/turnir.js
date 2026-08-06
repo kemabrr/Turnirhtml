@@ -114,7 +114,7 @@ function renderTurnirler(turnirler) {
                         </div>
                     </div>
                     <div class="tournament-prize-box">
-                        <div class="tournament-prize">${escapeHtml(t.bayrak_jemi)} <img src="/static/images/uc-icon.webp" alt="UC" class="prize-icon"></div>
+                        <div class="tournament-prize">${escapeHtml(t.bayrak_jemi)} <img src="/static/img/uc-icon.webp" alt="UC" class="prize-icon"></div>
                     </div>
                 </div>
                 ${btnHtml}

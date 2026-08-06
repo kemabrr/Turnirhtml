@@ -1,5 +1,10 @@
 /* ===== TURNIR GOSUL CSS ===== */
 
+.main-content {
+    padding-top: 24px;
+    padding-bottom: 110px;
+}
+
 /* ===== LOADING ===== */
 .loading-box {
     display: flex;
@@ -148,4 +153,3 @@
 .btn-submit:hover { transform: translateY(-2px); filter: brightness(1.1); }
 .btn-submit:active { transform: translateY(0); }
 .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
-  

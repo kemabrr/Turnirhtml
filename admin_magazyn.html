@@ -239,32 +239,32 @@
         // ===== API =====
         async function apiPost(url,body){
             const r=await fetch(API+url,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+adminToken},body:JSON.stringify(body)});
+            const data=await r.json();
             if(r.status===401 || r.status===403){
                 showToast('Session gutardy, täzeden giriň!','error');
                 adminLogout();
                 return {success:false,message:'Not authenticated'};
             }
             if(!r.ok){
-                const text=await r.text();
-                console.error('API ýalňyşlygy:',r.status,text);
-                return {success:false,message:`Serwer ${r.status}: ${text.slice(0,100)}`};
+                console.error('API ýalňyşlygy:',r.status,data);
+                return {success:false,message:data?.message||`Serwer ${r.status}`};
             }
-            return await r.json();
+            return data;
         }
         
         async function apiGet(url){
             const r=await fetch(API+url,{headers:{'Authorization':'Bearer '+adminToken}});
+            const data=await r.json();
             if(r.status===401 || r.status===403){
                 showToast('Session gutardy, täzeden giriň!','error');
                 adminLogout();
                 return {success:false,message:'Not authenticated'};
             }
             if(!r.ok){
-                const text=await r.text();
-                console.error('API ýalňyşlygy:',r.status,text);
-                return {success:false,message:`Serwer ${r.status}: ${text.slice(0,100)}`};
+                console.error('API ýalňyşlygy:',r.status,data);
+                return {success:false,message:data?.message||`Serwer ${r.status}`};
             }
-            return await r.json();
+            return data;
         }
 
         function showToast(msg,type='success'){

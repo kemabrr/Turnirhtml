@@ -69,12 +69,12 @@ async function apiGet(endpoint) {
 
     try {
         const res = await fetch(`${API_BASE}${endpoint}`, { headers });
+        const data = await res.json();
         if (!res.ok) {
-            const text = await res.text();
-            console.error('API ýalňyşlygy:', res.status, text);
-            return { success: false, message: `Serwer ${res.status}: ${text.slice(0, 100)}` };
+            console.error('API ýalňyşlygy:', res.status, data);
+            return { success: false, message: data?.message || `Serwer ${res.status}` };
         }
-        return await res.json();
+        return data;
     } catch (err) {
         showToast('Baglanyşyk ýalňyşlygy!', 'error');
         return null;
@@ -92,12 +92,12 @@ async function apiPost(endpoint, body) {
             headers,
             body: JSON.stringify(body)
         });
+        const data = await res.json();
         if (!res.ok) {
-            const text = await res.text();
-            console.error('API ýalňyşlygy:', res.status, text);
-            return { success: false, message: `Serwer ${res.status}: ${text.slice(0, 100)}` };
+            console.error('API ýalňyşlygy:', res.status, data);
+            return { success: false, message: data?.message || `Serwer ${res.status}` };
         }
-        return await res.json();
+        return data;
     } catch (err) {
         showToast('Baglanyşyk ýalňyşlygy!', 'error');
         return null;
@@ -110,7 +110,7 @@ async function loadUCPaketler() {
 
     const data = await apiGet('/api/uc-paketler');
     if (!data || !data.success) {
-        ucGrid.innerHTML = getEmptyState(ICON_UC, 'UC paketler elýeterli däl', 'Soňra synanyşyň');
+        ucGrid.innerHTML = getEmptyState(ICON_UC, 'UC paketler elýeterli däl', data?.message || 'Soňra synanyşyň');
         return;
     }
 
@@ -141,7 +141,7 @@ async function loadAkkauntlar() {
 
     const data = await apiGet('/api/akkauntlar');
     if (!data || !data.success) {
-        akkauntList.innerHTML = getEmptyState(ICON_USER, 'Akkauntlar elýeterli däl', 'Soňra synanyşyň');
+        akkauntList.innerHTML = getEmptyState(ICON_USER, 'Akkauntlar elýeterli däl', data?.message || 'Soňra synanyşyň');
         return;
     }
 

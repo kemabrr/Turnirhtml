@@ -1,0 +1,151 @@
+/* ===== TURNIR GOSUL CSS ===== */
+
+/* ===== LOADING ===== */
+.loading-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 14px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.loading-box i {
+    font-size: 32px;
+    color: #ff2d55;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== TOURNAMENT SUMMARY CARD ===== */
+.tournament-summary {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 20px;
+    margin-bottom: 24px;
+}
+
+.tournament-summary h3 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 16px;
+}
+
+.tournament-summary h3 i {
+    color: #ff2d55;
+}
+
+.tournament-summary p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.tournament-summary p:last-child { margin-bottom: 0; }
+
+.tournament-summary strong {
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* ===== FORM HINT ===== */
+.form-hint {
+    display: block;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.4);
+    margin-top: 6px;
+}
+
+/* ===== PAYMENT INFO BOX ===== */
+.payment-info-box {
+    background: rgba(255, 45, 85, 0.06);
+    border: 1px solid rgba(255, 45, 85, 0.15);
+    border-left: 3px solid #ff2d55;
+    border-radius: 12px;
+    padding: 16px 18px;
+    margin: 22px 0;
+}
+
+.payment-info-box h4 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ff2d55;
+    margin-bottom: 10px;
+}
+
+.payment-info-box p {
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.75);
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.payment-info-box p:last-child { margin-bottom: 0; }
+
+.payment-info-box strong {
+    color: #ffffff;
+}
+
+/* ===== ALREADY JOINED ===== */
+.already-joined-box {
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.already-joined-box i {
+    font-size: 52px;
+    color: #34c759;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 16px rgba(52, 199, 89, 0.4));
+}
+
+.already-joined-box h3 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 19px;
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+.already-joined-box p {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 4px;
+}
+
+/* ===== SUBMIT BUTTON ===== */
+.btn-submit {
+    width: 100%;
+    padding: 17px;
+    border: none;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #ff2d55 0%, #ff6b35 100%);
+    color: white;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s;
+    box-shadow: 0 8px 30px rgba(255, 45, 85, 0.3);
+    margin-top: 8px;
+}
+
+.btn-submit:hover { transform: translateY(-2px); filter: brightness(1.1); }
+.btn-submit:active { transform: translateY(0); }
+.btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  

@@ -24,7 +24,7 @@
         .tournament-card-tags { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
         .tournament-prize-box { flex-shrink: 0; text-align: right; }
         .tournament-prize { font-family: 'Orbitron', sans-serif; font-size: 15px; font-weight: 900; color: #0096ff; display: flex; align-items: center; gap: 6px; justify-content: flex-end; white-space: nowrap; }
-        .tournament-prize .prize-icon { color: #ffd700; font-size: 13px; filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.4)); }
+        .tournament-prize .prize-icon { width: 17px; height: 17px; object-fit: contain; flex-shrink: 0; }
 
         .btn-join-tournament { display: block; width: 100%; margin-top: 14px; padding: 14px; background: linear-gradient(135deg, #ff2d55, #ff6b35); border: none; border-radius: 12px; color: white; font-family: 'Orbitron', sans-serif; font-weight: 800; font-size: 13px; text-align: center; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; box-shadow: 0 6px 20px rgba(255, 45, 85, 0.3); transition: all 0.3s; text-decoration: none; }
         .btn-join-tournament:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(255, 45, 85, 0.5); }

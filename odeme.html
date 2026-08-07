@@ -69,8 +69,16 @@
 
         <div class="payment-confirmation">
             <h3>Toleg Etdinizmi?</h3>
-            <p>TMCell arkaly toleg etdinizmi?</p>
-            <button class="btn-confirm-payment" id="confirm-btn" onclick="confirmPayment()" type="button">
+            <p>TMCell-den gelen tassyknama SMS-iniň skrinshotyny yukläň:</p>
+
+            <label for="skrinshot-input" class="btn-upload-screenshot" id="skrinshot-label-wrap">
+                <i class="fas fa-camera"></i>
+                <span id="skrinshot-label-text">Skrinshot Saylan</span>
+            </label>
+            <input type="file" id="skrinshot-input" accept="image/*" style="display:none;">
+            <img id="skrinshot-preview" style="display:none; max-width:100%; border-radius:10px; margin-top:12px;">
+
+            <button class="btn-confirm-payment" id="confirm-btn" onclick="confirmPayment()" type="button" disabled>
                 <span class="btn-text">TOLEG ETDIM</span>
                 <span class="btn-loader" style="display:none;"><i class="fas fa-hourglass-half"></i></span>
             </button>

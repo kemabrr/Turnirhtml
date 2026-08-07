@@ -53,7 +53,46 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
             }
         }
 
+        const MAX_SKRINSHOT_SIZE = 5 * 1024 * 1024; // 5MB
+        let selectedSkrinshot = null;
+
+        function onSkrinshotSelect(event) {
+            const file = event.target.files[0];
+            const labelText = document.getElementById('skrinshot-label-text');
+            const preview = document.getElementById('skrinshot-preview');
+            const confirmBtn = document.getElementById('confirm-btn');
+
+            if (!file) {
+                selectedSkrinshot = null;
+                confirmBtn.disabled = true;
+                return;
+            }
+
+            if (!file.type.startsWith('image/')) {
+                alert('Diňe surat faýly saýlaň!');
+                event.target.value = '';
+                return;
+            }
+
+            if (file.size > MAX_SKRINSHOT_SIZE) {
+                alert('Surat 5MB-dan uly bolmaly däl!');
+                event.target.value = '';
+                return;
+            }
+
+            selectedSkrinshot = file;
+            labelText.textContent = file.name;
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+            confirmBtn.disabled = false;
+        }
+
         async function confirmPayment() {
+            if (!selectedSkrinshot) {
+                alert('Iberimizden ozal toleg skrinshotyny yukläň!');
+                return;
+            }
+
             const btn = document.getElementById('confirm-btn');
             const btnText = btn.querySelector('.btn-text');
             const btnLoader = btn.querySelector('.btn-loader');
@@ -62,27 +101,33 @@ const API_URL = 'https://web-production-413a9.up.railway.app'; // ÖZ BACKEND UR
             btn.disabled = true;
 
             try {
-                const response = await fetch(API_URL + '/api/odeme-yapildi', {
+                const token = localStorage.getItem('pubg_token');
+                const formData = new FormData();
+                formData.append('skrinshot', selectedSkrinshot);
+
+                const response = await fetch(API_URL + '/api/odeme-skrinshot-yukle', {
                     method: 'POST',
-                    headers: getAuthHeaders(),
-                    body: JSON.stringify({})
+                    headers: token ? { 'Authorization': 'Bearer ' + token } : {},
+                    body: formData
                 });
 
-                if (!response.ok) throw new Error('Server yalnyslygy: ' + response.status);
-
                 const result = await response.json();
-                if (result.success) {
-                    document.getElementById('pending-modal').style.display = 'flex';
-                } else {
-                    alert(result.message || 'Yalnyslyk yuze cykdy');
+
+                if (!response.ok || !result.success) {
+                    throw new Error(result.message || ('Server yalnyslygy: ' + response.status));
                 }
+
+                document.getElementById('pending-modal').style.display = 'flex';
             } catch (error) {
                 alert('Yalnyslyk: ' + error.message);
+                btn.disabled = false;
             } finally {
                 btnText.style.display = 'inline';
                 btnLoader.style.display = 'none';
-                btn.disabled = false;
             }
         }
 
-        document.addEventListener('DOMContentLoaded', loadOdemeBilgi);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadOdemeBilgi();
+            document.getElementById('skrinshot-input').addEventListener('change', onSkrinshotSelect);
+        });
